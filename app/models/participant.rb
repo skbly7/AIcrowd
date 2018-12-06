@@ -77,7 +77,7 @@ class Participant < ApplicationRecord
   validates :name,
     format: {
       with: /\A[a-zA-Z.\-_{}\[\]]+\z/,
-      message: 'Display Names can contain letters, numbers and these characters -_.{}[] '
+      message: 'User handle can contain letters, numbers and these characters -_.{}[] '
     },
     length: { minimum: 2, maximum: 15 },
     uniqueness: { case_sensitive: false }
