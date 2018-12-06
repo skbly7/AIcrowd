@@ -76,10 +76,10 @@ class Participant < ApplicationRecord
   validates :twitter, :url => { allow_blank: true }
   validates :name,
     format: {
-      with: /[a-zA-Z0-9\-_]/,
-      message: 'cannot contain spaces or special characters'
+      with: /\A[a-zA-Z.\-_{}\[\]]+\z/,
+      message: 'Display Names can contain letters, numbers and these characters -_.{}[] '
     },
-    length: { minimum: 2 },
+    length: { minimum: 2, maximum: 15 },
     uniqueness: { case_sensitive: false }
 
   #validates :name,
