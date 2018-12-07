@@ -17,6 +17,26 @@ describe Participant do
       it { is_expected.to_not be_valid }
     end
 
+    describe 'when handle format is invalid' do
+      it 'is_expected.to be invalid' do
+        handles = %w(mridul\ nagpal mridul@nagpal thisisaverylonguserhandle)
+        handles.each do |invalid_handle|
+          @participant.name = invalid_handle
+          expect(@participant).not_to be_valid
+        end
+      end
+    end
+
+    describe 'when handle format is valid' do
+      it 'is_expected.to be valid' do
+        handles = %w(mridul_nagpal mridul.nagpal [mridulnagpal])
+        handles.each do |valid_handle|
+          @participant.name = valid_handle
+          expect(@participant).to be_valid
+        end
+      end
+    end
+
     describe 'when email is not present' do
       before { @participant.email = ' ' }
       it { is_expected.to_not be_valid }
