@@ -12,7 +12,7 @@ describe Participant do
       expect(@participant.admin?).to be true
     end
 
-    describe 'when name is not present' do
+    describe 'when handle is not present' do
       before { @participant.name = ' ' }
       it { is_expected.to_not be_valid }
     end
@@ -29,7 +29,7 @@ describe Participant do
 
     describe 'when handle format is valid' do
       it 'is_expected.to be valid' do
-        handles = %w(mridul_nagpal mridul.nagpal [mridulnagpal])
+        handles = %w(mridul_nagpal mridul.nagpal [mridulnagpal] mridul.nagpal1 12345nagpal)
         handles.each do |valid_handle|
           @participant.name = valid_handle
           expect(@participant).to be_valid

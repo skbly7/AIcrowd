@@ -76,7 +76,7 @@ class Participant < ApplicationRecord
   validates :twitter, :url => { allow_blank: true }
   validates :name,
     format: {
-      with: /\A[a-zA-Z.\-_{}\[\]]+\z/,
+      with: /\A[0-9a-zA-Z.\-_{}\[\]]+\z/,
       message: 'User handle can contain letters, numbers and these characters -_.{}[] '
     },
     length: { minimum: 2, maximum: 15 },
