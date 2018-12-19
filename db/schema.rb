@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_130935) do
+ActiveRecord::Schema.define(version: 2018_12_18_165023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -441,32 +441,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
     t.string "job_url"
   end
 
-  create_table "leaderboard_snapshots", force: :cascade do |t|
-    t.bigint "challenge_id"
-    t.bigint "challenge_round_id"
-    t.bigint "participant_id"
-    t.integer "row_num"
-    t.integer "previous_row_num"
-    t.string "slug"
-    t.string "name"
-    t.integer "entries"
-    t.float "score"
-    t.float "score_secondary"
-    t.string "leaderboard_type_cd"
-    t.datetime "refreshed_at"
-    t.bigint "submission_id"
-    t.boolean "post_challenge"
-    t.integer "seq"
-    t.boolean "baseline"
-    t.string "baseline_comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["challenge_id"], name: "index_leaderboard_snapshots_on_challenge_id"
-    t.index ["challenge_round_id"], name: "index_leaderboard_snapshots_on_challenge_round_id"
-    t.index ["participant_id"], name: "index_leaderboard_snapshots_on_participant_id"
-    t.index ["submission_id"], name: "index_leaderboard_snapshots_on_submission_id"
-  end
-
   create_table "login_activities", force: :cascade do |t|
     t.string "scope"
     t.string "strategy"
@@ -516,7 +490,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
     t.integer "related_change_id"
     t.string "description"
     t.datetime "created_at"
-    t.index ["action_id"], name: "index_merit_activity_logs_on_action_id"
   end
 
   create_table "merit_score_points", force: :cascade do |t|
@@ -671,11 +644,13 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
     t.boolean "clef_email", default: false
     t.integer "sash_id"
     t.integer "level", default: 0
+    t.decimal "rating_mean", default: "25.0"
+    t.decimal "rating_sigma", default: "8.3333"
+    t.decimal "rating_temporary", default: ["25.0"], array: true
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
     t.index ["reset_password_token"], name: "index_participants_on_reset_password_token", unique: true
-    t.index ["sash_id"], name: "index_participants_on_sash_id"
     t.index ["slug"], name: "index_participants_on_slug", unique: true
     t.index ["unlock_token"], name: "index_participants_on_unlock_token", unique: true
   end
@@ -865,7 +840,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
   add_foreign_key "invitations", "participants"
-  add_foreign_key "leaderboard_snapshots", "submissions"
   add_foreign_key "notifications", "participants"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
@@ -969,69 +943,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
              FROM participant_clef_tasks pc,
               challenges c
             WHERE (c.clef_task_id = pc.clef_task_id)) x;
-  SQL
-
-  create_view "challenge_round_views",  sql_definition: <<-SQL
-      SELECT cr.id,
-      cr.challenge_round,
-      cr.row_num,
-      cr.active,
-      cr.challenge_id,
-      cr.start_dttm,
-      cr.end_dttm,
-      cr.submission_limit,
-      cr.submission_limit_period_cd,
-      cr.failed_submissions,
-      cr.minimum_score,
-      cr.minimum_score_secondary
-     FROM ( SELECT r1.id,
-              r1.challenge_id,
-              r1.challenge_round,
-              r1.active,
-              r1.created_at,
-              r1.updated_at,
-              r1.submission_limit,
-              r1.submission_limit_period_cd,
-              r1.start_dttm,
-              r1.end_dttm,
-              r1.minimum_score,
-              r1.minimum_score_secondary,
-              r1.ranking_window,
-              r1.ranking_highlight,
-              r1.score_precision,
-              r1.score_secondary_precision,
-              r1.leaderboard_note_markdown,
-              r1.leaderboard_note,
-              r1.failed_submissions,
-              row_number() OVER (PARTITION BY r1.challenge_id ORDER BY r1.challenge_id, r1.start_dttm) AS row_num
-             FROM challenge_rounds r1) cr;
-  SQL
-
-  create_view "challenge_round_summaries",  sql_definition: <<-SQL
-      SELECT cr.id,
-      cr.challenge_round,
-      cr.row_num,
-      acr.row_num AS active_row_num,
-          CASE
-              WHEN (cr.row_num < acr.row_num) THEN 'history'::text
-              WHEN (cr.row_num = acr.row_num) THEN 'current'::text
-              WHEN (cr.row_num > acr.row_num) THEN 'future'::text
-              ELSE NULL::text
-          END AS round_status_cd,
-      cr.active,
-      cr.challenge_id,
-      cr.start_dttm,
-      cr.end_dttm,
-      cr.submission_limit,
-      cr.submission_limit_period_cd,
-      cr.failed_submissions,
-      cr.minimum_score,
-      cr.minimum_score_secondary,
-      c.status_cd
-     FROM challenge_round_views cr,
-      challenge_round_views acr,
-      challenges c
-    WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
 
   create_view "challenge_stats",  sql_definition: <<-SQL
@@ -1278,19 +1189,67 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
 
-  create_view "badge_stats",  sql_definition: <<-SQL
-      SELECT bc.badge_id,
-      bc.badge_count,
-      pc.participant_count,
-      ((100)::double precision - trunc(((((pc.participant_count - bc.badge_count))::double precision / (pc.participant_count)::double precision) * (100)::double precision))) AS percentile
-     FROM ( SELECT b.badge_id,
-              count(*) AS badge_count
-             FROM badges_sashes b,
-              participants p
-            WHERE (p.sash_id = b.sash_id)
-            GROUP BY b.badge_id) bc,
-      ( SELECT count(*) AS participant_count
-             FROM participants) pc;
+  create_view "challenge_round_views",  sql_definition: <<-SQL
+      SELECT cr.id,
+      cr.challenge_round,
+      cr.row_num,
+      cr.active,
+      cr.challenge_id,
+      cr.start_dttm,
+      cr.end_dttm,
+      cr.submission_limit,
+      cr.submission_limit_period_cd,
+      cr.failed_submissions,
+      cr.minimum_score,
+      cr.minimum_score_secondary
+     FROM ( SELECT r1.id,
+              r1.challenge_id,
+              r1.challenge_round,
+              r1.active,
+              r1.created_at,
+              r1.updated_at,
+              r1.submission_limit,
+              r1.submission_limit_period_cd,
+              r1.start_dttm,
+              r1.end_dttm,
+              r1.minimum_score,
+              r1.minimum_score_secondary,
+              r1.ranking_window,
+              r1.ranking_highlight,
+              r1.score_precision,
+              r1.score_secondary_precision,
+              r1.leaderboard_note_markdown,
+              r1.leaderboard_note,
+              r1.failed_submissions,
+              row_number() OVER (PARTITION BY r1.challenge_id ORDER BY r1.challenge_id, r1.start_dttm) AS row_num
+             FROM challenge_rounds r1) cr;
+  SQL
+
+  create_view "challenge_round_summaries",  sql_definition: <<-SQL
+      SELECT cr.id,
+      cr.challenge_round,
+      cr.row_num,
+      acr.row_num AS active_row_num,
+          CASE
+              WHEN (cr.row_num < acr.row_num) THEN 'history'::text
+              WHEN (cr.row_num = acr.row_num) THEN 'current'::text
+              WHEN (cr.row_num > acr.row_num) THEN 'future'::text
+              ELSE NULL::text
+          END AS round_status_cd,
+      cr.active,
+      cr.challenge_id,
+      cr.start_dttm,
+      cr.end_dttm,
+      cr.submission_limit,
+      cr.submission_limit_period_cd,
+      cr.failed_submissions,
+      cr.minimum_score,
+      cr.minimum_score_secondary,
+      c.status_cd
+     FROM challenge_round_views cr,
+      challenge_round_views acr,
+      challenges c
+    WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
 
 end

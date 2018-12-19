@@ -77,6 +77,9 @@ Rails.application.routes.draw do
   end
 
   resources :challenges, only: [:index,:show] do
+    collection do
+      get :assign_rating
+    end 
     resources :dataset_files
     resources :participant_challenges, only: [:index] do
       get :approve, on: :collection

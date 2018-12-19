@@ -1,4 +1,5 @@
 class ChallengesController < ApplicationController
+
   before_action :authenticate_participant!, except: [:show,:index]
   before_action :terminate_challenge, only: [:show, :index]
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
@@ -8,6 +9,8 @@ class ChallengesController < ApplicationController
 
   after_action :update_stats_job
   respond_to :html, :js
+
+  
 
   def index
     @challenge_filter = params[:challenge_filter] ||= 'all'
@@ -100,6 +103,27 @@ class ChallengesController < ApplicationController
     @challenge.remove_image_file!
     @challenge.save
     redirect_to edit_organizer_challenge_path(@challenge.organizer, @challenge), notice: 'Image removed.'
+  end
+
+  def assign_rating
+    authorize Challenge
+
+    @challenges = policy_scope(Challenge)
+
+    @challenges.each do |challenge|
+      leaderboards = Leaderboard.where(challenge_id: 30).pluck([:participant_id, :row_num]).to_h
+      
+      rankings = {}
+      leaderboards.keys.each do |participant_id|
+        participant = Participant.friendly.find(participant_id)
+        rating = [Saulabs::TrueSkill::Rating.new(participant.rating_mean, participant.rating_sigma, 1.0)]
+        rankings[rating] = leaderboards[participant_id].to_i
+      end
+      graph = Saulabs::TrueSkill::FactorGraph.new rankings
+      graph.update_skills
+    end
+
+    @b = Saulabs::TrueSkill::Rating.new(25.0, 8.33)
   end
 
   private
