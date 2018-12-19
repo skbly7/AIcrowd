@@ -88,6 +88,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'turbolinks', '~> 5.1'
 gem 'trailblazer', '2.0.7'
 gem 'trailblazer-rails', '1.0.9'
+gem 'trueskill', github: 'saulabs/trueskill', require: 'saulabs/trueskill'
 gem 'uglifier', '~> 4.1.10'
 gem 'validate_url'
 gem 'valid_email2'
