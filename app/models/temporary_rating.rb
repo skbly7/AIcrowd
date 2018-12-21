@@ -1,0 +1,2 @@
+class TemporaryRating < ApplicationRecord
+end

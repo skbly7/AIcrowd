@@ -1,0 +1,2 @@
+class PermanentRating < ApplicationRecord
+end

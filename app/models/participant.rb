@@ -29,6 +29,8 @@ class Participant < ApplicationRecord
   has_many :topics, dependent: :nullify
   has_many :comments, dependent: :nullify
   has_many :articles, dependent: :nullify
+  has_many :permanent_ratings
+  has_many :temporary_ratings
   has_many :leaderboards,
     class_name: 'Leaderboard'
   has_many :ongoing_leaderboards,

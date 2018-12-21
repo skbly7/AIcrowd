@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_130935) do
+ActiveRecord::Schema.define(version: 2018_12_21_222407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -691,6 +691,17 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
     t.index ["organizer_id"], name: "index_partners_on_organizer_id"
   end
 
+  create_table "permanent_ratings", force: :cascade do |t|
+    t.bigint "challenge_id"
+    t.bigint "participant_id"
+    t.float "mean", default: 25.0
+    t.float "deviation", default: 8.333
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_permanent_ratings_on_challenge_id"
+    t.index ["participant_id"], name: "index_permanent_ratings_on_participant_id"
+  end
+
   create_table "sashes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -808,6 +819,15 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
     t.index ["clef_task_id"], name: "index_task_dataset_files_on_clef_task_id"
   end
 
+  create_table "temporary_ratings", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.float "mean", default: 25.0
+    t.float "deviation", default: 8.333
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_id"], name: "index_temporary_ratings_on_participant_id"
+  end
+
   create_table "topics", id: :serial, force: :cascade do |t|
     t.integer "challenge_id"
     t.integer "participant_id"
@@ -873,6 +893,8 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
   add_foreign_key "participant_clef_tasks", "participants"
   add_foreign_key "participants", "organizers"
   add_foreign_key "partners", "organizers"
+  add_foreign_key "permanent_ratings", "challenges"
+  add_foreign_key "permanent_ratings", "participants"
   add_foreign_key "submission_comments", "participants"
   add_foreign_key "submission_comments", "submissions"
   add_foreign_key "submission_file_definitions", "challenges"
@@ -881,6 +903,7 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
   add_foreign_key "submissions", "challenges"
   add_foreign_key "submissions", "participants"
   add_foreign_key "task_dataset_files", "clef_tasks"
+  add_foreign_key "temporary_ratings", "participants"
   add_foreign_key "topics", "challenges"
   add_foreign_key "topics", "participants"
   add_foreign_key "votes", "participants"
