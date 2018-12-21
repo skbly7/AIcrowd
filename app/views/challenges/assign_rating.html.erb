@@ -1,3 +1,6 @@
-<h1> Hello world </h1>
+<h1> Updated Ratings </h1>
 
-<%= @b.mean %>
+<% @rankings.keys.each do |rating| %>
+	<%= rating[0] %>
+	</br>
+<% end %>

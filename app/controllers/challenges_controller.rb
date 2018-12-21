@@ -110,20 +110,32 @@ class ChallengesController < ApplicationController
 
     @challenges = policy_scope(Challenge)
 
+    participant_rating_mean = Participant.all.pluck([:id, :rating_mean]).to_h
+    participant_rating_sigma = Participant.all.pluck([:id, :rating_sigma]).to_h
+
     @challenges.each do |challenge|
-      leaderboards = Leaderboard.where(challenge_id: 30).pluck([:participant_id, :row_num]).to_h
+      leaderboards = Leaderboard.where(challenge_id: challenge.id).pluck([:participant_id, :row_num]).to_h
       
-      rankings = {}
+      @rankings = {}
+      p_id = {}
       leaderboards.keys.each do |participant_id|
-        participant = Participant.friendly.find(participant_id)
-        rating = [Saulabs::TrueSkill::Rating.new(participant.rating_mean, participant.rating_sigma, 1.0)]
-        rankings[rating] = leaderboards[participant_id].to_i
+        rating = [Saulabs::TrueSkill::Rating.new(participant_rating_mean[participant_id], participant_rating_sigma[participant_id], 1.0)]
+        @rankings[rating] = leaderboards[participant_id].to_i
+        p_id[rating] = participant_id
       end
-      graph = Saulabs::TrueSkill::FactorGraph.new rankings
+      graph = Saulabs::TrueSkill::FactorGraph.new @rankings
       graph.update_skills
+
+      @rankings.keys.each do |rating|
+        participant_rating_mean[p_id[rating]] = rating[0].mean
+        participant_rating_sigma[p_id[rating]] = rating[0].deviation
+      end
     end
 
-    @b = Saulabs::TrueSkill::Rating.new(25.0, 8.33)
+    participant_rating_mean.keys.each do |participant_id|
+      participant = Participant.friendly.find(participant_id)
+      participant.update(rating_temporary: participant.rating_temporary << participant_rating_mean[participant_id]).to_f    
+    end
   end
 
   private

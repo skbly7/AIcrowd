@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/saulabs/trueskill.git
-  revision: d15b0752cb4be5ff27f26e5dbbac520680446355
+  remote: git://github.com/AICrowd/trueskill.git
+  revision: 1247788dbd4bf062d2c2759747a092c74955775f
   specs:
     trueskill (1.0.0)
 
@@ -953,6 +953,9 @@ DEPENDENCIES
   validate_url
   web-console
   webpacker (~> 2.0)
+
+RUBY VERSION
+   ruby 2.3.7p456
 
 BUNDLED WITH
    1.17.2
