@@ -1,0 +1,150 @@
+//
+// Basic Bootstrap table
+//
+
+.table {
+  color: $gray-700;
+  font-size: .938rem;
+  width: 100%;
+  margin-bottom: $spacer;
+  background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+  th,
+  td {
+    padding: $table-cell-padding;
+    vertical-align: top;
+    border-top: 1px solid $gray-200;
+  }
+  tr:last-of-type {
+    border-bottom: 1px solid $gray-200;
+  }
+  thead th {
+    background: $gray-050;
+    color: $gray-600;
+    font-size: .875rem;
+    font-weight: 400;
+    white-space: nowrap;
+    padding-top: .875rem;
+    padding-bottom: .875rem;
+    vertical-align: bottom;
+  }
+  tbody + tbody {
+    border-top: 1px solid $gray-200;
+  }
+  .table {
+    background-color: $body-bg;
+  }
+  tr th,
+  tr td {
+    &:last-of-type {
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+  .avatar {
+    width: 32px;
+    height: 32px;
+    margin-right: 4px;
+  }
+}
+
+
+//
+// Condensed table w/ half padding
+//
+
+.table-sm {
+  th,
+  td {
+    padding: $table-cell-padding-sm;
+  }
+}
+
+// Zebra-striping
+//
+// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+
+.table-striped {
+  tbody tr:nth-of-type(#{$table-striped-order}) {
+    background-color: $table-accent-bg;
+  }
+}
+
+
+// Hover effect
+//
+// Placed here since it has to come after the potential zebra striping
+
+.table-hover {
+  tbody tr {
+    @include hover {
+      background-color: $table-hover-bg;
+    }
+  }
+}
+
+
+// Table backgrounds
+//
+// Exact selectors below required to override `.table-striped` and prevent
+// inheritance to nested tables.
+
+@each $color, $value in $theme-colors {
+  @include table-row-variant($color, theme-color-level($color, -9));
+}
+
+@include table-row-variant(active, $table-active-bg);
+
+
+// Responsive tables
+//
+// Generate series of `.table-responsive-*` classes for configuring the screen
+// size of where your table will overflow.
+
+.table-responsive {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar; // See https://github.com/twbs/bootstrap/pull/10057
+        // Prevent double border on horizontal scroll due to use of `display: block;`
+        > .table-bordered {
+          border: 0;
+        }
+      }
+    }
+  }
+}
+
+// Leaderboard
+
+.table-leaderboard {
+  td {
+    vertical-align: middle
+  }
+  .leaderboard-change {
+    text-align: center;
+    div {
+      background: $gray-050;
+      border-radius: 2px;
+      padding: .25rem;
+    }
+    img {
+      margin-top: -6px;
+    }
+    span {
+      display: block;
+      font-size: .75rem;
+      white-space: nowrap;
+      margin-top: -6px;
+    }
+  }
+  a {
+    white-space: nowrap;
+  }
+}

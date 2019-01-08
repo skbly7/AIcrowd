@@ -1,0 +1,21 @@
+//
+// Challenge stats
+//
+
+.stats-group {
+  display: flex;
+}
+
+.stat-item {
+  font-size: .875rem;
+  width: 76px;
+  span {
+    cursor: help;
+  }
+  img {
+    margin-top: -2px;
+  }
+  &:last-of-type {
+  	width: auto;
+  }
+}

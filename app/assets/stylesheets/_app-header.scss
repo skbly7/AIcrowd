@@ -1,0 +1,100 @@
+//
+// App header
+//
+
+.app-header {
+  border-bottom: 1px solid $gray-200;
+  a {
+    color: $gray-700;
+    &:hover {
+      color: darken($gray-700, 15%);
+    }
+  }
+  .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    @include media-breakpoint-down(sm) {
+      height: 60px;
+    }
+  }
+  .app-header-section {
+    display: flex;
+    align-items: center;
+  }
+  .app-brand {
+    margin-right: 2rem;
+    @include media-breakpoint-down(sm) {
+      margin-right: 1rem;
+    }
+  }
+  .search-input {
+    width: 280px;
+    @include media-breakpoint-down(lg) {
+      width: 240px;
+    }
+    @include media-breakpoint-down(xs) {
+      width: 200px;
+    }
+    @include media-breakpoint-down(xxs) {
+      width: 160px;
+    }
+  }
+  .nav {
+    @media only screen and (max-width: 999px) {
+      display: none;
+    }
+    .nav-link {
+      padding-right: 1.25rem;
+      padding-left: 0;
+    }
+  }
+  .dropdown-toggle::after {
+    display:none;
+  }
+  .user-options {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+  .member-options {
+    img {
+      height: 40px;
+      width: 40px;
+      @include media-breakpoint-down(sm) {
+        height: 36px;
+        width: 36px;
+      }
+    }
+    .dropdown-menu {
+      margin-top: 1rem;
+    }
+  }
+}
+
+// Button for toggling the navbar when in its collapsed state
+.app-header-toggler {
+  font-size: $navbar-toggler-font-size;
+  line-height: 1;
+  background-color: transparent; // remove default button style
+  border: $border-width solid transparent; // remove default button style
+  border-radius: none;
+  height: 40px;
+  width: 40px;
+  margin-right: .5rem;
+  @include hover-focus {
+    outline: none;
+    text-decoration: none;
+  }
+  @include media-breakpoint-down(sm) {
+    margin-right: 0;
+  }
+  @media only screen and (min-width: 1000px) {
+    display: none;
+  }
+  // Opinionated: add "hand" cursor to non-disabled .navbar-toggler elements
+  &:not([disabled]):not(.disabled) {
+    cursor: pointer;
+  }
+}

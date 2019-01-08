@@ -1,0 +1,62 @@
+//
+// App footer
+//
+
+// Sticky footer using flexbox (all other page content must be wrapped in .content)
+
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1 0 auto;
+}
+.app-footer {
+  flex-shrink: 0;
+}
+
+.app-footer {
+  background: $gray-900;
+  padding: 60px 0 42px 0; 
+  @include media-breakpoint-down(md) {
+    padding: 44px 0; 
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: .875rem;
+  }
+  .app-brand {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+  .section-legal {
+    @include media-breakpoint-down(xs) {
+      margin-top: 2rem;
+    }
+  }
+  h4 {
+    color: $gray-500 !important;
+    margin-bottom: 1.5rem;
+  }
+  p {
+    color: $gray-400;
+    font-size: .938rem;
+    margin: 1.875rem 0 0 0;
+  }
+  .nav-link {
+    color: $gray-200;
+    font-size: .938rem;
+    margin: 0 0 .5rem 0;
+    padding: 0;
+    transition: .2s;
+    &:hover {
+      color: $white;
+    }
+    img {
+      margin: -2px 0 0 8px;
+    }
+  }
+}

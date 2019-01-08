@@ -1,0 +1,46 @@
+//
+// Logos
+//
+
+.logos-organizers {
+  display: flex;
+  align-items: center;
+  .logo-organizer {
+    flex-basis: 100%;
+    max-width: 92px;
+    height: auto;
+    margin-right: 28px;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    @include media-breakpoint-down(sm) {
+      margin-right: 1rem;
+    }
+  }
+}
+
+.logo-grid {
+  .col-sm-12,
+  .col-md-6 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 28px;
+    .logo {
+      flex-basis: 100%;
+      max-width: 92px;
+      height: auto;
+      margin-right: 28px;
+      &:last-of-type {
+        margin-right: 0;
+      }
+      @include media-breakpoint-down(sm) {
+        margin-right: 1rem;
+      }
+    }
+  }
+  img {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+    opacity: .5;
+  }
+}

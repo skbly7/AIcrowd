@@ -1,0 +1,221 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+//
+// Headings
+//
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: $headings-margin-bottom;
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
+}
+
+h1, .h1 {
+  font-size: 2.75rem;
+  @include media-breakpoint-down(md) {
+    font-size: 2.5rem;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 2rem;
+  }
+}
+h2, .h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  @include media-breakpoint-down(sm) {
+    font-size: 1.625rem;
+    margin-bottom: 1.5rem;
+  }
+}
+h3, .h3 {
+  font-size: 1.5rem;
+  @include media-breakpoint-down(sm) {
+    font-size: 1.25rem;
+  }
+}
+h4, .h4 {
+  color: $primary-text;
+  font-size: .875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h1 a, .h1 a,
+h2 a, .h2 a,
+h3 a, .h3 a,
+h5 a, .h5 a {
+  color: $gray-800;
+  &:hover {
+    color: $gray-900;
+    text-decoration: underline;
+  }
+}
+
+.lead {
+  font-size: $lead-font-size !important;
+  font-weight: $lead-font-weight;
+}
+
+// Type display classes
+.display-1 {
+  font-size: $display1-size;
+  font-weight: $display1-weight;
+  line-height: $display-line-height;
+}
+.display-2 {
+  font-size: $display2-size;
+  font-weight: $display2-weight;
+  line-height: $display-line-height;
+}
+.display-3 {
+  font-size: $display3-size;
+  font-weight: $display3-weight;
+  line-height: $display-line-height;
+}
+.display-4 {
+  font-size: $display4-size;
+  font-weight: $display4-weight;
+  line-height: $display-line-height;
+}
+
+//
+// Paragraph
+//
+
+p {
+  font-size: 1.125rem;
+  @include media-breakpoint-down(sm) {
+    font-size: 1rem;
+  }
+  a {
+    text-decoration: underline;
+  }
+}
+
+.article p,
+.masthead p {
+  font-size: 1.25rem;
+  @include media-breakpoint-down(sm) {
+    font-size: 1.125rem;
+  }
+}
+
+
+//
+// Horizontal rules
+//
+
+hr {
+  margin-top: $hr-margin-y;
+  margin-bottom: $hr-margin-y;
+  border: 0;
+  border-top: $hr-border-width solid $hr-border-color;
+}
+
+
+//
+// Emphasis
+//
+
+small,
+.small {
+  font-size: $small-font-size;
+  font-weight: $font-weight-normal;
+}
+
+mark,
+.mark {
+  padding: $mark-padding;
+  background-color: $mark-bg;
+}
+
+
+//
+// Lists
+//
+
+.list-unstyled {
+  @include list-unstyled;
+}
+
+// Inline turns list items into inline-block
+.list-inline {
+  @include list-unstyled;
+}
+.list-inline-item {
+  display: inline-block;
+
+  &:not(:last-child) {
+    margin-right: $list-inline-padding;
+  }
+}
+
+
+//
+// Misc
+//
+
+// Builds on `abbr`
+.initialism {
+  font-size: 90%;
+  text-transform: uppercase;
+}
+
+// Blockquotes
+.blockquote {
+  background-color: $gray-050;
+  margin-bottom: $spacer;
+  font-size: 1rem;
+  padding: .5rem .5rem .5rem 1rem;
+  border-left: 2px solid $primary;
+}
+
+.blockquote-footer {
+  display: block;
+  font-size: 80%; // back to default font-size
+  color: $blockquote-small-color;
+
+  &::before {
+    content: "\2014 \00A0"; // em dash, nbsp
+  }
+}
+
+.blockquote-testimonial {
+  text-align: center;
+  max-width: 640px;
+  img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 2rem;
+    @include media-breakpoint-down(sm) {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1.5rem;
+    }
+  }
+  p {
+    color: $gray-700;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem !important;
+    @include media-breakpoint-down(sm) {
+      font-size: 1.25rem;
+    }
+  }
+  .blockquote-footer {
+    font-size: 1rem;
+  }
+}
+
+.update {
+  background-color: rgba(255,182,0,.25);
+  padding: .875rem 1rem;
+  border-radius: 2px;
+}

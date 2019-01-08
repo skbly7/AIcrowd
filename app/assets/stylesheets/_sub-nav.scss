@@ -1,0 +1,110 @@
+//
+// Sub-nav
+//
+
+.sub-nav-bar {
+  background: $white;
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.14);
+  z-index: 1000;
+  .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    @include media-breakpoint-down(sm) {
+      height: 56px;
+    }
+  }
+  .nav {
+    width: 100%;
+  }
+  .nav-item {
+    margin: 0 1.5rem 0 0;
+    // Firefox fix for layout issue @mobile
+    @media (min-width: 0px) and (max-width: 479px) {
+      margin: 0;
+      &:first-of-type {
+        margin-right: 1.5rem;
+      }
+    }
+  }
+  // Aligns more item to right
+  .nav-item:last-of-type {
+    margin-left: auto;
+    margin-right: 0;
+  }
+  .nav-link {
+    color: $gray-700;
+    line-height: 4;
+    padding: 0;
+    @include media-breakpoint-down(sm) {
+      line-height: 3.5;
+    }
+  }
+  .active {
+    border-bottom: 1px solid $primary;
+  }
+  .dropdown-toggle::after {
+    display:none;
+  }
+  .dropdown-menu {
+    margin-top: -1rem;
+  }
+  .nav-link-06 {
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+  .nav-link-05 {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+  .nav-link-04,
+  .nav-link-03 {
+    @include media-breakpoint-down(xs) {
+      display: none;
+    }
+  }
+  .btn {
+    color: $gray-800 !important;
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+  .more-lg {
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+  .more-md,
+  .more-sm,
+  .more-xs {
+    display: none;
+    margin-left: auto !important;
+    .dropdown-toggle {
+      padding: 0 8px;
+    }
+  }
+  .more-md {
+    @media (min-width: 768px) and (max-width: 991px) {
+      display: inline;
+    }
+  }
+  .more-sm {
+    @media (min-width: 480px) and (max-width: 767px) {
+      display: inline;
+    }
+  }
+  .more-xs {
+    @media (min-width: 0px) and (max-width: 479px) {
+      display: inline;
+    }
+  }
+}
+
+.sub-nav-vertical-container {
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}

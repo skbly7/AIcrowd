@@ -1,0 +1,180 @@
+//
+// Masthead
+//
+
+.masthead {
+  background: $gray-050;
+  padding: 48px 0;
+  border-bottom: 1px solid $gray-200;
+  @include media-breakpoint-down(sm) {
+    padding: 40px 0;
+  }
+  .container-fluid {
+    @include media-breakpoint-down(sm) {
+      flex-wrap: wrap;
+    }
+  }
+  p {
+    max-width: 520px;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+}
+
+.masthead-home {
+  h1 {
+    max-width: 560px;
+  }
+  .logos-organizers {
+    margin-top: 136px;
+    @include media-breakpoint-down(lg) {
+      margin-top: 20px;
+    }
+    @include media-breakpoint-down(sm) {
+      margin-top: 12px;
+    }
+  }
+}
+
+.masthead-challenge,
+.masthead-blog-post {
+  padding: 48px 0 32px 0;
+  @include media-breakpoint-down(sm) {
+    padding: 32px 0 20px 0;
+  }
+  .badge {
+    margin: 0 4px 8px 0;
+  }
+  .row:nth-child(2) {
+    margin-top: 24px;
+    @include media-breakpoint-down(sm) {
+      margin-top: 16px;
+    }
+  }
+  h1 {
+    max-width: 840px;
+  }
+  p {
+    margin: 2rem 0;
+    max-width: 720px !important;
+    @include media-breakpoint-down(md) {
+      margin: 1rem 0 1.5rem 0;
+    }
+  }
+  .prizes-breakdown {
+    margin: .688rem 0 1.5rem 0;
+    font-size: 1.125rem;
+    @include media-breakpoint-down(md) {
+      margin-top: 0;
+    }
+  }
+  .organizer-attribution,
+  .author {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    img {
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
+    }
+    span {
+      a {
+        color: $gray-800;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .organizer-attribution,
+  .author,
+  .stats-group {
+    flex-shrink: 0;
+    margin-right: 32px;
+    margin-bottom: 12px;
+  }
+  .stats-group {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+  .stat-item {
+    color: $gray-800;
+    font-size: 1rem !important;
+  }
+  .btn-set {
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+.masthead-blog-post {
+  .row:nth-child(2) {
+    margin-top: 24px;
+    @include media-breakpoint-down(sm) {
+      margin-top: 16px;
+    }
+  }
+  p {
+    margin: 1rem 0;
+  }
+}
+
+.masthead-info {
+  color: $gray-700;
+  header {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    margin: 1.5rem 0 4px 0;
+    @include media-breakpoint-down(sm) {
+      margin-top: 1.25rem;
+    }
+    h4 {
+      margin: 0;
+    }
+    .btn {
+      margin-left: 8px;
+    }
+  }
+}
+
+.masthead-open {
+  background: $white;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.masthead-achievement {
+  .award-gold {
+    width: 56px;
+    height: auto;
+    margin: .5rem 1rem 0 0;
+    @include media-breakpoint-down(md) {
+      width: 52px;
+      margin-top: .688rem;
+    }
+    @include media-breakpoint-down(sm) {
+      width: 44px;
+      margin: .5rem .75rem 0 0;
+    }
+  }
+  .award-silver,
+  .award-bronze {
+    width: 60px;
+    height: auto;
+    margin: .75rem 1rem 0 0;
+    @include media-breakpoint-down(md) {
+      width: 56px;
+      margin-top: .688rem;
+    }
+    @include media-breakpoint-down(sm) {
+      width: 52px;
+      margin: .5rem .75rem 0 0;
+    }
+  }
+  p {
+    margin: 0;
+  }
+}

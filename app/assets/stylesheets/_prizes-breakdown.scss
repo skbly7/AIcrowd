@@ -1,0 +1,22 @@
+//
+// Prizes breakdown
+//
+
+.prizes-breakdown {
+  color: $gray-700;
+  .prize-item {
+    padding-left: 1.5rem;
+  }
+  .prize-item-cash {
+    background: url('../../assets/img/icon-prize-cash.svg') 0 6px no-repeat;
+  }
+  .prize-item-travel {
+    background: url('../../assets/img/icon-prize-travel.svg') 0 6px no-repeat;
+  }
+  .prize-item-academic {
+    background: url('../../assets/img/icon-prize-academic.svg') 0 6px no-repeat;
+  }
+  .prize-item-misc {
+    background: url('../../assets/img/icon-prize-misc.svg') 2px 8px no-repeat;
+  }
+}

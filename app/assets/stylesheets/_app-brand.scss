@@ -1,0 +1,28 @@
+.app-brand {
+  .logo-aicrowd,
+  .logo-aicrowd-light {
+    display: block;
+    background: url('../../assets/img/logo-aicrowd.svg') no-repeat 0 0;
+    height: 24px;
+    width: 126px;
+    span {
+      display: none;
+    }
+  }
+}
+
+.app-brand {
+  .logo-aicrowd {
+    @include media-breakpoint-down(md) {
+      background: url('../../assets/img/logo-aicrowd-sm.svg') no-repeat 0 0;
+      height: 28px;
+      width: 30px;
+    }
+  }
+}
+
+.app-brand {
+  .logo-aicrowd-light {
+    background: url('../../assets/img/logo-aicrowd-light.svg') no-repeat 0 0;
+  }
+}
