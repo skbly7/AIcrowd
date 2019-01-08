@@ -20,7 +20,8 @@ class Participant < ApplicationRecord
     :recoverable,
     :registerable,
     :rememberable,
-    :validatable
+    :validatable,
+    :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('name ASC') }
   belongs_to :organizer, optional: true
@@ -199,6 +200,45 @@ class Participant < ApplicationRecord
 
   def publish_to_prometheus
     Prometheus::ParticipantCounterService.new.call
+  end
+
+  def self.from_omniauth(auth)
+    puts "FROM OMNIAUTH:"
+    puts auth
+    ### NATE: this is the standard workflow from https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
+    ### however we want one user per email
+    # where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    #   user.email = auth.info.email
+    #   user.password = Devise.friendly_token[0,20]
+    #   user.name = auth.info.name.gsub(/\s+/, '_')
+    #   # user.image = auth.info.image # assuming the user model has an image
+    #   # If you are using confirmable and the provider(s) you use validate emails,
+    #   # uncomment the line below to skip the confirmation emails.
+    #   # user.skip_confirmation!
+    # end
+    raw_info = auth.raw_info || (auth.extra && auth.extra.raw_info.participant)
+    puts "RAW_INFO:"
+    puts raw_info
+    email = auth.info.email || raw_info.email
+    puts "EMAIL:"
+    puts email
+    username = auth.info.name || raw_info.name
+    username = username.gsub(/\s+/, '_')
+    image_url = auth.info.image ||
+                raw_info.image ||
+                (raw_info.image_file && raw_info.image_file.url)
+    where(email: email).first_or_create do |user|
+      user.email = email
+      user.password = Devise.friendly_token[0,20]
+      user.name = username
+      # user.image = auth.info.image # assuming the user model has an image
+
+      ### NATE: We have to be a little careful here about ensuring providers only send validated
+      ### emails.
+      # If you are using confirmable and the provider(s) you use validate emails,
+      # uncomment the line below to skip the confirmation emails.
+      user.skip_confirmation!
+    end
   end
 
 end

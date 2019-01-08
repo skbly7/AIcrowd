@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_130935) do
+ActiveRecord::Schema.define(version: 2019_01_08_082234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -671,6 +671,8 @@ ActiveRecord::Schema.define(version: 2018_11_15_130935) do
     t.boolean "clef_email", default: false
     t.integer "sash_id"
     t.integer "level", default: 0
+    t.string "provider"
+    t.string "uid"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
