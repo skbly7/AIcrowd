@@ -175,6 +175,7 @@ class ChallengesController < ApplicationController
         :media_on_leaderboard,
         :challenge_client_name,
         :image_file,
+        :dynamic_content_url,
         :dynamic_content_flag,
         :dynamic_content_tab,
         :dynamic_content,

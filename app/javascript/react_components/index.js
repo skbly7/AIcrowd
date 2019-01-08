@@ -5,12 +5,12 @@ import {CrowdAIMusicEvaluationInterface} from 'crowdai-music-evaluation-interfac
 
 
 document.addEventListener('turbolinks:load', () => {
-  
+
   const notificationAnchor = document.getElementById('notification-anchor');
   if (notificationAnchor) {
     render(<NotificationsContainer />, notificationAnchor);
   }
-  
+
   const musicRoot = document.getElementById('music-root2');
   if (musicRoot) {
     const participantId = musicRoot.dataset.participantId;
