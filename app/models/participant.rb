@@ -20,7 +20,8 @@ class Participant < ApplicationRecord
     :recoverable,
     :registerable,
     :rememberable,
-    :validatable
+    :validatable,
+    :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('name ASC') }
   belongs_to :organizer, optional: true
@@ -81,7 +82,7 @@ class Participant < ApplicationRecord
     },
     length: { minimum: 2, maximum: 15 },
     uniqueness: { case_sensitive: false }
-
+  validate :reserved_userhandle, on: :create
   #validates :name,
   #  length: { minimum: 2 },
   #  uniqueness: { case_sensitive: false }
@@ -99,6 +100,12 @@ class Participant < ApplicationRecord
   validates :last_name,
     length:{ in: 2...100},
     allow_blank: true
+
+  def reserved_userhandle
+    if (self.provider != 'crowdai') && ReservedUserhandle.where(name: self.name.downcase).exists?
+      self.errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.')
+    end
+  end
 
   def disable_account(reason)
     self.update(
@@ -199,6 +206,40 @@ class Participant < ApplicationRecord
 
   def publish_to_prometheus
     Prometheus::ParticipantCounterService.new.call
+  end
+
+  def self.from_omniauth(auth)
+    puts "FROM OMNIAUTH:"
+    puts auth
+    raw_info = auth.raw_info || (auth.extra && auth.extra.raw_info.participant)
+    puts "RAW_INFO:"
+    puts raw_info
+    email = auth.info.email || raw_info.email
+    puts "EMAIL:"
+    puts email
+    username = auth.info.name || raw_info.name
+    username = username.gsub(/\s+/, '_').downcase
+    image_url = auth.info.image ||
+                raw_info.image ||
+                (raw_info.image_file && raw_info.image_file.url)
+    puts "IMAGE URL:"
+    puts image_url
+    provider = auth.provider
+    if provider == 'oauth2_generic'
+      provider = 'crowdai'
+    end
+    puts "PROVIDER:"
+    puts provider
+    where(email: email).first_or_create do |user|
+      user.email = email
+      user.password = Devise.friendly_token[0,20]
+      user.name = username
+      user.provider = provider
+      # user.remote_image_file_url = image_url
+      ### NATE: we want to skip the notification but leave the user unconfirmed
+      ### which will allow us to force a password reset on first login
+      user.skip_confirmation_notification!
+    end
   end
 
 end

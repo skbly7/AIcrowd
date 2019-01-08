@@ -1,0 +1,2 @@
+class ReservedUserhandle < ApplicationRecord
+end

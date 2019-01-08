@@ -14,6 +14,14 @@
           </div>
         </fieldset>
         <%= f.button 'Log In', type: 'submit', class: 'btn btn-primary btn-login' %>
+        <%#= link_to "Sign in with Facebook", participant_facebook_omniauth_authorize_path %>
+        <%= link_to participant_oauth2_generic_omniauth_authorize_path, {class: "btn"} do%>
+          <i class="fa fa-user"></i> Log in with CrowdAI
+        <% end %>
+        <%= link_to participant_github_omniauth_authorize_path, {class: "btn"} do%>
+          <i class="fa fa-github"></i> Log in with GitHub
+        <% end %>
+
         <a id="login-issues" href="#">Can't log in?</a>
         <ul id="login-help">
           <li><%= link_to "Forgot your password?", new_password_path(resource_name) %></li>
