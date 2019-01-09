@@ -11,7 +11,7 @@ let!(:participant) { create(:participant) }
       visit '/'
     end
     specify { expect(page).to have_link challenge.challenge }
-    specify { expect(page).to have_link 'Knowledge Base' }
+    # specify { expect(page).to have_link 'Knowledge Base' }
     specify { expect(page).to have_link 'Challenges' }
   end
 
