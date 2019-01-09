@@ -1,3 +1,68 @@
+<div class="masthead masthead-home bg-white">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-lg-12 col-xl-6">
+        <h1><span class="text-primary">Crowdsourcing AI</span> to solve real-world problems</h1>
+        <p>AIcrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, through challenges. <a href="#">Learn more</a></p>
+      </div>
+
+      <% if @partners.present? %>
+        <div class="col-lg-12 col-xl-6">
+          <div class="logos-organizers">
+            <% @partners.each_with_index do |partner,index| %>
+            <div class="logo-organizer">
+              <%= image_tag partner.image_file.url, class: "img-fluid" %>
+            </div>
+            <% end %>
+          </div>
+        </div> 
+      <% end %>
+
+
+<!--       <div class="col-lg-12 col-xl-6">
+        <div class="logos-organizers">
+          <div class="logo-organizer">
+            <img class="img-fluid" src="assets/img/logo-organizer-un.svg">
+          </div>
+          <div class="logo-organizer">
+            <img class="img-fluid" src="assets/img/logo-organizer-uber.svg">
+          </div>  
+          <div class="logo-organizer">
+            <img class="img-fluid" src="assets/img/logo-organizer-sbb.png">
+          </div>
+          <div class="logo-organizer">
+            <img class="img-fluid" src="assets/img/logo-organizer-spotify.svg">
+          </div>
+          <div class="logo-organizer">
+            <img class="img-fluid" src="assets/img/logo-organizer-microsoft.png">
+          </div>
+          <div class="logo-organizer">
+            <img class="img-fluid" src="assets/img/logo-organizer-stanford.png">
+          </div>
+        </div>
+      </div> 
+ -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="content">
   <div class="row">
     <h1>Crowdsourcing AI<br/> to solve real-world problems</h1>

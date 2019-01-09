@@ -95,3 +95,8 @@ document.addEventListener("turbolinks:load", function() {
   $('#page-content').show();
   $('#loader-container').hide();
 });
+
+
+// -------------------- Views ------------------- //
+
+//= require views/index

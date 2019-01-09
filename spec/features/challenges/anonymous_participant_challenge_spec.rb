@@ -10,9 +10,8 @@ feature "challenge", js: true do
       visit '/'
     end
     specify { expect(page).to have_link challenge.challenge }
-    specify { expect(page).to have_link 'Log in' }
-    specify { expect(page).to have_link 'Sign up' }
-    specify { expect(page).to have_link 'Knowledge Base' }
+    specify { expect(page).to have_selector(:link_or_button, 'Log in')}
+    specify { expect(page).to have_link 'Blog' }
     specify { expect(page).to have_link 'Challenges' }
   end
 

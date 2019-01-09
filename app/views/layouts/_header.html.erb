@@ -77,13 +77,13 @@
 
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Challenges</a>
+            <%= link_to 'Challenges', challenges_path, {:class=> "nav-link"} %>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Achievements</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
+            <%= link_to 'Blog', blogs_path, {:class=> "nav-link"} %>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><svg width="16" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/></svg></a>
@@ -118,7 +118,7 @@
         </div>
 
         <div class="user-options">
-          <button type="button" class="btn btn-secondary">Log in</button>
+          <%= link_to '<button type="button" class="btn btn-secondary">Log in</button>'.html_safe, new_participant_session_path %>
         </div>
 
       </div>
