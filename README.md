@@ -1,4 +1,4 @@
-![CrowdAI Logo](app/assets/images/misc/aicrowd-avatar.png)
+![CrowdAI Logo](app/assets/images/misc/aicrowd-horizontal.png)
 
 # AICrowd - The open platform for data science challenges
 
