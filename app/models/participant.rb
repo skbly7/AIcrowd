@@ -82,7 +82,7 @@ class Participant < ApplicationRecord
     },
     length: { minimum: 2, maximum: 15 },
     uniqueness: { case_sensitive: false }
-
+  validate :reserved_userhandle
   #validates :name,
   #  length: { minimum: 2 },
   #  uniqueness: { case_sensitive: false }
@@ -100,6 +100,12 @@ class Participant < ApplicationRecord
   validates :last_name,
     length:{ in: 2...100},
     allow_blank: true
+
+  def reserved_userhandle
+    if (self.provider != 'crowdai') && ReservedUserhandle.where(name: self.name).exists?
+      self.errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.')
+    end
+  end
 
   def disable_account(reason)
     self.update(
