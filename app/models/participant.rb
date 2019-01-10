@@ -229,7 +229,7 @@ class Participant < ApplicationRecord
     puts "EMAIL:"
     puts email
     username = auth.info.name || raw_info.name
-    username = username.gsub(/\s+/, '_')
+    username = username.gsub(/\s+/, '_').downcase
     image_url = auth.info.image ||
                 raw_info.image ||
                 (raw_info.image_file && raw_info.image_file.url)
