@@ -233,7 +233,7 @@ class Participant < ApplicationRecord
     image_url = auth.info.image ||
                 raw_info.image ||
                 (raw_info.image_file && raw_info.image_file.url)
-    provider = auth.info.provider
+    provider = auth.provider
     if provider == 'oauth2_generic'
       provider = 'crowdai'
     end
