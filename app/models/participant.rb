@@ -233,10 +233,15 @@ class Participant < ApplicationRecord
     image_url = auth.info.image ||
                 raw_info.image ||
                 (raw_info.image_file && raw_info.image_file.url)
+    provider = auth.info.provider
+    if provider == 'oauth2_generic'
+      provider = 'crowdai'
+    end
     where(email: email).first_or_create do |user|
       user.email = email
       user.password = Devise.friendly_token[0,20]
       user.name = username
+      user.provider = provider
       # user.image = auth.info.image # assuming the user model has an image
 
       ### NATE: We have to be a little careful here about ensuring providers only send validated
