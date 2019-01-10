@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_08_082234) do
+ActiveRecord::Schema.define(version: 2019_01_10_021745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -691,6 +691,13 @@ ActiveRecord::Schema.define(version: 2019_01_08_082234) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.index ["organizer_id"], name: "index_partners_on_organizer_id"
+  end
+
+  create_table "reserved_userhandles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_reserved_userhandles_on_name", unique: true
   end
 
   create_table "sashes", force: :cascade do |t|
