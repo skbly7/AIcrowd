@@ -1,21 +1,15 @@
-<div class="blog-post">
-  <h5><%= link_to blog.title, blog_path(blog) %></h5>
-  <p>
-    <%= truncate(strip_tags(blog.body),
-           length: 100,
-           omission: "" ,
-           escape: false) %>...
-  </p>
+<!-- blog post -->
+<div class="col-sm-12 col-md-4">
+  <div class="card card-blog-post">
+    <div class="card-body">
+      <h5 class="card-title"><%= link_to blog.title, blog_path(blog) %></h5>
+      <p class="card-text"><%= local_time(blog.posted_at, "%-d %B %Y") %></p>
+    </div>
 
-  <div class="blog-post-details">
-    <%= concept(Image::Cell,blog.participant,size: :medium) %>
-    <div>
-      <span class="author">
-        By <%= link_to blog.participant.name, participant_path(blog.participant) %>
-      </span>
-      <span>
-        <%= local_time(blog.posted_at, "%-d %B %Y") %>
-      </span>
+    <div class="card-footer">
+      <%= link_to concept(Image::Cell,blog.participant, klass: "avatar"), participant_path(blog.participant)%>
+      <span>By  <%= link_to blog.participant.name, participant_path(blog.participant) %></span>
     </div>
   </div>
 </div>
+<!-- /blog post -->

@@ -1,15 +1,39 @@
+<!-- page content -->
 <div class="content">
-  <div class="row">
-    <h1>AICrowd Blog</h1>
-    <p class="large">Everything about crowdAI: press releases, technical papers, challenge releases, general trivia and more.</p>
-  </div>
 
-  <div class="row">
-    <!-- every four posts (each row @desktop) need to be wrapped in .grid-blog -->
-    <div class="grid-blog">
-      <% @blogs.each_with_index do |blog,index| %>
-        <%= render partial: 'blog_post', locals: { blog: blog } %>
-      <% end %>
+  <!-- flash notice 
+  <div class="alert alert-flash alert-dismissible fade show" role="alert">
+    <div class="container-fluid">
+      $1 Million in prize money in our latest challenge hosted by Uber. <a href="#">View challenge</a>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </div>
+   /flash notice -->
+
+  <!-- masthead -->
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1>AIcrowd Blog</h1>
+          <p>Everything about AIcrowd: press releases, technical papers, challenge releases, general trivia and more.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /masthead -->
+
+  <!-- section -->
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <div class="row">
+        <% @blogs.each_with_index do |blog,index| %>
+          <%= render partial: 'blog_post', locals: { blog: blog } %>
+        <% end %>
+      </div> 
+    </div>
+  </div>
+    <!-- /section -->
 </div>
