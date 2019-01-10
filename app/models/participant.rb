@@ -237,6 +237,8 @@ class Participant < ApplicationRecord
     if provider == 'oauth2_generic'
       provider = 'crowdai'
     end
+    puts "PROVIDER:"
+    puts provider
     where(email: email).first_or_create do |user|
       user.email = email
       user.password = Devise.friendly_token[0,20]
