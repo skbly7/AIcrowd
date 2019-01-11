@@ -21,3 +21,12 @@
 .bg-transparent {
   background-color: transparent !important;
 }
+
+.bg-sphere {
+  background-image: url('../../assets/img/bg-sphere.svg');
+  background-position: right -400px top 60px;
+  background-repeat: no-repeat, no-repeat;
+  @include media-breakpoint-down(md) {
+    background-position: right -600px top 48px;
+  }
+}

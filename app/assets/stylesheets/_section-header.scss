@@ -1,21 +1,39 @@
-/* Section header (e.g., Home Challenges) */
+//
+// Section header
+//
 
-.section-header {
+.section-header,
+.section-header-decorative,
+.section-header-mb-sm,
+.sub-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 73px;
-  margin-top: 80px;
-  border-bottom: 1px solid $color-grey-10;
-  @media screen and (max-width: 640px) {
-    height: 48px;
-    margin-top: 60px;
+  height: 32px;
+  width: 100%;
+  margin-bottom: 32px;
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 24px;
   }
-  .btn {
-    float: right;
+  h4 {
+    margin-bottom: 0;
   }
 }
 
-.section-header-alt {
-  margin-top: 32px;
+.section-header-decorative {
+  background-image: url('../../assets/img/divider-decorative.svg');
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  h4 {
+    margin-top: 1.25rem;
+  }
+}
+
+.section-header-mb-sm {
+  margin-bottom: 1rem;
+}
+
+.sub-section-header {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }

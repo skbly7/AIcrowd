@@ -9,7 +9,7 @@
   padding: .25rem .5rem .125rem .5rem;
   font-size: 11px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -30,6 +30,7 @@
 }
 
 .badge-outline {
+  padding-top: .188rem;
   border: 1px solid $gray-300;
 }
 

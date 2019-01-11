@@ -268,7 +268,7 @@ $transition-collapse:         height .35s ease !default;
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif:      "inter-ui", sans-serif !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
@@ -307,9 +307,6 @@ $display2-weight:             300 !default;
 $display3-weight:             300 !default;
 $display4-weight:             300 !default;
 $display-line-height:         $headings-line-height !default;
-
-$lead-font-size:              ($font-size-base * 1.5) !default;
-$lead-font-weight:            400 !default;
 
 $small-font-size:             .875rem !default;
 
@@ -412,7 +409,7 @@ $btn-line-height-lg:          $input-btn-line-height-lg !default;
 
 $btn-border-width:            $input-btn-border-width !default;
 
-$btn-font-weight:             700 !default;
+$btn-font-weight:             600 !default;
 $btn-box-shadow:              none !default;
 $btn-focus-width:             $input-btn-focus-width !default;
 $btn-focus-box-shadow:        $input-btn-focus-box-shadow !default;
@@ -628,7 +625,7 @@ $dropdown-link-active-bg:           $component-active-bg !default;
 $dropdown-link-disabled-color:      $gray-600 !default;
 
 $dropdown-item-padding-y:           .375rem !default;
-$dropdown-item-padding-x:           1.25rem !default;
+$dropdown-item-padding-x:           1rem !default;
 
 $dropdown-header-color:             $gray-600 !default;
 
@@ -638,8 +635,8 @@ $dropdown-header-color:             $gray-600 !default;
 // Warning: Avoid customizing these values. They're used for a bird's eye view
 // of components dependent on the z-axis and are designed to all work together.
 
-$zindex-dropdown:                   1000 !default;
-$zindex-sticky:                     1020 !default;
+$zindex-sticky:                     1000 !default;
+$zindex-dropdown:                   1020 !default;
 $zindex-fixed:                      1030 !default;
 $zindex-modal-backdrop:             1040 !default;
 $zindex-modal:                      1050 !default;

@@ -1,3 +1,4 @@
+<!-- app footer -->
 <footer class="app-footer">
   <div class="container-fluid">
     <div class="row">
@@ -20,16 +21,13 @@
             <%= link_to 'Challenges', challenges_path, {:class=>"nav-link"} %>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">How it works</a>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Host a Challenge', landing_page_host_path, {:class=>"nav-link"} %>
+            <%= link_to 'Organize a Challenge', landing_page_host_path, {:class=>"nav-link"} %>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Achievements</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Dojo</a>
+            <%= link_to 'FAQ', faq_path, {:class=>"nav-link"} %>
           </li>
         </ul>
       </div>
@@ -46,10 +44,13 @@
             <%= link_to 'Contact', contact_path, {:class=>"nav-link"} %>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Twitter<%= image_tag("img/icon-external-link.svg", :alt => "Twitter") %></a>
+            <a class="nav-link" href="https://github.com/AICrowd/AIcrowd">GitHub<%= image_tag("img/icon-external-link.svg", :alt => "GitHub") %></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/AICrowd/AIcrowd">GitHub<%= image_tag("img/icon-external-link.svg", :alt => "GitHub") %></a>
+            <a class="nav-link" href="http://gitlab.aicrowd.com/">GitLab<%= image_tag("img/icon-external-link.svg", :alt => "GitLab") %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Twitter<%= image_tag("img/icon-external-link.svg", :alt => "Twitter") %></a>
           </li>
         </ul>
       </div>
@@ -76,3 +77,4 @@
     </div>
   </div>
 </footer>
+<!-- /app footer -->

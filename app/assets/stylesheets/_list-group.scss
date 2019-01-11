@@ -137,6 +137,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    &:first-child {
+      border-top: none;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
   }
   a {
     display: flex;
@@ -168,6 +174,7 @@
 
 .list-group-teams,
 .list-group-team-members,
+.list-group-organizers,
 .list-group-dataset,
 .list-group-achievements,
 .list-group-discussion,

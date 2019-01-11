@@ -284,7 +284,7 @@
   font-size: 1rem;
   margin-bottom: 28px;
   border: none;
-  box-shadow: 0 0 1px 0 rgba(0,0,0,0.48);
+  box-shadow: 0 0 1px 0 rgba(0,0,0,0.6);
   transition: .2s ease;
   @include media-breakpoint-down(lg) {
     margin-bottom: 20px;
@@ -292,7 +292,7 @@
   &:active,
   &:focus,
   &:hover {
-    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.28);
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.28);
   }
   .card-title, .card-actions, .card-body, .card-footer {   // Basically all possible content of our panel
     pointer-events: none; // Lets clicks fall through
@@ -307,7 +307,7 @@
   }
   h5 {
     font-size: 1.125rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.5rem;
   }
   .card-text {
@@ -360,7 +360,7 @@
   }
   h5 {
     font-size: 1.125rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.5rem;
   }
   .card-text {

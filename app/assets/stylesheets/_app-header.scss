@@ -28,6 +28,9 @@
     @include media-breakpoint-down(sm) {
       margin-right: 1rem;
     }
+    @include media-breakpoint-down(xs) {
+      margin-right: .5rem;
+    }
   }
   .search-input {
     width: 280px;
@@ -46,15 +49,18 @@
       display: none;
     }
     .nav-link {
-      padding-right: 1.25rem;
-      padding-left: 0;
+      margin-right: 1.25rem;
+      padding: 0;
+    }
+    .nav-link.dropdown-toggle {
+      margin-right: .75rem;
     }
   }
   .dropdown-toggle::after {
     display:none;
   }
   .user-options {
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       display: none;
     }
   }
@@ -82,12 +88,17 @@
   border-radius: none;
   height: 40px;
   width: 40px;
-  margin-right: .5rem;
+  margin-right: .75rem;
   @include hover-focus {
     outline: none;
     text-decoration: none;
   }
+  @include media-breakpoint-down(md) {
+    margin-right: .25rem;
+  }
   @include media-breakpoint-down(sm) {
+    height: 36px;
+    width: 36px;
     margin-right: 0;
   }
   @media only screen and (min-width: 1000px) {
@@ -96,5 +107,27 @@
   // Opinionated: add "hand" cursor to non-disabled .navbar-toggler elements
   &:not([disabled]):not(.disabled) {
     cursor: pointer;
+  }
+}
+
+// Notifications
+.app-header-notifications {
+  margin-right: .5rem;
+  @include media-breakpoint-down(sm) {
+    margin-right: .25rem;
+  }
+  @include media-breakpoint-down(xs) {
+    margin-right: 0;
+  }
+  .dropdown-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    @include media-breakpoint-down(sm) {
+      height: 36px;
+      width: 36px;
+    }
   }
 }

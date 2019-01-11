@@ -1,146 +1,220 @@
-/* Buttons */
+// stylelint-disable selector-no-qualifying-type
+
+//
+// Base styles
+//
 
 .btn {
-  cursor: pointer;
   display: inline-block;
-  background: #fff;
-  font-family: 'Roboto Condensed', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 36px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  font-weight: $btn-font-weight;
   text-align: center;
-  border: 1px solid $color-grey-20;
-  border-radius: 2px;
-  height: 36px;
-  padding: 0 16px;
-  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.08);
-  transition: 0.25s;
-  &:focus {
-    outline: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: $btn-border-width solid transparent;
+  @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
+  @include transition($btn-transition);
+  @include media-breakpoint-down(sm) {
+    font-size: .938rem;
+    padding: .375rem 1rem;
+  }
+  // Share hover and focus styles
+  @include hover-focus {
+    text-decoration: none;
   }
 
-  @media screen and (max-width: 800px) {
-    font-size: 13px;
-    height: 32px;
-    line-height: 32px;
+  &:focus,
+  &.focus {
+    outline: 0;
+    box-shadow: $btn-focus-box-shadow;
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    opacity: $btn-disabled-opacity;
+    @include box-shadow(none);
+  }
+
+  // Opinionated: add "hand" cursor to non-disabled .btn elements
+  &:not(:disabled):not(.disabled) {
+    cursor: pointer;
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    @include box-shadow($btn-active-box-shadow);
+
+    &:focus {
+      @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+    }
   }
 }
 
+// Future-proof disabling of clicks on `<a>` elements
+a.btn.disabled,
+fieldset:disabled a.btn {
+  pointer-events: none;
+}
+
+
+//
+// Alternate buttons
+//
+
+
 .btn-primary {
-  background: $color-accent;
-  color: #fff;
-  border: 1px solid transparent;
+  background-color: theme-color("primary");
+  color: $white;
+  box-shadow: 0px 2px 5px 0px rgba(240,82,77,0.12);
+  &:active,
+  &:focus,
   &:hover {
-    background: $color-accent-dark;
-    color: #fff;
-    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.16);
+    color: $white;
+    background-color: darken($primary, 4%);
+    box-shadow: 0px 2px 5px 0px rgba(240,82,77,0.24);
   }
 }
 
 .btn-secondary {
-  background: #fff;
-  color: $color-grey-87;
-  border: 1px solid $color-grey-20;
+  background-color: $white;
+  border: 1px solid $gray-300;
+  color: $gray-800 !important;
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.08);
+  &:active,
+  &:focus,
   &:hover {
-    color: $color-grey-87;
-    border: 1px solid $color-grey-40;
-    @box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.16);
-  }
-}
-
-.btn-large {
-  font-size: 16px;
-  line-height: 48px;
-  letter-spacing: 1px;
-  min-width: 140px;
-  height: 48px;
-
-  @media screen and (max-width: 800px) {
-    font-size: 14px;
-    height: 40px;
-    line-height: 40px;
-    min-width: 100px;
+    border: 1px solid $gray-500;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.16);
   }
 }
 
 .btn {
-  .active {
-    color: $color-accent;
-    &:hover {
-      color: $color-accent-dark;
-    }
+  svg,
+  img {
+    margin-top: -2px;
   }
 }
 
-button {
-  &::-moz-focus-inner {
-    margin-top: -2px;
-    padding: 0;
-    border: 0;
+//
+// Link buttons
+//
+
+// Make a button look and behave like a link
+.btn-link {
+  font-weight: 700;
+  color: $link-color;
+  background-color: transparent;
+  padding: .438rem 0;
+  @include media-breakpoint-down(sm) {
+    padding: .375rem 0;
   }
+
+  @include hover {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  &:focus,
+  &.focus {
+    text-decoration: $link-hover-decoration;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $btn-link-disabled-color;
+    pointer-events: none;
+  }
+
+  // No need for an active state here
 }
+
+
+//
+// Button Sizes
+//
+
+.btn-lg {
+  @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $font-size-lg, $btn-line-height-lg, $btn-border-radius-lg);
+}
+
+.btn-sm {
+  font-size: .938rem !important;
+  @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
+}
+
+
+//
+// Block button
+//
 
 .btn-block {
-  margin-top: 32px;
+  display: block;
   width: 100%;
-}
 
-/* Social buttons */
-
-.btn-facebook,
-.btn-twitter {
-  i {
-    color: #fff;
-    transition: 0.25s;
-    &:hover {
-      color: #fff !important;
-      opacity: .8;
-    }
+  // Vertically space out multiple block buttons
+  + .btn-block {
+    margin-top: $btn-block-spacing-y;
   }
 }
 
-.btn-facebook {
+// Specificity overrides
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  &.btn-block {
+    width: 100%;
+  }
+}
+
+// Load more container 
+.load-more {
+  margin-top: 1.5rem;
+}
+
+
+// Social buttons 
+
+.btn-facebook,
+.btn-twitter,
+.btn-github {
   background-color: #4267b1;
+  color: $white;
+  box-shadow: 0px 2px 5px 0px rgba(66,103,177,0.12);
+  &:active,
+  &:focus,
+  &:hover {
+    color: $white;
+    background-color: darken(#4267b1, 4%);
+    box-shadow: 0px 2px 5px 0px rgba(66,103,177,0.24);
+  }
+  img {
+    width: 16px;
+  }
 }
 
 .btn-twitter {
   background-color: #1da1f2;
+  box-shadow: 0px 2px 5px 0px rgba(29,161,242,0.12);
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: darken(#1da1f2, 4%);
+    box-shadow: 0px 2px 5px 0px rgba(29,161,242,0.24);
+  }
 }
 
-
-/* Dropdown button */
-
-.arrow-down {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 6px;
-  vertical-align: middle;
-  border-top: 4px dashed;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  display: none;
-  float: left;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  list-style: none;
-  font-size: 18px;
-  text-align: left;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 4px;
-  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.175);
-  background-clip: padding-box;
+.btn-github {
+  background-color: #24292e;
+  box-shadow: 0px 2px 5px 0px rgba(36,41,46,0.12);
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: darken(#24292e, 4%);
+    box-shadow: 0px 2px 5px 0px rgba(36,41,46,0.24);
+  }
 }

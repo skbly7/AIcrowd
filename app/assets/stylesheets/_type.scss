@@ -4,6 +4,27 @@
   text-rendering: optimizeLegibility;
 }
 
+@font-face {
+  font-family: Inter-UI;
+  src: url(../../assets/fonts/Inter-UI-Regular.woff);
+  src: url(../../assets/fonts/Inter-UI-Regular.woff2);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Inter-UI;
+  src: url(../../assets/fonts/Inter-UI-SemiBold.woff);
+  src: url(../../assets/fonts/Inter-UI-SemiBold.woff2);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Inter-UI;
+  src: url(../../assets/fonts/Inter-UI-Bold.woff);
+  src: url(../../assets/fonts/Inter-UI-Bold.woff2);
+  font-weight: 700;
+}
+
 //
 // Headings
 //
@@ -25,7 +46,11 @@ h1, .h1 {
   @include media-breakpoint-down(sm) {
     font-size: 2rem;
   }
+  @include media-breakpoint-down(xs) {
+    font-size: 1.75rem;
+  }
 }
+
 h2, .h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -34,12 +59,14 @@ h2, .h2 {
     margin-bottom: 1.5rem;
   }
 }
+
 h3, .h3 {
   font-size: 1.5rem;
   @include media-breakpoint-down(sm) {
     font-size: 1.25rem;
   }
 }
+
 h4, .h4 {
   color: $primary-text;
   font-size: .875rem;
@@ -47,6 +74,11 @@ h4, .h4 {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
+h5, .h5 {
+  font-weight: 600;
+}
+
 
 h1 a, .h1 a,
 h2 a, .h2 a,
@@ -60,8 +92,11 @@ h5 a, .h5 a {
 }
 
 .lead {
-  font-size: $lead-font-size !important;
-  font-weight: $lead-font-weight;
+  font-size: 1.5rem !important;
+  font-weight: 400;
+  @include media-breakpoint-down(sm) {
+    font-size: 1.375rem !important;
+  }
 }
 
 // Type display classes
@@ -100,7 +135,6 @@ p {
   }
 }
 
-.article p,
 .masthead p {
   font-size: 1.25rem;
   @include media-breakpoint-down(sm) {

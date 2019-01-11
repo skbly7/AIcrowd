@@ -15,23 +15,27 @@
     }
   }
   p {
-    max-width: 520px;
+    max-width: 640px;
     margin-top: 2rem;
     margin-bottom: 0;
   }
 }
 
 .masthead-home {
+  padding: 48px 0 60px 0;
+  @include media-breakpoint-down(sm) {
+    padding: 40px 0 52px 0;
+  }
   h1 {
-    max-width: 560px;
+    max-width: 640px;
   }
   .logos-organizers {
     margin-top: 136px;
     @include media-breakpoint-down(lg) {
-      margin-top: 20px;
+      margin-top: 28px;
     }
     @include media-breakpoint-down(sm) {
-      margin-top: 12px;
+      margin-top: 20px;
     }
   }
 }
@@ -43,7 +47,7 @@
     padding: 32px 0 20px 0;
   }
   .badge {
-    margin: 0 4px 8px 0;
+    margin: 0 4px 6px 0;
   }
   .row:nth-child(2) {
     margin-top: 24px;
@@ -121,8 +125,38 @@
   }
 }
 
+.masthead-organizer {
+  .avatar-organizer {
+    flex-shrink: 0;
+    width: 160px;
+    height: 160px;
+    margin-right: 1.5rem;
+    @include media-breakpoint-down(md) {
+      width: 120px;
+      height: 120px;
+    }
+    @include media-breakpoint-down(sm) {
+      width: 80px;
+      height: 80px;
+      margin-right: 1rem;
+    }
+    @include media-breakpoint-down(xs) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  p {
+    @include media-breakpoint-down(sm) {
+      margin-top: 1rem;
+    }
+  }
+}
+
 .masthead-info {
   color: $gray-700;
+  @include media-breakpoint-down(sm) {
+    font-size: .933rem;
+  }
   header {
     display: flex;
     align-items: center;
@@ -141,7 +175,7 @@
 }
 
 .masthead-open {
-  background: $white;
+  background: transparent;
   padding-bottom: 0;
   border-bottom: none;
 }
@@ -176,5 +210,59 @@
   }
   p {
     margin: 0;
+  }
+}
+
+.masthead-user {
+  .avatar {
+    flex-shrink: 0;
+    width: 180px;
+    height: 180px;
+    margin-right: 28px;
+    @include media-breakpoint-down(md) {
+      width: 160px;
+      height: 160px;
+    }
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+  .avatar-sm {
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+    @include media-breakpoint-down(md) {
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+      border-radius: 50%;
+    }
+  }
+  .masthead-content {
+    flex: 1 1 auto;
+  }
+  .masthead-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .masthead-info-item {
+      width: 20%;
+      padding-right: 20px;
+      @include media-breakpoint-down(md) {
+        width: 50%;
+      }
+      span {
+        display: block;
+      }
+    }
+    .api-key {
+      width: 40%;
+      @include media-breakpoint-down(md) {
+        width: 50%;
+      }
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+      }
+    }
   }
 }

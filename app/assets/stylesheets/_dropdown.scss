@@ -33,7 +33,7 @@
   background-clip: padding-box;
   border: 1px solid $gray-400;
   @include border-radius($dropdown-border-radius);
-  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.16);
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.16);
 }
 
 .dropdown-menu-right {
@@ -172,7 +172,6 @@
 }
 
 // Forms in dropdowns
-
 .dropdown {
   form {
     min-width: 240px;
@@ -186,6 +185,52 @@
     .btn {
       margin: 0 1rem !important;
       padding: 0 !important;
+    }
+  }
+}
+
+// Notifications – App header
+.dropdown-menu-notifications {
+  width: 400px;
+  margin-top: .375rem;
+  @include media-breakpoint-down(xs) {
+    width: 360px;
+  }
+  @include media-breakpoint-down(xxs) {
+    width: 268px;
+  }
+  .dropdown-item {
+    display: flex;
+    align-items: start;
+    font-size: .875rem;
+    line-height: 1.375;
+    white-space: normal;
+    padding-top: .688rem;
+    padding-bottom: .688rem;
+  }
+  .dropdown-item-active {
+    background-color: $gray-050;
+  }
+  .dropdown-item-img {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    margin-right: .5rem;
+    overflow: hidden;
+    img {
+      max-width: 40px;
+      max-height: 40px;
+    }
+    .avatar,
+    .challenge {
+      border-radius: 20px;
+    }
+    .challenge {
+      object-fit: cover;
+      object-position: center;
+      height: 40px;
+      width: 40px;
     }
   }
 }
