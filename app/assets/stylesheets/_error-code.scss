@@ -1,0 +1,64 @@
+//
+// Error
+//
+
+.error-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  .display-1 {
+    color: $gray-800;
+    font-size: 240px !important;
+    margin: 0 !important;
+    @media screen and (max-width: 768px) {
+      font-size: 180px !important;
+    }
+    @media screen and (max-width: 640px) {
+      font-size: 140px !important;
+    }
+    @media screen and (max-width: 480px) {
+      font-size: 120px !important;
+    }
+    @media screen and (max-width: 400px) {
+      font-size: 100px !important;
+    }
+  }
+  .logomark {
+    display: block;
+    background: url('../../assets/img/logomark-aicrowd.svg') no-repeat left center;
+    background-size: 256px 238px;
+    width: 256px;
+    height: 238px;
+    margin: 0 32px;
+    @media screen and (max-width: 768px) {
+      width: 193px;
+      height: 180px;
+      background-size: 193px 180px;
+      margin: 0 24px;
+      }
+    @media screen and (max-width: 640px) {
+      width: 150px;
+      height: 140px;
+      background-size: 150px 140px;
+    }
+    @media screen and (max-width: 480px) {
+      width: 129px;
+      height: 120px;
+      background-size: 129px 120px;
+      margin: 0 16px;
+    }
+    @media screen and (max-width: 400px) {
+      width: 106px;
+      height: 100px;
+      background-size: 106px 100px;
+      margin: 0 12px;
+    }
+  }
+  p {
+    margin-bottom: 0;
+  }
+  .btn {
+    width: 240px;
+  }
+}

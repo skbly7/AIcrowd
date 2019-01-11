@@ -1,0 +1,24 @@
+//
+// Mentions
+//
+
+// To be applied to mentions within comments, etc
+.text-mention {
+	color: $blue;
+	font-weight: 600;
+}
+
+// Dropdown
+.dropdown-mention {
+	.dropdown-item {
+		font-size: .875rem;
+		padding-top: .625rem;
+		padding-bottom: .625rem;
+	}
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: .25rem;
+    border-radius: 50%;
+  }
+}

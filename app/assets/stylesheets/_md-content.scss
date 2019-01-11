@@ -1,0 +1,66 @@
+//
+// MD content for text-sections
+//
+
+.md-content {
+  max-width: 640px;
+  .update {
+    color: $gray-800;
+    margin-bottom: 2rem;
+  }
+  p {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    max-width: 640px;
+    @include media-breakpoint-down(sm) {
+      font-size: 1.125rem;
+    }
+  }
+  ul,
+  ol {
+    font-size: 1.25rem;
+    @include media-breakpoint-down(sm) {
+      font-size: 1.125rem;
+    }
+    li {
+      margin-bottom: .5rem;
+    }
+  }
+  .lead {
+    margin-bottom: 1.5rem;
+  }
+  h1, .h1 {
+    font-size: 1.5rem;
+    margin: 3rem 0 1.75rem 0;
+    @include media-breakpoint-down(sm) {
+      font-size: 1.25rem;
+    }
+  }
+  h2, .h2 {
+    color: $primary-text;
+    font-size: .875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 2.5rem 0 1.5rem 0;
+  }
+  .blockquote {
+    margin: 2rem 0;
+    font-size: 1.125rem;
+    @include media-breakpoint-down(sm) {
+      font-size: 1rem;
+    }
+  }
+  .md-image,
+  .md-video {
+    width: 100%;
+    height: auto;
+    margin: 1.5rem 0 2.5rem 0;
+  }
+  .logos-organizers {
+    margin: .5rem 0 2.5rem 0;
+  }
+  .btn {
+    margin: 2.5rem 0;
+  }
+}

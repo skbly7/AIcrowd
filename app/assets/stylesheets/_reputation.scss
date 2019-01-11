@@ -1,0 +1,32 @@
+//
+// Reputation
+//
+
+.reputation-info {
+  background-image: url('../../assets/img/icon-score.svg');
+  background-repeat: no-repeat;
+  background-position: 0 4px;
+  display: inline-block;
+  font-size: 1rem !important;
+  font-weight: 600;
+  padding-left: 24px;
+  white-space: nowrap;
+  position: relative;
+  top: -13px;
+  @include media-breakpoint-down(md) {
+    top: -12px;
+  }
+  @include media-breakpoint-down(sm) {
+    top: -7px;
+  }
+  @include media-breakpoint-down(xs) {
+    top: -5px;
+  }
+  .reputation-score {
+    color: $success;
+  }
+  .reputation-rank {
+    color: $gray-500;
+    font-weight: 400;
+  }
+}
