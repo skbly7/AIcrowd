@@ -40,7 +40,10 @@ class Vote::Cell < Template::Cell
   end
 
   def upvote_link
-    link_to "<i class='fa fa-heart' aria-hidden='true'></i> #{display_vote_count}".html_safe,
+    link_to "<button type='button' class='btn btn-secondary btn-sm'>
+            <svg width='12' height='11' xmlns='http://www.w3.org/2000/svg'><path d='M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z' fill='#F0524D' fill-rule='evenodd'></svg>
+            #{display_vote_count}
+            </button>".html_safe,
             eval(create_vote_path),
             id: vote_link_id,
             class: 'btn btn-secondary',
@@ -61,26 +64,33 @@ class Vote::Cell < Template::Cell
   end
 
   def disabled_vote_link
-    link_to "<i class='fa fa-heart active' aria-hidden='true'></i> #{display_vote_count}".html_safe,
+    link_to "<button type='button' class='btn btn-secondary btn-sm'>
+            <svg width='12' height='11' xmlns='http://www.w3.org/2000/svg'><path d='M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z' fill='#F0524D' fill-rule='evenodd'></svg>
+            #{display_vote_count}
+            </button>".html_safe,
             '#',
             id: vote_link_id,
             class: 'btn btn-secondary'
   end
 
   def unvote_link(vote)
-    link_to "<i class='fa fa-heart active' aria-hidden='true'></i> #{display_vote_count}".html_safe,
+    link_to "<button type='button' class='btn btn-secondary btn-sm'>
+            <svg width='12' height='11' xmlns='http://www.w3.org/2000/svg'><path d='M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z' fill='#F0524D' fill-rule='evenodd'></svg>
+            #{display_vote_count}
+            </button>".html_safe,
             eval(destroy_vote_path(votable, vote.id)),
             id: vote_link_id,
-            class: 'btn btn-secondary',
             method: :delete,
             remote: true
   end
 
   def sign_in_link
-    link_to "<i class='fa fa-heart' aria-hidden='true'></i> #{display_vote_count}".html_safe,
+    link_to "<button type='button' class='btn btn-secondary btn-sm'>
+            <svg width='12' height='11' xmlns='http://www.w3.org/2000/svg'><path d='M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z' fill='#F0524D' fill-rule='evenodd'></svg>
+            #{display_vote_count}
+            </button>".html_safe,
             new_participant_session_path,
-            id: vote_link_id,
-            class: 'btn btn-secondary'
+            id: vote_link_id
   end
 
 end
