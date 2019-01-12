@@ -82,7 +82,7 @@ class Participant < ApplicationRecord
     },
     length: { minimum: 2, maximum: 15 },
     uniqueness: { case_sensitive: false }
-  validate :reserved_userhandle
+  validate :reserved_userhandle, on: :create
   #validates :name,
   #  length: { minimum: 2 },
   #  uniqueness: { case_sensitive: false }
