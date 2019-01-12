@@ -1,32 +1,77 @@
-<div class="content background-grey">
-  <div class="row">
-    <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: 'panel' }, validate: true do |f| %>
-    <fieldset>
-      <div class="panel-body">
-        <h3>Log In</h3>
-        <%= render "shared/error_messages", target: resource %>
-        <%= f.text_field :email, placeholder: 'Email address' %>
-        <%= f.password_field :password, placeholder: 'Password' %>
-        <fieldset class="checkbox">
-          <div>
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
+<!-- masthead -->
+<div class="masthead masthead-open">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>Member login</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead -->
+
+<!-- section -->
+<div class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+
+        <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-rg' }, validate: true do |f| %>
+
+          <!-- social log in buttons -->
+          <div class="btn-set-social">
+            <button type="button" class="btn btn-facebook btn-block">
+              <img src="assets/img/icon-facebook.svg">Log in with Facebook
+            </button>
+            <button type="button" class="btn btn-secondary btn-block">
+              <img src="assets/img/icon-google.svg">Log in with Google
+            </button>
+            <button type="button" class="btn btn-github btn-block">
+              <img src="assets/img/icon-github.svg">Log in with GitHub
+            </button>
           </div>
-        </fieldset>
-        <%= f.button 'Log In', type: 'submit', class: 'btn btn-primary btn-login' %>
-        <a id="login-issues" href="#">Can't log in?</a>
-        <ul id="login-help">
+          <!-- /social log in buttons -->
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <%= f.text_field :email, placeholder: 'Email address', class: "form-control"%>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <%= f.password_field :password, placeholder: 'Password', class: "form-control" %>
+          </div>
+
+          <%= f.button 'Log In', type: 'submit', class: 'btn btn-primary btn-block' %>
+        <% end %>
+
+        <div class="sub-section-header">
+          <h4>Can't log in?</h4>
+        </div>
+
+        <ul class="list-unstyled">
           <li><%= link_to "Forgot your password?", new_password_path(resource_name) %></li>
           <li><%= link_to "Account locked?", new_unlock_path(resource_name) %></li>
           <li><%= link_to "Resend account confirmation", new_confirmation_path(resource_name) %></li>
         </ul>
+
       </div>
-      <div class="panel-footer">
-        <p>Not registered?
-          <%= link_to 'Sign up', new_participant_registration_path %>
-        </p>
-      </div>
-    </fieldset>
-    <% end %>
+    </div>    
   </div>
 </div>
+<!-- /section -->
+
+<!-- section -->
+<div class="section-p-md border-top">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="section-header-mb-sm">
+          <h4>Not registered?</h4>
+        </div>
+        <%= link_to "Sign Up", new_participant_registration_path, {class: "btn btn-secondary", role:"button"} %>Sign up</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /section -->

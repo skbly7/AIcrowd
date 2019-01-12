@@ -5,19 +5,18 @@
       <%= concept(Image::Cell,challenge, current_participant: current_participant, klass: "card-img") %>
     <% end %>
 
-    <a href="#" class="card-img-overlay">
+    <%= link_to challenge_path(challenge), class:"card-img-overlay" do %>
       <span class="badge badge-primary">
         <img src="assets/img/icon-time.svg">
         <%= remaining_text %>
       </span>
-    </a>
+    <% end %>
 
     <!-- card body -->
     <div class="card-body">
 
       <div class="card-intro">
-        <h5 class="card-title"><a href="#"><%= challenge.challenge %></a></h5>
-
+        <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %></a></h5>
         <p class="card-text"><%= challenge.tagline %></p>
       </div>
 
@@ -53,16 +52,6 @@
           </span>
         </div>
 
-
-
-<!--     TBD: No. of teams
-         <div class="stat-item">
-          <span data-toggle="tooltip" data-placement="top" title="No. of teams">
-            <img src="assets/img/icon-teams.svg">
-            <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
-          </span>
-        </div>
- -->
         <div class="stat-item">
           <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
             <img src="assets/img/icon-submissions.svg">
@@ -76,9 +65,10 @@
     <!-- /card body -->
 
     <div class="card-footer">
-      <a href="#">
+      <%= link_to organizer_path(challenge.organizer) do %>
+        <%= image_tag challenge.organizer.image_file.url %>
         <span>By <%= challenge.organizer.organizer %></span>
-      </a>
+      <% end %>
     </div>
   
   </div>
