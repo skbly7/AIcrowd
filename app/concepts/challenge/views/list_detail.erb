@@ -1,17 +1,85 @@
-<li data-cell='Challenge::Cell::ListDetail'>
-  <div class="pic">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+  <div class="card card-challenge">
+  
     <%= link_to challenge_path(challenge) do %>
-      <%= concept(Image::Cell,challenge, current_participant: current_participant) %>
+      <%= concept(Image::Cell,challenge, current_participant: current_participant, klass: "card-img") %>
     <% end %>
+
+    <a href="#" class="card-img-overlay">
+      <span class="badge badge-primary">
+        <img src="assets/img/icon-time.svg">
+        <%= remaining_text %>
+      </span>
+    </a>
+
+    <!-- card body -->
+    <div class="card-body">
+
+      <div class="card-intro">
+        <h5 class="card-title"><a href="#"><%= challenge.challenge %></a></h5>
+
+        <p class="card-text"><%= challenge.tagline %></p>
+      </div>
+
+      <!-- prizes breakdown -->
+      <div class="prizes-breakdown">
+        <div class="prize-item prize-item-cash">
+          $1 Million USD Prize Money
+        </div>
+        <div class="prize-item prize-item-travel">
+          5 Travel Grants
+        </div>
+        <div class="prize-item prize-item-academic">
+          8 Academic Papers
+        </div>
+        <div class="prize-item prize-item-misc">
+          Misc Prizes
+        </div>
+      </div>
+      <!-- /prizes breakdown -->
+
+      <!-- stats group -->
+      <div class="stats-group">
+        <div class="stat-item">
+          <span data-toggle="tooltip" data-placement="top" title="No. of views">
+            <img src="assets/img/icon-views.svg">
+            <%= concept(Challenge::Cell::Statistic,challenge,type: 'view', current_participant: current_participant) %>
+          </span>
+        </div>
+        <div class="stat-item">
+          <span data-toggle="tooltip" data-placement="top" title="No. of users">
+            <img src="assets/img/icon-users.svg">
+            <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
+          </span>
+        </div>
+
+
+
+<!--     TBD: No. of teams
+         <div class="stat-item">
+          <span data-toggle="tooltip" data-placement="top" title="No. of teams">
+            <img src="assets/img/icon-teams.svg">
+            <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
+          </span>
+        </div>
+ -->
+        <div class="stat-item">
+          <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
+            <img src="assets/img/icon-submissions.svg">
+            <%= concept(Challenge::Cell::Statistic,challenge,type: 'submission', current_participant: current_participant) %>
+          </span>
+        </div>
+      </div>
+      <!-- stats group -->
+
+    </div>
+    <!-- /card body -->
+
+    <div class="card-footer">
+      <a href="#">
+        <span>By <%= challenge.organizer.organizer %></span>
+      </a>
+    </div>
+  
   </div>
-  <div class="details">
-    <h5 class="ellipsis"><%= link_to challenge.challenge, challenge_path(challenge) %></h5>
-    <p class="description ellipsis"><%= challenge.tagline %></p>
-    <p class="status active"><%= remaining_text %></p>
-  </div>
-  <div class="stats">
-    <%= concept(Challenge::Cell::Statistic,challenge,type: 'submission', current_participant: current_participant) %>
-    <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
-    <%= concept(Challenge::Cell::Statistic,challenge,type: 'view', current_participant: current_participant) %>
-  </div>
-</li>
+</div>

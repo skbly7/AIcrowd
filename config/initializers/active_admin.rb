@@ -302,7 +302,7 @@ module ActiveAdmin
       module FontAwesomeBuilder
         def build(*args)
           super(*args)
-          add_font_awesome
+          # add_font_awesome
         end
 
         def add_font_awesome

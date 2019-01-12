@@ -23,19 +23,34 @@
 </div>
 
 
+<!-- section -->
+<section class="section-p-md bg-light">
+
+  <!-- challenge cards -->
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- section header -->
+      <div class="col-12">
+        <header class="section-header-decorative">
+          <div>
+            <h4>Featured challenges</h4>
+          </div>
+
+          <%= link_to 'See all',
+            challenges_path,
+            class: "btn btn-secondary btn-sm" %>
+
+        </header>
+      </div>
+      <!-- /section header -->
+      <%= concept(Challenge::Cell::ListDetail, collection: @challenges, current_participant: current_participant) %>
+    </div>    
+  </div>
+</section>
+
 
 <!-- 
-
-
-
-
-
-
-
-
-
-
-
 <div class="content">
   <div class="row">
     <h1>Crowdsourcing AI<br/> to solve real-world problems</h1>

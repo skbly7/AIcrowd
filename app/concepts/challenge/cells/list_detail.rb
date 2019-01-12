@@ -20,12 +20,12 @@ class Challenge::Cell::ListDetail < Challenge::Cell
       elsif remaining_time_in_seconds > 0
         "Less than 1 hour left &middot; Ending #{ending_dttm}"
       else
-        "Challenge ended"   # display for perpetual challenges
+        "Completed"   # display for perpetual challenges
       end
     when :draft
       "Draft"
     when :completed
-      "Challenge ended"
+      "Completed"
     when :starting_soon
       "Starting soon"
     end

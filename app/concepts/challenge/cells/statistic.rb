@@ -30,9 +30,4 @@ class Challenge::Cell::Statistic < Challenge::Cell
       counter
     end
   end
-
-  def stat_text
-    "#{stat_type.titlecase}".pluralize(challenge.submission_count).html_safe
-  end
-
 end
