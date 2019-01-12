@@ -248,11 +248,9 @@ class Participant < ApplicationRecord
       user.provider = provider
       # user.image = auth.info.image # assuming the user model has an image
       user.remote_image_file_url = image_url
-      ### NATE: We have to be a little careful here about ensuring providers only send validated
-      ### emails.
-      # If you are using confirmable and the provider(s) you use validate emails,
-      # uncomment the line below to skip the confirmation emails.
-      user.skip_confirmation!
+      ### NATE: we want to skip the notification but leave the user unconfirmed
+      ### which will allow us to force a password reset on first login
+      user.skip_confirmation_notification!
     end
   end
 
