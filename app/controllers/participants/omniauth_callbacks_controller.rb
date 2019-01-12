@@ -18,7 +18,11 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
   def oauth2_generic
     @user = Participant.from_omniauth(request.env["omniauth.auth"])
     if @user.persisted?
-      sign_in_and_redirect @user
+      # sign_in_and_redirect @user
+      # sign_in @user
+      # binding.pry
+      token = @user.send(:set_reset_password_token)
+      redirect_to edit_password_path(@user, reset_password_token: token)
       set_flash_message(:notice, :success, kind: "Crowdai") if is_navigational_format?
     else
       puts "NEW USER"
