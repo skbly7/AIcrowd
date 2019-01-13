@@ -15,8 +15,6 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
         sign_in_and_redirect @user
       end
     else
-      puts "NEW USER"
-      Rails.logger.info request.env["omniauth.auth"]
       session["devise.omniauth_data"] = request.env["omniauth.auth"]
       redirect_to new_participant_registration_path
     end

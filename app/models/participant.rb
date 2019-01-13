@@ -209,27 +209,17 @@ class Participant < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    puts "FROM OMNIAUTH:"
-    puts auth
     raw_info = auth.raw_info || (auth.extra && auth.extra.raw_info.participant)
-    puts "RAW_INFO:"
-    puts raw_info
     email = auth.info.email || raw_info.email
-    puts "EMAIL:"
-    puts email
     username = auth.info.name || raw_info.name
     username = username.gsub(/\s+/, '_').downcase
     image_url = auth.info.image ||
                 raw_info.image ||
                 (raw_info.image_file && raw_info.image_file.url)
-    puts "IMAGE URL:"
-    puts image_url
     provider = auth.provider
     if provider == 'oauth2_generic'
       provider = 'crowdai'
     end
-    puts "PROVIDER:"
-    puts provider
     where(email: email).first_or_create do |user|
       user.email = email
       user.password = Devise.friendly_token[0,20]
