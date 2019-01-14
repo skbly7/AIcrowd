@@ -46,7 +46,6 @@ class Vote::Cell < Template::Cell
             </button>".html_safe,
             eval(create_vote_path),
             id: vote_link_id,
-            class: 'btn btn-secondary',
             method: :post,
             remote: true
   end
@@ -69,8 +68,7 @@ class Vote::Cell < Template::Cell
             #{display_vote_count}
             </button>".html_safe,
             '#',
-            id: vote_link_id,
-            class: 'btn btn-secondary'
+            id: vote_link_id
   end
 
   def unvote_link(vote)

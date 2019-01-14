@@ -35,8 +35,8 @@ if Rails.env == 'development'
 
   # Organizers
   Organizer.create!([
-    {id: 21, organizer: "Poznan University of Technology", address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", image_file: "Poznań_University_of_Technology.png", tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
-    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", image_file: "images.jpeg", tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
+    {id: 21, organizer: "Poznan University of Technology", address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", image_file: {url: "assets/img/logo-organizer-spotify.svg"}, tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
+    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", image_file: {url: "assets/img/logo-organizer-spotify.svg"}, tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
   ])
 
   member_poznac_ids = [1020, 1050, 1110]
