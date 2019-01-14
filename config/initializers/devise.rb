@@ -247,7 +247,7 @@ Devise.setup do |config|
       "site" => "https://www.crowdai.org",
       "user_info_url" => "/api/user"
     },
-    "redirect_url" => File.join(ENV["DOMAIN"], "participants/auth/oauth2_generic/callback")
+    "redirect_url" => File.join(ENV["DOMAIN_NAME"], "participants/auth/oauth2_generic/callback")
   }
 
   # ==> Warden configuration
