@@ -71,8 +71,6 @@ if Rails.env == 'development'
     {id: 10223, organizer_id: 17 , image_file: File.open(Rails.root + "app/assets/images/img/logo-organizer-spotify.svg"), name: "Uber", visible: true}
   ])
 
-
-
   # Challenges
   Challenge.create!([
     {id: 37,
