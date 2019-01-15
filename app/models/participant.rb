@@ -102,6 +102,9 @@ class Participant < ApplicationRecord
     allow_blank: true
 
   def reserved_userhandle
+    if !self.name
+      return
+    end
     if (self.provider != 'crowdai') && ReservedUserhandle.where(name: self.name.downcase).exists?
       self.errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.')
     end
