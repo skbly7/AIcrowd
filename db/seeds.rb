@@ -67,8 +67,8 @@ if Rails.env == 'development'
 
   # Partners
   Partner.create!([
-    {id: 19022, organizer_id: 21 , image_file: File.open(Rails.root + "app/assets/images/img/logo-organizer-spotify.svg"), name: "Spotify"},
-    {id: 10223, organizer_id: 17 , image_file: File.open(Rails.root + "app/assets/images/img/logo-organizer-spotify.svg"), name: "Uber"}
+    {id: 19022, organizer_id: 21 , image_file: File.open(Rails.root + "app/assets/images/img/logo-organizer-spotify.svg"), name: "Spotify", visible: true},
+    {id: 10223, organizer_id: 17 , image_file: File.open(Rails.root + "app/assets/images/img/logo-organizer-spotify.svg"), name: "Uber", visible: true}
   ])
 
 
