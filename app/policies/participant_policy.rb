@@ -1,5 +1,4 @@
 class ParticipantPolicy < ApplicationPolicy
-
   def index?
     false
   end
@@ -8,8 +7,12 @@ class ParticipantPolicy < ApplicationPolicy
     true
   end
 
+  def sso?
+    true
+  end
+
   def edit?
-    participant && participant.admin? || participant && @record.id == participant.id
+    participant&.admin? || participant && @record.id == participant.id
   end
 
   def update?
@@ -36,6 +39,10 @@ class ParticipantPolicy < ApplicationPolicy
     edit?
   end
 
+  def show_pending_invitations?
+    participant && record.id == participant.id
+  end
+
   def clef_access?
     participant && (participant.admin? || participant.id == @record.id || participant.organizer && participant.organizer.clef_organizer == true)
   end
@@ -45,14 +52,14 @@ class ParticipantPolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def resolve
-      if participant && participant.admin?
+      if participant&.admin?
         scope.all
       else
-        if participant && participant.id
+        if participant&.id
           scope.where("id = ?", participant.id)
         else
           scope.none
@@ -60,5 +67,4 @@ class ParticipantPolicy < ApplicationPolicy
       end
     end
   end
-
 end

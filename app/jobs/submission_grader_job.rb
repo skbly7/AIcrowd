@@ -5,5 +5,4 @@ class SubmissionGraderJob < ApplicationJob
     submission = Submission.find(submission_id)
     GraderService.new(submission_id: submission_id).call
   end
-
 end

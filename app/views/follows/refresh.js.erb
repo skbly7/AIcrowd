@@ -1,0 +1,8 @@
+function handleFollowButtonRefresh() {
+  const followLinkId     = "#<%= "#{follow_link_id(@followable)}" %>";
+  const refreshedContent = "<%= j render 'shared/challenges/follow_button', followable: @followable, follow: @follow %>";
+
+  $(followLinkId).replaceWith(refreshedContent);
+}
+
+handleFollowButtonRefresh();

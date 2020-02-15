@@ -1,31 +1,40 @@
 <div class='content'>
-  <%= render partial: 'organizers/masthead', locals: { organizer: @organizer } %>
-  <%= render partial: 'organizers/subnav', locals: { organizer: @organizer, challenges: @challenges } %>
-
-  <div class="row">
-    <ul class="list-host-members">
-      <% @clef_tasks.each do |task| %>
-      <li>
-        <div class="details">
-          <h5><%= link_to task.task, organizer_clef_task_path(@organizer,task) %></h5>
-          <% if policy(task).destroy? %>
-            <p class='status active'>
-              <%= link_to 'delete',
-                    organizer_clef_task_path(@organizer,task),
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' } %>
-            </p>
+  <%= render partial: 'organizers/masthead', locals: {organizer: @organizer} %>
+  <%= render partial: 'organizers/subnav', locals: {organizer: @organizer, challenges: @challenges} %>
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <% if policy(@organizer).update? %>
+            <header class="section-header">
+              <%= link_to 'Create Task', new_organizer_clef_task_path(@organizer), class: 'btn btn-secondary btn-sm' %>
+            </header>
           <% end %>
-        </div>
-        <div class="stats">
-          <div class="stat-fr">
-            <%= task.task_dataset_files.count %><br>
-            <span>Dataset Files</span>
-          </div>
-        </div>
-      </li>
-      <% end %>
-    </ul>
-  </div>
+          <!-- list group – tasks -->
+          <ul class="list-group list-group-flush-px-0 list-group-organizers">
 
+            <% @clef_tasks.each do |task| %>
+              <!-- task -->
+              <li class="list-group-item">
+                <% if policy(task).edit? %>
+                  <%= link_to task.task, organizer_clef_task_path(@organizer, task) %>
+                <% else %>
+                  <p><%= task.task %></p>
+                <% end %>
+                <span><%= task.task_dataset_files.count %><span> Dataset Files</span></span>
+                <% if policy(task).destroy? %>
+                  <%= link_to 'Delete',
+                              organizer_clef_task_path(@organizer, task),
+                              method: :delete,
+                              data: {confirm: 'Are you sure?'}, class: "btn btn-secondary btn-sm" %>
+                <% end %>
+              </li>
+              <!-- /task -->
+            <% end %>
+          </ul>
+          <!-- /list group – tasks -->
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

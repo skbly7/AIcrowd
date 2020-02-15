@@ -1,4 +1,4 @@
-<div class="button-group">
-  <%= f.button (f.object.new_record? ? "Create Host" : "Update Host"), class: 'btn btn-primary' %>
-  <%= link_to 'Cancel', challenges_path, class: "btn btn-secondary" %>
+<div class="btn-set" aria-hidden="true">
+  <%= f.button (f.object.new_record? ? 'Create organizer' : 'Update organizer'), class: 'btn btn-primary' %>
+  <%= link_to 'Cancel', challenges_path, class: 'btn btn-secondary', role: 'button' %>
 </div>

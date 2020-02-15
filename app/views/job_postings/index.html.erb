@@ -1,14 +1,36 @@
-<div class='content'>
-  <div class="masthead">
-    <div class="row">
-      <h2>Job Board</h2>
-    </div>
-  </div>
-  <div class="row">
-    <ul class="list-jobs">
-      <% @job_postings.each do |job| %>
-        <%= render partial: 'posting', locals: { job: job } %>
-      <% end %>
-    </ul>
-  </div>
-</div>
+<!-- main content -->
+<main>
+
+	<!-- masthead -->
+	<div class="masthead masthead-open">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<h1>Open positions</h1>
+					<p>
+						Interested in working at AIcrowd? Our open positions are below.
+						AIcrowd is a "mostly remote" company - our HQ is in the Geneva area in Switzerland, but most of us work
+						from wherever we happen to live, and the way we work strongly reflects that.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /masthead -->
+
+	<!-- section -->
+	<div class="section-p-md">
+		<div class="container-fluid">
+			<div class="row">
+
+				<% @job_postings.each do |job| %>
+					<%= render partial: 'posting', locals: { job: job } %>
+				<% end %>
+
+			</div>
+		</div>
+	</div>
+	<!-- /section -->
+
+</main>
+<!-- /main content -->

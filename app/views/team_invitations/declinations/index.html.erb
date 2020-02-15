@@ -1,0 +1,42 @@
+<% @page_title = "#{@team.name} | Decline Invitation" %>
+<main>
+  <div class="masthead masthead-team">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center flex-sm-wrap">
+          <h1>Decline Team Invitation</h1>
+        </div>
+      </div>
+
+      <div class="row masthead-info">
+        <div class="col-sm-12 col-md-6">
+          <header>
+            <h4>You’re about to <i>decline</i> your invitation to “<%= link_to(@team.name, challenge_team_path(@team.challenge, @team)) %>”</h4>
+          </header>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <p>Things you should know before <b>declining an invitation</b> to a team:</p>
+      <ul>
+        <% if @invitee.is_a?(EmailInvitation) %>
+          <li>This invitation was intended only for “<%= @invitee.email %>”</li>
+        <% end %>
+        <li>A team is only valid for one challenge. In this case: “<%= link_to(@challenge.challenge, @challenge) %>”</li>
+        <li>Joining will make you a member of the team for the duration of the challenge</li>
+        <li>All team members will share equal leaderboard spots and prizes</li>
+        <li>You may only be a member of a single team per challenge</li>
+      </ul>
+      <p>If you still don’t want to be a part of the the team, then you may decline your invitation below.</p>
+      <%= form_for team_invitation_declinations_path(@invitation) do |f| %>
+        <% if @invitee.is_a?(EmailInvitation) %>
+          <%= hidden_field_tag :email_token, params[:email_token] %>
+        <% end %>
+        <%= f.submit 'Decline', class: 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Return to Challenge', @challenge, class: 'btn btn-secondary' %>
+      <% end %>
+    </div>
+  </div>
+</main>

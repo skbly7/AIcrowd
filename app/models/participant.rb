@@ -1,9 +1,8 @@
 class Participant < ApplicationRecord
-  has_merit
-
   include FriendlyId
   include ApiKey
   include Countries
+
   friendly_id :name, use: [:slugged, :finders, :history]
   before_save :set_api_key
   before_save { self.email = email.downcase }
@@ -15,123 +14,120 @@ class Participant < ApplicationRecord
   validates :image_file, file_size: { less_than: 5.megabytes }
 
   devise :confirmable,
-    :database_authenticatable,
-    :lockable,
-    :recoverable,
-    :registerable,
-    :rememberable,
-    :validatable,
-    :omniauthable, omniauth_providers: %i[github oauth2_generic]
+         :database_authenticatable,
+         :lockable,
+         :recoverable,
+         :registerable,
+         :rememberable,
+         :validatable,
+         :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('name ASC') }
   belongs_to :organizer, optional: true
   has_many :submissions, dependent: :nullify
   has_many :votes, dependent: :destroy
-  has_many :topics, dependent: :nullify
-  has_many :comments, dependent: :nullify
-  has_many :articles, dependent: :nullify
-  has_many :leaderboards,
-    class_name: 'Leaderboard'
-  has_many :ongoing_leaderboards,
-    class_name: 'OngoingLeaderboard'
+  has_many :blogs, dependent: :nullify
+  has_many :challenge_participants, dependent: :destroy
+  has_many :leaderboards, class_name: 'Leaderboard', as: :submitter
+  has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard', as: :submitter
+  has_many :base_leaderboards, as: :submitter, dependent: :nullify
   has_many :participant_challenges,
-    class_name: 'ParticipantChallenge'
+           class_name: 'ParticipantChallenge'
   has_many :challenge_registrations,
-    class_name: 'ChallengeRegistration'
+           class_name: 'ChallengeRegistration'
   has_many :participant_challenge_counts,
-    class_name: 'ParticipantChallengeCount'
+           class_name: 'ParticipantChallengeCount'
   has_many :challenge_organizer_participants,
-    class_name: 'ChallengeOrganizerParticipant'
-  has_many :base_leaderboards, dependent: :nullify
+           class_name: 'ChallengeOrganizerParticipant'
   has_many :challenges,
-    through: :participant_challenges
+           through: :participant_challenges
   has_many :dataset_file_downloads,
-    dependent: :destroy
+           dependent: :destroy
   has_many :task_dataset_file_downloads,
-    dependent: :destroy
+           dependent: :destroy
   has_many :email_preferences,
-    dependent: :destroy
+           dependent: :destroy
   has_many :email_preferences_tokens,
-    dependent: :destroy
+           dependent: :destroy
   has_many :follows,
-    dependent: :destroy
+           dependent: :destroy
   has_many :participant_clef_tasks,
-    dependent: :destroy
+           dependent: :destroy
   has_many :invitations, dependent: :destroy
   has_many :access_grants,
-    class_name: "Doorkeeper::AccessGrant",
-    foreign_key: :resource_owner_id,
-    dependent: :destroy
+           class_name:  "Doorkeeper::AccessGrant",
+           foreign_key: :resource_owner_id,
+           dependent:   :destroy
   has_many :access_tokens,
-    class_name: "Doorkeeper::AccessToken",
-    foreign_key: :resource_owner_id,
-    dependent: :destroy
+           class_name:  "Doorkeeper::AccessToken",
+           foreign_key: :resource_owner_id,
+           dependent:   :destroy
+
+  has_many :team_participants, inverse_of: :participant
+  has_many :teams, through: :team_participants, inverse_of: :participants
+  has_many :concrete_teams, -> { concrete }, through: :team_participants, source: :team, inverse_of: :participants
+  has_many :invitor_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitor_id, inverse_of: :invitor
+  has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee_participant, foreign_type: 'Participant'
+  has_many :invitor_email_invitations, class_name: 'EmailInvitation', foreign_key: :invitor_id, inverse_of: :invitor
+  has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant
 
   validates :email,
-    presence: true,
-    'valid_email_2/email': true,
-    uniqueness: { case_sensitive: false }
-  validates :website, :url => { allow_blank: true }
-  validates :github, :url => { allow_blank: true }
-  validates :linkedin, :url => { allow_blank: true }
-  validates :twitter, :url => { allow_blank: true }
+            presence:              true,
+            'valid_email_2/email': true,
+            uniqueness:            { case_sensitive: false }
+
+  validates :website, url: { allow_blank: true }
+  validates :github, url: { allow_blank: true }
+  validates :linkedin, url: { allow_blank: true }
+  validates :twitter, url: { allow_blank: true }
   validates :name,
-    format: {
-      with: /\A(?=.*[a-zA-Z])[a-zA-Z0-9.\-_{}\[\]]+\z/,
-      message: 'User handle can contain numbers and these characters -_.{}[] and atleast one letter'
-    },
-    length: { minimum: 2, maximum: 15 },
-    uniqueness: { case_sensitive: false }
-  validate :reserved_userhandle, on: :create
-  #validates :name,
-  #  length: { minimum: 2 },
-  #  uniqueness: { case_sensitive: false }
+            format:     {
+              with:    /\A(?=.*[a-zA-Z])[a-zA-Z0-9.\-_{}\[\]]+\z/,
+              message: 'username can contain numbers and these characters -_.{}[] and atleast one letter'
+            },
+            length:     { in: 2...256 },
+            uniqueness: { case_sensitive: false }
   validates :affiliation,
-    length: { in: 2...100},
-    allow_blank: true
+            length:      { in: 2...100 },
+            allow_blank: true
   validates :country_cd,
-    inclusion: { in: ISO3166::Country::codes}, allow_blank: true
+            inclusion: { in: ISO3166::Country.codes }, allow_blank: true
   validates :address,
-    length: { in: 10...255 },
-    allow_blank: true
+            length:      { in: 10...255 },
+            allow_blank: true
   validates :first_name,
-    length: { in: 2...100},
-    allow_blank: true
+            length:      { in: 2...100 },
+            allow_blank: true
   validates :last_name,
-    length:{ in: 2...100},
-    allow_blank: true
+            length:      { in: 2...100 },
+            allow_blank: true
 
   def reserved_userhandle
-    if !self.name
-      return
-    end
-    if (self.provider != 'crowdai') && ReservedUserhandle.where(name: self.name.downcase).exists?
-      self.errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.')
-    end
+    return unless name
+
+    errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.') if (provider != 'crowdai') && ReservedUserhandle.where(name: name.downcase).exists?
   end
 
   def disable_account(reason)
-    self.update(
-      account_disabled: true,
+    update(
+      account_disabled:        true,
       account_disabled_reason: reason,
-      account_disabled_dttm: Time.now )
+      account_disabled_dttm:   Time.now)
   end
 
   def enable_account
-    self.update(
-      account_disabled: false,
+    update(
+      account_disabled:        false,
       account_disabled_reason: nil,
-      account_disabled_dttm: nil )
+      account_disabled_dttm:   nil)
   end
 
   def active_for_authentication?
-    super && self.account_disabled == false
+    super && account_disabled == false
   end
 
   def inactive_message
-    if account_disabled
-      "Your account has been disabled. Please contact us at info@crowdai.org."
-    end
+    'Your account has been disabled. Please contact us at help@aicrowd.com' if account_disabled
   end
 
   def admin?
@@ -155,84 +151,100 @@ class Participant < ApplicationRecord
   end
 
   def image_url
-    if image_file.file.present?
-      image_url = image_file.url
-    else
-      image_url = 'users/avatar-default.png'
-    end
+    image_url = if image_file.file.present?
+                  image_file.url
+                else
+                  'users/user-avatar-default.svg'
+                end
   end
 
   def process_urls
-    ['website','github','linkedin','twitter'].each do |url_field|
+    ['website', 'github', 'linkedin', 'twitter'].each do |url_field|
       format_url(url_field)
     end
   end
 
   def format_url(url_field)
-    if self.send(url_field).present?
-      unless self.send(url_field).include?("http://") || self.send(url_field).include?("https://")
-        self.send("#{url_field}=", "http://#{self.send(url_field)}")
-      end
+    if send(url_field).present?
+      send("#{url_field}=", "http://#{send(url_field)}") unless send(url_field).include?("http://") || send(url_field).include?("https://")
     end
   end
 
   def after_confirmation
     super
-    AddToMailChimpListJob.perform_later(self.id)
+    AddToMailChimpListJob.perform_later(id)
   end
 
   def set_email_preferences
-    self.email_preferences.create!
+    email_preferences.create!
   end
 
   def should_generate_new_friendly_id?
     name_changed?
   end
 
-  def self.find_by(args)
-    super || NullParticipant.new
-  end
-
+  # TODO: Investigate how to get rid of this hack without causing issues
   def self.find(args)
-    begin
-      super
-    rescue
-      NullParticipant.new
-    end
+    super
+  rescue StandardError
+    nil
   end
 
   def refresh_materialized_view
-    if saved_change_to_attribute?(:organizer_id)
-      RefreshChallengeOrganizerParticipantViewJob.perform_later
-    end
+    RefreshChallengeOrganizerParticipantViewJob.perform_later if saved_change_to_attribute?(:organizer_id)
   end
 
   def publish_to_prometheus
     Prometheus::ParticipantCounterService.new.call
   end
 
+  def self.sanitize_userhandle(userhandle)
+    userhandle.to_ascii
+      .tr("@", "a")
+      .gsub("&", "and")
+      .delete('#')
+      .delete('*')
+      .gsub(/[\,\.\'\;\-\=]/, "")
+      .gsub(/[\(\)]/, "_")
+      .tr(' ', "_")
+  end
+
   def self.from_omniauth(auth)
-    raw_info = auth.raw_info || (auth.extra && auth.extra.raw_info.participant)
-    email = auth.info.email || raw_info.email
-    username = auth.info.name || raw_info.name
-    username = username.gsub(/\s+/, '_').downcase
+    raw_info  = auth.raw_info || (auth.extra&.raw_info&.participant)
+    email     = auth.info.email || raw_info.email
+    username  = auth.info.name || raw_info.name
+    username  = username.gsub(/\s+/, '_').downcase
+    username  = sanitize_userhandle(username)
     image_url = auth.info.image ||
-                raw_info.image ||
-                (raw_info.image_file && raw_info.image_file.url)
+      raw_info.image ||
+      (raw_info.image_file&.url)
     provider = auth.provider
-    if provider == 'oauth2_generic'
-      provider = 'crowdai'
-    end
+    provider = 'crowdai' if provider == 'oauth2_generic'
     where(email: email).first_or_create do |user|
-      user.email = email
-      user.password = Devise.friendly_token[0,20]
-      user.name = username
+      user.email    = email
+      user.password = Devise.friendly_token[0, 20]
+      user.name     = username
       user.provider = provider
-      # user.remote_image_file_url = image_url
+      puts "EMAIL: #{email} name: #{username} provider: #{provider}"
+      user.remote_image_file_url = image_url if image_url
       ### NATE: we want to skip the notification but leave the user unconfirmed
       ### which will allow us to force a password reset on first login
       user.skip_confirmation_notification!
     end
   end
 
+  def current_participation_terms
+    ParticipationTerms.current_terms
+  end
+
+  def current_participation_terms_version
+    current_participation_terms&.version
+  end
+
+  def has_accepted_participation_terms?
+    return if participation_terms_accepted_version != current_participation_terms_version
+    return unless participation_terms_accepted_date
+
+    return true
+  end
 end

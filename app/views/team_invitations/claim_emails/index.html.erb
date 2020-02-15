@@ -1,0 +1,30 @@
+<% @page_title = "Claim Email" %>
+<main>
+  <div class="masthead masthead-team">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center flex-sm-wrap">
+          <h1>Claim an Email Address</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <p>If an email address you own was invited to a team, claim it here</p>
+      <%= form_for 'email_claim', url: claim_emails_path do |f| %>
+        <div class="form-group">
+          <label for="email_confirmation">Email</label>
+          <%= f.text_field :email_confirmation, class: 'form-control', value: params[:email_confirmation] %>
+        </div>
+        <div class="form-group">
+          <label for="email_token">Token</label>
+          <%= f.text_field :email_token, class: 'form-control', value: params[:email_token] %>
+          <small id="email_tokenHelp" class="form-text text-muted">This is the unique code that was provided to you via email</small>
+        </div>
+        <br>
+        <%= f.submit 'Claim', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</main>

@@ -1,5 +1,4 @@
 class EmailPreferencePolicy < ApplicationPolicy
-
   def edit?
     participant && (participant.admin? || @record.participant == participant)
   end
@@ -7,5 +6,4 @@ class EmailPreferencePolicy < ApplicationPolicy
   def update?
     edit?
   end
-
 end

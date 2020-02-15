@@ -12,6 +12,10 @@ RSpec.describe Admin::SubmissionNotificationJob, type: :job, api: true do
   subject(:job) { described_class.perform_later(submission) }
 
   describe 'queues the job' do
+    after do
+      clear_enqueued_jobs
+      clear_performed_jobs
+    end
 
     it 'queues the job' do
       expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
@@ -24,11 +28,5 @@ RSpec.describe Admin::SubmissionNotificationJob, type: :job, api: true do
     it 'executes with no errors' do
       perform_enqueued_jobs { job }
     end
-
-    after do
-      clear_enqueued_jobs
-      clear_performed_jobs
-    end
   end
-
 end

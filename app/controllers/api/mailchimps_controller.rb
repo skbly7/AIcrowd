@@ -28,5 +28,4 @@ class Api::MailchimpsController < ApplicationController
       head :unauthorized
     end
   end
-
 end

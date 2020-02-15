@@ -27,6 +27,12 @@ function copyLink() {
   hiddenInput.select();
   document.execCommand("copy");
   hiddenInput.style.display = 'none';
+  var copybtn = document.getElementById("copyurlbutton");
+  copybtn.style.text = '#FFFFFF';
+  copybtn.style.backgroundColor = '#44B174';
+  copybtn.classList.remove("btn-secondary");
+  copybtn.classList.add("btn-primary");
+  copybtn.innerHTML = "Copied!";
   return false;
 }
 

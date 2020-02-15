@@ -1,27 +1,78 @@
-<div class="content">
-  <div class="masthead-detailed">
+<!-- masthead – blog post -->
+<div class="masthead masthead-blog-post">
+  <div class="container-fluid">
+
+    <!-- title -->
     <div class="row">
-      <div class="info info-tutorial">
-        <h2><%= @blog.title %></h2>
-        <p class="large"><%= @blog.posted_at.strftime("%-d %B %Y") %></p>
-        <div class="user-link">
-          <%= concept(Image::Cell,@blog.participant,size: :medium) %>
-          <p>By
-            <%= link_to @blog.participant.name, participant_path(@blog.participant) %>
-          </p>
+      <div class="col-12">
+        <h1><%= @blog.title %></h1>
+        <p><%= local_time(@blog.posted_at, "%-d %B %Y") %></p>
+      </div>
+    </div>
+    <!-- /title -->
+
+    <!-- author/options -->
+    <div class="row">
+      <div class="col-12 d-flex align-items-center flex-wrap">
+        <div class="author">
+          <%= link_to image_tag(@blog.participant.image_url, class: 'avatar'), participant_path(@blog.participant)%>
+          <span>
+            By <%= link_to @blog.participant.name, participant_path(@blog.participant) %>
+          </span>
         </div>
-        <div class="button-group">
-          <%= concept(Vote::Cell,
-                @blog,
-                current_participant: current_participant) %>
+
+        <div class="btn-set" aria-hidden="true">
+          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @vote } %>
         </div>
       </div>
     </div>
-  </div>
+    <!-- /author/options -->
 
-  <div class="row">
-    <div class="article">
-      <%= @blog.body.html_safe %>
+  </div>
+</div>
+<!-- /masthead – blog post -->
+
+<!-- section -->
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- md content -->
+      <div class="col-12">
+        <div class="md-content">
+          <%= @blog.body.html_safe %>
+        </div>
+      </div>
+      <!-- /md content -->
+
     </div>
   </div>
 </div>
+<!-- /section -->
+
+<!-- section -->
+<section class="section-pb-md">
+
+  <!-- blog post previews -->
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- section header -->
+      <div class="col-12">
+        <header class="section-header">
+          <div>
+            <h4>You may also like...</h4>
+          </div>
+          <%= button_to 'See all', blogs_path, class: "btn btn-secondary btn-sm", method: :get %>
+        </header>
+      </div>
+      <!-- /section header -->
+      <% @selected_blogs.each_with_index do |blog,index| %>
+          <%= render partial: 'blog_post', locals: { blog: blog } %>
+      <% end %>
+    </div>
+  </div>
+  <!-- /blog post previews -->
+
+</section>
+<!-- /section -->

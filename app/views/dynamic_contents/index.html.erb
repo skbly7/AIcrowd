@@ -1,21 +1,23 @@
 <div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
-  <%#= concept(Challenge::Cell::ChallengeSubnav,
-                @challenge,
-                tab: 'dynamic',
-                current_participant: current_participant) %>
-
-  <div id='dynamic-content'>
-    <%#= ERB.new(@challenge.dynamic_content).result(OpenStruct.new({challenge: @challenge, current_participant: current_participant}).instance_eval { binding }).html_safe %>
-  </div>
+  <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+  <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 </div>
-
-<% if current_participant %>
-  <div id='music-root2' data-participant_id='<%= current_participant.id %>'></div>
-<% else %>
-  <div id='music-root2' data-participant_id=''></div>
+<% if @challenge.dynamic_content_url %>
+  <script>
+  function onDynamicFrameLoad(frame) {
+    var metadata = {
+      "participantId": 1,
+      "scores": [
+        1,
+        5,
+        3,
+        5
+      ]
+    }
+    frame.contentWindow.postMessage(metadata, '*');
+  };
+  </script>
+  <div class='responsive-iframe-wrapper'>
+    <iframe class='responsive-iframe' src="<%=@challenge.dynamic_content_url%>" sandbox="allow-scripts allow-pointer-lock" onload="onDynamicFrameLoad(this)"></iframe>
+  </div>
 <% end %>

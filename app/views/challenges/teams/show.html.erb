@@ -1,0 +1,26 @@
+<main>
+  <div class="masthead masthead-team">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center flex-sm-wrap">
+          <h1><%= @team.name %></h1>
+        </div>
+      </div>
+
+      <div class="row masthead-info">
+        <div class="col-sm-12 col-md-6">
+          <header>
+            <h4>Challenge</h4>
+          </header>
+          <span><%= link_to @team.challenge.challenge, @team.challenge %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <%= render partial: 'member_list' %>
+    </div>
+  </div>
+</main>

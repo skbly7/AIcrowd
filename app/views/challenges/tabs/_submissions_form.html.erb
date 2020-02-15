@@ -1,0 +1,36 @@
+<div>
+  <div class="form-group">
+    <h3>This page configures the optional online submissions page, if the challenge requires it.</h3>
+  </div>
+
+  <div class="form-group">
+    <% if @organizer&.clef? %>
+      <%= render partial: 'challenges/fields/clef_fields', locals: {f: f} %>
+    <% end %>
+
+    <%= render partial: 'challenges/fields/fancy_radio', locals: {
+        f: f,
+        name: :online_submissions,
+        text: "Online Submissions Permitted",
+        p: {data: {target: 'challenge-submission.online', action: 'click->challenge-submission#toggleOnline'}} } %>
+
+
+    <%= render partial: 'challenges/fields/fancy_radio', locals: {
+        f: f,
+        name: :post_challenge_submissions,
+        text: "Post Challenge Submissions Permitted",
+        p: {data: {target: 'challenge-submission.post'}} } %>
+
+  </div>
+
+  <label>Submission Instructions</label>
+  <%= markdown_editor do |m| %>
+    <%= f.text_area :submission_instructions_markdown, class: "txt-med" %>
+  <% end %>
+
+  <h3>This license text is displayed on the submission upload page during and after the challenge</h3>
+  <%= markdown_editor do |m| %>
+    <%= f.text_area :license_markdown, class: "txt-med", placeholder: "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC)." %>
+  <% end %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'winner' } %>
+</div>

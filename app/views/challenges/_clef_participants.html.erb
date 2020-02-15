@@ -1,4 +1,30 @@
-<%= concept(ParticipantClefTask::Cell::ListDetail,
-              collection: @clef_task.participant_clef_tasks,
-              challenge_id: @challenge.id,
-              current_participant: current_participant) %>
+<% clef_task.participant_clef_tasks.each do |participant_clef_task| %>
+  <% participant = participant_clef_task.participant %>
+
+  <li class="list-group-item">
+    <% if participant.present? %>
+      <div>
+        <%= link_to participant_path(participant) do %>
+          <%= image_tag participant.image_url, class: 'avatar' %>
+          <span class="text-link"><%= participant.name %></span>
+        <% end %>
+        <span class="description"><%= participant.email %></span>
+      </div>
+    <% else %>
+      <div>
+        <%= link_to '#' do %>
+          <%= image_tag default_image_url, class: 'avatar' %>
+          <span class="text-link">Unknown User</span>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="row" style="width:20%">
+      <% if participant_clef_task.eua_file.present? %>
+        <%= link_to asset_path(participant_clef_task.eua_file.url), target: :_blank do %>
+          <i aria-hidden="true" class="fa fa-file-pdf-o fa-2x"></i>
+        <% end %>
+      <% end %>
+      <span style="margin-left:10px"><%= participant_clef_task_status_button(participant_clef_task, challenge_id) %></span>
+    </div>
+  </li>
+<% end %>

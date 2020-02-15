@@ -15,8 +15,8 @@ Devise.setup do |config|
   config.mailer_sender = 'info@crowdai.org'
 
   # Configure the class responsible to send e-mails.
-  #config.mailer = 'Devise::CrowdaiMailer'   # devise erb templates
-  config.mailer = 'DeviseMandrillMailer'  # Mailchimp templates
+  # config.mailer = 'Devise::CrowdaiMailer'   # devise erb templates
+  config.mailer = 'DeviseMandrillMailer' # Mailchimp templates
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -32,8 +32,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  #config.authentication_keys = [ :login ]
-
+  # config.authentication_keys = [ :login ]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -188,8 +187,8 @@ Devise.setup do |config|
   # ==> Configuration for :recoverable
   #
   # Defines which key will be used when recovering the password for an account
-  #config.reset_password_keys = [ :name ]
-  #config.confirmation_keys = [ :name ]
+  # config.reset_password_keys = [ :name ]
+  # config.confirmation_keys = [ :name ]
 
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
@@ -244,10 +243,10 @@ Devise.setup do |config|
   config.omniauth :github, ENV['GITHUB_OAUTH_KEY'], ENV['GITHUB_OAUTH_SECRET'], scope: 'user,public_repo'
   config.omniauth :oauth2_generic, ENV['CROWDAI_OAUTH_KEY'], ENV['CROWDAI_OAUTH_SECRET'], {
     "client_options" => {
-      "site" => "https://www.crowdai.org",
+      "site"          => "https://www.crowdai.org",
       "user_info_url" => "/api/user"
     },
-    "redirect_url" => File.join(ENV["DOMAIN_NAME"], "participants/auth/oauth2_generic/callback")
+    "redirect_url"   => File.join(ENV["DOMAIN_NAME"], "participants/auth/oauth2_generic/callback")
   }
 
   # ==> Warden configuration

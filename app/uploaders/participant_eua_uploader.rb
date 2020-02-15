@@ -1,5 +1,4 @@
 class ParticipantEuaUploader < CarrierWave::Uploader::Base
-
   storage :fog
 
   def store_dir
@@ -7,7 +6,6 @@ class ParticipantEuaUploader < CarrierWave::Uploader::Base
   end
 
   def extension_whitelist
-    %w(pdf)
+    ['pdf']
   end
-
 end

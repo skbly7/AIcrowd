@@ -4,5 +4,4 @@ class OrganizerApplicationNotificationJob < ApplicationJob
   def perform(organizer_application)
     OrganizerApplicationNotificationMailer.new.sendmail(organizer_application)
   end
-
 end

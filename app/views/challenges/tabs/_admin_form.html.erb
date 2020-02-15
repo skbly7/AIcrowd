@@ -1,0 +1,23 @@
+<div class="challenges-form__thin-tab">
+
+  <div class="form-group">
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :submissions_downloadable, text: "Organizer submission file access?" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :dynamic_content_flag, text: "Dynamic content?" } %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Tab description</span>
+    <%= f.text_field :dynamic_content_tab, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_area :dynamic_content, cols: 80, rows: 80, placeholder: 'Enter ERB content here...', class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Dynamic Content Url</span>
+    <%= f.text_field :dynamic_content_url, class: "form-control" %>
+  </div>
+
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'admin' } %>
+</div>

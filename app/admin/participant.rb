@@ -26,18 +26,17 @@ ActiveAdmin.register Participant do
 
     def update
       model = :participant
-      if params[model][:password].blank?
-        %w(password password_confirmation).each { |p| params[model].delete(p) }
-      end
+      ['password', 'password_confirmation'].each { |p| params[model].delete(p) } if params[model][:password].blank?
       super
     end
   end
 
   filter :email
   filter :name
-  filter :organizer, :as => :select, :collection => Organizer.all.collect {|organizer| [organizer.organizer, organizer.id] }
+  filter :organizer, as: :select, collection: Organizer.all.map { |organizer| [organizer.organizer, organizer.id] }
   filter :admin
   filter :current_sign_in_at
+  filter :agreed_to_marketing
   filter :sign_in_count
   filter :created_at
 
@@ -45,12 +44,11 @@ ActiveAdmin.register Participant do
     f.inputs do
       f.input :email
       f.input :name
-      f.input :organizer, :as => :select, :collection => Organizer.all.collect {|organizer| [organizer.organizer, organizer.id] }
+      f.input :organizer, as: :select, collection: Organizer.all.map { |organizer| [organizer.organizer, organizer.id] }
       f.input :admin
       f.input :password
       f.input :password_confirmation
     end
     f.actions
   end
-
 end

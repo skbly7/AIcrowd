@@ -5,5 +5,4 @@ class Prometheus::ParticipantCounterService
     payload = { action: 'create' }
     PARTICIPANT_COUNTER.increment(payload, 1)
   end
-
 end

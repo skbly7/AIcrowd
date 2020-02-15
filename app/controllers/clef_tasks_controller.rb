@@ -9,8 +9,7 @@ class ClefTasksController < ApplicationController
     @challenges = @organizer.challenges
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @clef_task = @organizer.clef_tasks.new
@@ -45,6 +44,7 @@ class ClefTasksController < ApplicationController
   end
 
   private
+
   def set_organizer
     @organizer = Organizer.friendly.find(params[:organizer_id])
   end
@@ -63,9 +63,8 @@ class ClefTasksController < ApplicationController
   end
 
   def set_s3_direct_post
-    @s3_direct_post = S3_BUCKET.presigned_post(key: "task_dataset_files/organizer_#{@organizer.id}/#{SecureRandom.uuid}_${filename}",
+    @s3_direct_post = S3_BUCKET.presigned_post(key:                   "task_dataset_files/organizer_#{@organizer.id}/#{SecureRandom.uuid}_${filename}",
                                                success_action_status: '201',
-                                               acl: 'private')
+                                               acl:                   'private')
   end
-
 end

@@ -9,7 +9,6 @@ class LogoImageUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(jpg jpeg gif png)
+    ['jpg', 'jpeg', 'gif', 'png']
   end
-
 end

@@ -1,5 +1,4 @@
 class OrganizerPolicy < ApplicationPolicy
-
   def index?
     false
   end
@@ -9,7 +8,7 @@ class OrganizerPolicy < ApplicationPolicy
   end
 
   def edit?
-    participant && participant.admin? || participant && @record.id == participant.organizer_id
+    participant&.admin? || participant && @record.id == participant.organizer_id
   end
 
   def update?
@@ -21,11 +20,11 @@ class OrganizerPolicy < ApplicationPolicy
   end
 
   def create?
-    participant && participant.admin?
+    participant&.admin?
   end
 
   def destroy?
-    participant && participant.admin? || participant && @record.id == participant.organizer_id
+    participant&.admin? || participant && @record.id == participant.organizer_id
   end
 
   def regen_api_key?
@@ -41,7 +40,7 @@ class OrganizerPolicy < ApplicationPolicy
   end
 
   def clef_email?
-    participant && participant.admin? || participant && @record.id == participant.organizer_id
+    participant&.admin? || participant && @record.id == participant.organizer_id
   end
 
   class Scope
@@ -49,14 +48,14 @@ class OrganizerPolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def resolve
-      if participant && participant.admin?
+      if participant&.admin?
         scope.all
       else
-        if participant && participant.organizer_id
+        if participant&.organizer_id
           scope.where("id = ?", participant.organizer_id)
         else
           scope.none
@@ -64,5 +63,4 @@ class OrganizerPolicy < ApplicationPolicy
       end
     end
   end
-
 end

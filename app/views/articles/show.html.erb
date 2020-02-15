@@ -1,9 +1,0 @@
-<% if @article.notebook_url.blank? %>
-  <%= render partial: 'articles/show/article',
-        locals: {
-          article: @article,
-          article_section: @article_section } %>
-<% else %>
-  <%= render partial: 'articles/show/notebook',
-        locals: { article: @article }%>
-<% end %>

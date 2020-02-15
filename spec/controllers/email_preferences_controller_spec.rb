@@ -1,40 +1,39 @@
 require 'rails_helper'
-RSpec.describe EmailPreferencesController, type: :controller do
+
+describe EmailPreferencesController, type: :controller do
   render_views
 
-  let(:participant) { create :participant }
-  let(:email_preference) { participant.email_preferences.first }
+  let(:participant)            { create(:participant, :with_email_preferences_token, agreed_to_marketing: false) }
+  let(:email_preference)       { participant.email_preferences.first }
+  let(:email_preference_token) { participant.email_preferences_tokens.first.email_preferences_token }
 
-=begin
   describe "GET #edit" do
     it "assigns the requested email_preference as @email_preference" do
-      get :edit, params: { participant_id: participant.id, id: email_preference.id }
-      puts assigns.inspect
+      get :edit, params: { participant_id: participant.id, preferences_token: email_preference_token }
+
       expect(assigns(:email_preference)).to eq(email_preference)
     end
   end
 
   describe "PUT #update" do
-    let(:new_attributes) {
-      { my_leaderboard: true, any_leaderboard: false }
-    }
+    it "updates participant agreed_to_marketing field" do
+      expect(participant.reload.agreed_to_marketing).to eq(false)
 
-    it "updates the requested email_preference" do
-      put :update, params: { participant_id: participant.id, id: email_preference.id, email_preference: new_attributes}
-      email_preference.reload
-      expect(email_preference.my_leaderboard).to eq(new_attributes[:my_leaderboard])
-      expect(email_preference.any_leaderboard).to eq(new_attributes[:any_leaderboard])
+      put :update, params: { participant: { agreed_to_marketing: true }, participant_id: participant.id, preferences_token: email_preference_token }
+
+      expect(participant.reload.agreed_to_marketing).to eq(true)
     end
 
     it "assigns the requested email_preference as @email_preference" do
-      put :update, params: { participant_id: participant.id, id: email_preference.id, email_preference: new_attributes}
+      put :update, params: { participant: { agreed_to_marketing: true }, participant_id: participant.id, preferences_token: email_preference_token }
+
       expect(assigns(:email_preference)).to eq(email_preference)
     end
 
     it "redirects to the email_preferences_controller" do
-      put :update, params: { participant_id: participant.id, id: email_preference.id, email_preference: new_attributes}
-      expect(response).to redirect_to([participant,email_preference])
+      put :update, params: { participant: { agreed_to_marketing: true }, participant_id: participant.id, preferences_token: email_preference_token }
+
+      expect(response).to redirect_to(participant_notifications_path(participant))
     end
   end
-=end
 end

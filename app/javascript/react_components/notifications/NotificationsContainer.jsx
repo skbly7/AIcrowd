@@ -120,19 +120,3 @@ class NotificationsContainer extends React.Component {
 }
 
 export default NotificationsContainer
-
-
-/* TBD
-  setActionCableSubscription() {
-    App.cable.subscriptions.create("NotificationsChannel", {
-      connected() {},
-      disconnected() {},
-      received(data) {
-        console.log("new message");
-        console.log(data);
-        //this.appendNewMessage(data);
-      }//,
-      //appendNewMessage: this.appendNewMessage
-    });
-  }
-*/

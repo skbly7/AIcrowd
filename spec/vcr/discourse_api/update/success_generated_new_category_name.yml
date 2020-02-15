@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://discourse-staging.aicrowd.com/categories/30
+    body:
+      encoding: UTF-8
+      string: color=49d9e9&id=30&name=Discourse+Category+Name+That+Exists&parent_category_id&slug=discourse-category-name-that-exists&text_color=f0fcfd
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - DiscourseAPI Ruby Gem 0.38.0
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Date:
+      - Fri, 31 Jan 2020 12:58:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - categories/update
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 51fa6050-ad0c-4b35-bf0e-54520ae2e3c8
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3D99c240347d8479cf6f24fbe5082d4570; path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.032238'
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Category Name has already been taken","Slug is already
+        in use"]}'
+    http_version:
+  recorded_at: Fri, 31 Jan 2020 12:58:19 GMT
+- request:
+    method: put
+    uri: https://discourse-staging.aicrowd.com/categories/30
+    body:
+      encoding: UTF-8
+      string: color=49d9e9&id=30&name=Discourse+Category+Name+That+Exists-684602&parent_category_id&slug=discourse-category-name-that-exists-137048&text_color=f0fcfd
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - DiscourseAPI Ruby Gem 0.38.0
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 31 Jan 2020 12:58:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - categories/update
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 3b6aab7b-db5e-49c9-a731-c53cafe2218e
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3D99c240347d8479cf6f24fbe5082d4570; path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.050264'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"success":"OK","category":{"id":30,"name":"Discourse Category Name
+        That Exists-684602","color":"49d9e9","text_color":"f0fcfd","slug":"discourse-category-name-that-exists-137048","topic_count":0,"post_count":0,"position":29,"description":null,"description_text":null,"description_excerpt":null,"topic_url":"/t/about-the-discourse-category-name-that-exists-684602-category/53","read_restricted":false,"permission":null,"notification_level":null,"can_edit":true,"topic_template":null,"has_children":null,"sort_order":null,"sort_ascending":null,"show_subcategory_list":false,"num_featured_topics":3,"default_view":null,"subcategory_list_style":"rows_with_featured_topics","default_top_period":"all","minimum_required_tags":0,"navigate_to_first_post_after_read":false,"custom_fields":{},"min_tags_from_required_group":1,"required_tag_group_name":null,"available_groups":["admins","at-aicrowd-test","moderators","staff","trust_level_0","trust_level_1","trust_level_2","trust_level_3","trust_level_4"],"auto_close_hours":null,"auto_close_based_on_last_post":false,"group_permissions":[{"permission_type":1,"group_name":"everyone"}],"email_in":null,"email_in_allow_strangers":false,"mailinglist_mirror":false,"all_topics_wiki":false,"can_delete":true,"cannot_delete_reason":null,"allow_badges":true,"topic_featured_link_allowed":true,"search_priority":0,"uploaded_logo":null,"uploaded_background":null}}'
+    http_version:
+  recorded_at: Fri, 31 Jan 2020 12:58:19 GMT
+recorded_with: VCR 5.0.0

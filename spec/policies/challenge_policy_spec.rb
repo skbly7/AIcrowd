@@ -4,14 +4,15 @@ describe ChallengePolicy do
   context "for a published Challenge" do
     subject { described_class.new(participant, challenge) }
 
-    let(:challenge) { build(:challenge, organizer: organizer) }
-    let(:organizer) { build(:organizer) }
-    let(:organizer_person) { build(:participant, organizer: organizer) }
-    let(:admin) { build(:participant, :admin )}
+    let(:challenge) { create(:challenge, organizer: organizer) }
+    let(:organizer) { create(:organizer) }
+    let(:organizer_person) { create(:participant, organizer: organizer) }
+    let(:admin) { create(:participant, :admin) }
 
     context 'for a public participant' do
       let(:participant) { nil }
-      #it { is_expected.to permit_action(:show) }
+      # it { is_expected.to permit_action(:show) }
+
       it { is_expected.to permit_action(:index) }
       it { is_expected.to forbid_action(:create) }
       it { is_expected.to forbid_action(:new) }
@@ -22,7 +23,8 @@ describe ChallengePolicy do
 
     context 'for the organizer' do
       let(:participant) { organizer_person }
-      #it { is_expected.to permit_action(:show) }
+      # it { is_expected.to permit_action(:show) }
+
       it { is_expected.to permit_action(:index) }
       it { is_expected.to permit_action(:create) }
       it { is_expected.to permit_action(:new) }
@@ -33,7 +35,8 @@ describe ChallengePolicy do
 
     context 'for an admin' do
       let(:participant) { admin }
-      #it { is_expected.to permit_action(:show) }
+      # it { is_expected.to permit_action(:show) }
+
       it { is_expected.to permit_action(:index) }
       it { is_expected.to permit_action(:create) }
       it { is_expected.to permit_action(:new) }
@@ -44,8 +47,6 @@ describe ChallengePolicy do
   end
 
   context 'for a private challenge' do
-    #subject { described_class.new(participant, challenge) }
-
+    # subject { described_class.new(participant, challenge) }
   end
-
 end

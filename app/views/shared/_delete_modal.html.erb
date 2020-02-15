@@ -1,14 +1,28 @@
-<div class="remodal" data-remodal-id="modal">
-	<form class="modal" method="" action="" data-remote="true">
-		<h3>Delete Confirmation</h3>
-		<p>Your account will be deleted and cannot be reinstated.</p>
-		<p>Your username will be redacted and your posts, submissions and comments will be marked as redacted but stay present on crowdAI.</p>
-		<p>All content contributed to crowdAI is released under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons - Attribution 4.0 International</a>.</p>
-		<div class="button-group-fluid">
-      <%= link_to registration_path(@participant), method: :delete do %>
-        <button class='btn btn-primary'>Delete</button>
-      <% end %>
-			<button class="btn btn-secondary" data-remodal-action="cancel">Cancel</button>
-		</div>
-	</form>
+<!-- modal: delete account -->
+<div class="modal" id="deleteAccount" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete your account</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Your account will be deleted and cannot be reinstated.</p>
+        <p>Your username will be redacted and your posts, submissions and comments will be marked as redacted but stay
+          present on AIcrowd.</p>
+        <p>All content contributed to AIcrowd is released under
+          <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons - Attribution 4.0 International</a>.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <%= link_to registration_path(@participant), method: :delete do %>
+          <button type="button" class="btn btn-primary">Delete account</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- /modal: delete account -->

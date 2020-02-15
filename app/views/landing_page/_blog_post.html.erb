@@ -1,6 +1,15 @@
-<div>
-  <h5><%= link_to post.title, blog_path(post) %></h5>
-  <span class="light">
-    <%= post.posted_at.strftime("%-d %B %Y") %>
-  </span>
+<!-- blog post -->
+<div class="col-sm-12 col-md-4">
+	<div class="card card-blog-post">
+	  <div class="card-body">
+	    <h5 class="card-title"><%= link_to post.title, blog_path(post) %></h5>
+	    <p class="card-text"><%= local_time(post.posted_at, "%-d %B %Y") %></p>
+	  </div>
+
+	  <div class="card-footer">
+	      <%= link_to image_tag(post.participant.image_url, class: 'avatar'), participant_path(post.participant)%>
+	      <span>By <%= link_to post.participant.name, participant_path(post.participant) %></span>
+	  </div>
+	</div>
 </div>
+<!-- /blog post -->

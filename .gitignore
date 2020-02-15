@@ -1,24 +1,53 @@
-/.bundle
-
+# OS files
+.DS_Store
 
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
 /tmp
-/public/uploads
-/coverage
-config/application.yml
-.DS_Store
-*.swp
-public/assets_test/*
-public/assets/*
-screenshot*
+
+# dev
 .byebug_history
-scripts/challenges/openfood/public_500/images/*
-scripts/dev_from_prd.sh
-scripts/stg_from_prd.sh
+/.bundle
+/dump.rdb
+/config/application.yml
+/scripts/challenges/openfood/public_500/images/*
+/scripts/dev_from_prd.sh
+/scripts/stg_from_prd.sh
+
+# public
+/public/uploads
+/public/assets_test/*
+/public/assets/*
 /public/packs
-/node_modules
-spec/examples.txt
 /public/assets/**
+
+# built
+/node_modules
+
+# misc
+*.swp
 storage/*
+spec/examples.txt
+/coverage
+screenshot*
+dump.rdb
+.idea
+.generators
+.rakeTasks
+
+# Migration Data
+db/crowdai_aicrowd_data_migration/challenge_participants.json
+db/crowdai_aicrowd_data_migration/challenge_rounds.json
+db/crowdai_aicrowd_data_migration/challenges.json
+db/crowdai_aicrowd_data_migration/organizers.json
+db/crowdai_aicrowd_data_migration/submissions.json
+
+# Clef Migration Data
+db/crowdai_aicrowd_data_migration/clef_tasks.json
+db/crowdai_aicrowd_data_migration/participant_clef_tasks.json
+db/crowdai_aicrowd_data_migration/task_dataset_files.json
+
+
+# For rubocop temp files
+spec/tmp

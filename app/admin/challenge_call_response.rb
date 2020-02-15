@@ -1,8 +1,7 @@
 ActiveAdmin.register ChallengeCallResponse do
-
-  belongs_to :challenge_call, finder: :find_by_slug #, parent_class: ChallengeCall
+  belongs_to :challenge_call, finder: :find_by_slug
   navigation_menu :challenge_call
-  
+
   index do
     selectable_column
     column :id
@@ -12,5 +11,4 @@ ActiveAdmin.register ChallengeCallResponse do
     column :phone
     actions
   end
-
 end

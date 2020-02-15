@@ -11,7 +11,6 @@ class ChallengeCall < ApplicationRecord
   end
 
   def call_closed?
-    self.closing_date.present? && self.closing_date < Time.now.utc
+    closing_date.present? && closing_date < Time.now.utc
   end
-
 end

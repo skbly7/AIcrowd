@@ -6,7 +6,6 @@ class EuaUploader < CarrierWave::Uploader::Base
   end
 
   def extension_whitelist
-    %w(pdf)
+    ['pdf']
   end
-
 end

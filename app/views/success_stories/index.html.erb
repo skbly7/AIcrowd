@@ -1,0 +1,27 @@
+<!-- page content -->
+<div class="content">
+  <!-- masthead -->
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1>Success Stories</h1>
+          <p>Why do our clients work with us, and what is their experience? Here, we share some insights on successful collaborations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /masthead -->
+
+  <!-- section -->
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <div class="row">
+        <% @success_stories.where(:published => true).each_with_index do |success_story,index| %>
+          <%= render partial: 'success_story_post', locals: { success_story: success_story } %>
+        <% end %>
+      </div> 
+    </div>
+  </div>
+    <!-- /section -->
+</div>

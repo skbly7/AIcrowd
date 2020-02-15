@@ -1,0 +1,18 @@
+<div class="challenges-form__thin-tab">
+  <span class="label-text">Rules</span>
+
+  <% if @challenge.current_challenge_rules.present? %>
+    <%= render 'challenge_rules/challenge_rules', challenge_rules: @challenge.current_challenge_rules, challenge: @challenge, organizer: @organizer %>
+  <% else %>
+    No rules added yet
+  <% end %>
+  <hr/>
+
+  <div class="links">
+    <%= link_to_add_association 'Set challenge rules', f, :challenge_rules, html_options = {
+                                partial: 'challenges/fields/challenge_rules_fields',
+                                class: 'form-text',
+                                id: 'replace-rules-button' } %>
+  </div>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'admin' } %>
+</div>

@@ -1,20 +1,5 @@
-<div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
-  <%#= concept(Challenge::Cell::ChallengeSubnav,
-                @challenge,
-                tab: 'participants',
-                current_participant: current_participant) %>
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
 
-  <div class="row">
-    <ul class="list-host-members">
-        <%= render partial: 'participant_challenges' %>
-    </ul>
-    <span id='more-anchor'></span>
-    <%= render partial: 'shared/load_more',
-               locals: { collection: @participant_challenges } %>
-  </div>
-</div>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+
+<%= render partial: 'participant_challenges' %>

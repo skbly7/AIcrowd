@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="error-code">
+        <div class="text-center">
+          <div class="d-flex justify-content-center">
+            <%= pretty_error_code(@code) %>
+          </div>
+          <div>
+            <p><%= @message %><br><br></p>
+            <a
+              class="btn btn-secondary"
+              role="button"
+              href="<%= challenges_path %>"
+            >View challenges</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

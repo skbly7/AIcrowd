@@ -1,3 +1,15 @@
-<%= render partial: 'challenges/form/form', locals: {
-      challenge: @challenge,
-      title: 'Edit Challenge'} %>
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h4><%= @challenge.challenge %></h4>
+        <h1>Edit challenge</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'challenges/navigation', locals: { challenge: @challenge } %>
+<div id="challenges-form__wrapper">
+  <%= render partial: 'challenges/form', locals: { challenge: @challenge } %>
+</div>

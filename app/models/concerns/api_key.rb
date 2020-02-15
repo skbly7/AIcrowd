@@ -1,9 +1,6 @@
 module ApiKey
-
   def set_api_key
-    if self.api_key.blank?
-      self.api_key = generate_api_key
-    end
+    self.api_key = generate_api_key if api_key.blank?
   end
 
   def generate_api_key
@@ -13,5 +10,4 @@ module ApiKey
     end while (Participant.exists?(api_key: api_key) || Organizer.exists?(api_key: api_key))
     return api_key
   end
-
 end

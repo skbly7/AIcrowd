@@ -1,20 +1,10 @@
-<div class='content'>
-  <div class="masthead">
+<div class="section-pt-sm-pb-md">
+  <div class="container-fluid">
     <div class="row">
-      <div class="info">
-        <h2><%= @challenge_call.title %></h2>
-        <p>by <%= link_to @challenge_call.organizer.organizer, organizer_path(@challenge_call.organizer) %></p>
-        <p class='light'>Closing date: <%= @challenge_call.closing_date.strftime("%d %b %H:%M UTC") %></p>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class='article'>
-      <div class='markdown-wrap'>
-        <%= simple_format(@challenge_call.description) %>
-      </div>
-      <h2>Thank you</h2>
-      <p>Your submisson has been received, and you will contacted by a member of our team.</p>
+      <div class="col-12">
+        <h2>Thank you</h2>
+        <p>Your submisson has been received, and you will be contacted by a member of our team.</p>
+      </div>    
     </div>
   </div>
 </div>

@@ -1,0 +1,62 @@
+<!-- main content -->
+<main>
+  <!-- masthead -->
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h4>CLEF: <%= @clef_task.task %></h4>
+          <h2><%= @task_dataset_file.persisted? ? "Update File" : "Add File" %></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /masthead -->
+
+  <!-- section -->
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <%= form_for [@clef_task, @task_dataset_file], validate: true,
+                       html: {class: "form-rg",
+                              'data-form-data' => @s3_direct_post.fields.to_json.html_safe,
+                              'data-url' => @s3_direct_post.url,
+                              'data-host' => URI.parse(@s3_direct_post.url).host} do |f| %>
+
+            <div class="form-group">
+              <label for="fileTitle">File title</label>
+              <%= f.text_field :title, class: "form-control", id: "fileTitle" %>
+            </div>
+
+            <div class="form-group">
+              <label for="fileDescription">File description</label>
+              <%= f.text_field :description, class: "form-control", id: "fileDescription", 'aria-describedby': "fileDescriptionHelp" %>
+              <small id="fileDescriptionHelp" class="form-text text-muted">Max. X characters</small>
+            </div>
+
+            <div class="form-group">
+              <span class="label-text">Dataset file</span>
+              <div class="custom-file mt-1">
+                <%= f.file_field :dataset_file_s3_key, class: 'file-upload s3File custom-file-input', id: 'datasetFile' %>
+                <label class="custom-file-label" for="datasetFile">Choose file</label>
+              </div>
+            </div>
+
+            <div class="btn-set" aria-hidden="true">
+              <%= f.button (f.object.new_record? ? "Add File" : "Update File"), class: 'btn btn-primary', id: 'submitS3' %>
+              <%= link_to organizer_clef_tasks_path(@clef_task.organizer), class: "btn btn-secondary", validate: false do %>
+                Cancel
+              <% end %>
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+
+</main>
+<!-- /main content -->

@@ -1,4 +1,5 @@
 class ImageUploader < CarrierWave::Uploader::Base
+  include ActionView::Helpers::AssetUrlHelper
   include CarrierWave::MiniMagick
   # https://github.com/DarthSim/carrierwave-bombshelter
 
@@ -11,7 +12,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(jpg jpeg gif png)
+    ['jpg', 'jpeg', 'gif', 'png']
   end
 
+  def default_url
+    asset_url '/assets/users/user-avatar-default.svg'
+  end
 end

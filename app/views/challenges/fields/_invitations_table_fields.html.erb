@@ -1,0 +1,42 @@
+<!-- section header -->
+<header class="sub-section-header">
+  <div>
+    <h4>Invited</h4>
+  </div>
+  <div class="links">
+  <%= link_to_add_association '+ Invite participant',
+            f,
+            :invitations,
+            html_options = {
+              partial: 'challenges/fields/invitation_fields',
+              class: 'btn btn-secondary btn-sm' } %>
+  </div>
+</header>
+<!-- /section header -->
+
+<!-- table: invited participants -->
+<div class="table-responsive mb-4">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Invited (UTC)</th>
+	      <th>Remove?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :invitations do |invitation| %>
+          <tr>
+            <td><%= invitation.object.email %></td>
+            <td><%= invitation.object.invitee_name %></td>
+            <td><%= participant_invitation(email: invitation.object.email) %></td>
+            <td><%= invitation.object.created_at %></td>
+            <td><%= link_to_remove_association "remove", invitation %></td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+</div>
+<!-- /table: invited participants -->

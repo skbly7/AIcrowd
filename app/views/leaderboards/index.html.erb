@@ -1,51 +1,94 @@
-<div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
-  <%= concept(Leaderboard::Cell::ChallengeRoundPills,
-                @challenge,
-                current_round: @current_round,
-                current_participant: current_participant) %>
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-  <% if @current_round.leaderboard_note.present? %>
-    <div class='row'>
-      <div class="leaderboard-note">
-        <%= sanitize(@current_round.leaderboard_note) %>
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if @challenge_rounds.size > 1 %>
+          <!-- Challenge Round Pills  -->
+          <ul class="nav nav-pills">
+            <% @challenge_rounds.each do |challenge_round| %>
+              <li class="nav-item">
+                <%= link_to challenge_round.challenge_round,
+                            challenge_leaderboards_path(challenge_round_id: challenge_round.id),
+                            class: leaderboard_tab_classes(challenge_round, @current_round) %>
+              </li>
+            <% end %>
+          </ul>
+          <!-- / Challenge Round Pills  -->
+        <% end %>
+
+        <!-- challenge leaderboard -->
+        <% if @current_round.leaderboard_note.present? %>
+		      <div class="md-content width-100">
+			      <div class="note">
+				      <%= sanitize(@current_round.leaderboard_note) %>
+			      </div>
+		      </div>
+        <% end %>
+
+        <% if policy(@challenge).show_leaderboard? %>
+          <% unless @challenge.show_leaderboard? %>
+            <div class="leaderboard-important-msg">
+              <p>Leaderboard is only visible to organizers</p>
+            </div>
+          <% end %>
+
+          <div class="table-responsive-md">
+            <table class="table table-leaderboard">
+              <thead>
+                <tr>
+                  <th scope="col" class="leaderboard-change">Δ</th>
+                  <th scope="col">#</th>
+                  <th scope="col">Participants</th>
+                  <% if @challenge.media_on_leaderboard %>
+                    <th scope="col">Media</th>
+                  <% end %>
+                  <th scope="col"><%= @challenge.score_title %></th>
+                  <% if @challenge.score_secondary_title.present? %>
+                    <th scope="col"><%= @current_round.score_secondary_title %></th>
+                  <% end %>
+                  <% @challenge.other_scores_fieldnames_array.each do |fname| %>
+                    <th scope="col"><%= fname %></th>
+                  <% end %>
+                  <th scope="col">Entries</th>
+                  <th scope="col" class="text-right">Last Submission</th>
+                  <th scope="col" class="text-right"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards } %>
+              </tbody>
+          </table>
+        <% else %>
+          <div class="leaderboard-msg">
+            <p>Leaderboard is not displayed yet.</p>
+          </div>
+        <% end %>
+      </div>
+
+        <!-- toggle switch -->
+        <% if @challenge.status == :completed %>
+          <div class="toggle-switch-container">
+            <div class="can-toggle can-toggle--size-small">
+              <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?) do %>
+                <input id="post-challenge-switch" type="checkbox" <%= "checked" if @post_challenge %> >
+                <label for="post-challenge">
+                  <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
+                  <div class="can-toggle__label-text">Show post-challenge submissions</div>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <!-- /toggle switch -->
+
+      <span id="more-anchor"></span>
+       <%= render partial: 'shared/load_more',
+        locals: { collection: @leaderboards } %>
       </div>
     </div>
-  <% end %>
-
-  <div class="row">
-    <% if policy(@challenge).show_leaderboard? %>
-      <% unless @challenge.show_leaderboard? %>
-        <div class="leaderboard-important-msg">
-          <p>Leaderboard is only visible to organizers</p>
-        </div>
-      <% end %>
-      <table class="leaderboard">
-          <%= concept(Leaderboard::Cell::TableHead,
-                @leaderboards,
-                challenge: @challenge,
-                current_round: @current_round,
-                current_participant: current_participant) %>
-          <tbody>
-            <%= render partial: 'leaderboards' %>
-          </tbody>
-      </table>
-    <% else %>
-      <div class="leaderboard-msg">
-        <p>Leaderboard is not displayed yet.</p>
-      </div>
-    <% end %>
   </div>
-
-  <%= render partial: 'post_challenge',
-        locals: { challenge: @challenge, post_challenge: @post_challenge } %>
-
-  <span id='more-anchor'></span>
-  <%= render partial: 'shared/load_more',
-        locals: { collection: @leaderboards } %>
-  <div id='modal-anchor'></div>
-</div>
+</section>
+<!-- /section -->

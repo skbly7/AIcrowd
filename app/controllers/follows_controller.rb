@@ -4,25 +4,31 @@ class FollowsController < ApplicationController
   respond_to :js
 
   def create
-    @follow = @followable.follows.new
+    @follow             = @followable.follows.new
     @follow.participant = current_participant
     @follow.save
-    render js: concept(Follow::Cell, @followable, current_participant: current_participant).(:refresh)
+
+    respond_to do |format|
+      format.js { render :refresh }
+    end
   end
 
   def destroy
     Follow.destroy(params[:id])
-    render js: concept(Follow::Cell, @followable, current_participant: current_participant).(:refresh)
+
+    respond_to do |format|
+      format.js { render :refresh }
+    end
   end
 
   private
+
   def set_followable
-    params.each do |key,val|
+    params.each do |key, val|
       if key =~ /(.+)_id$/
-        @followable = $1.classify.constantize.find(val)
+        @followable = Regexp.last_match(1).classify.constantize.find(val)
         break
       end
     end
   end
-
 end

@@ -1,0 +1,87 @@
+<!-- masthead - challenge -->
+<div class="masthead masthead-challenge">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% challenge_rounds.each do |challenge_round| %>
+          <span class="badge <%= challenge_remaining_text(challenge, challenge_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+            <img src="/assets/img/icon-time.svg">
+            <%= challenge_round.challenge_round %>: <%= challenge_remaining_text(challenge, challenge_round) %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- title/description/prizes -->
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-9">
+        <h1><%= challenge.challenge %></h1>
+        <% if challenge.private_challenge %>
+          <span class="badge badge-secondary">
+            Private
+          </span>
+        <% end %>
+        <% if challenge.hidden_challenge %>
+          <span class="badge badge-secondary">
+            Hidden
+          </span>
+        <% end %>
+        <p><%= challenge.tagline %></p>
+      </div>
+
+      <div class="col-sm-12 col-md-4 col-lg-3">
+        <%= render partial: 'shared/challenges/prizes_breakdown', locals: { challenge: challenge } %>
+      </div>
+    </div>
+    <!-- /title/description/prizes -->
+
+    <!-- organizer/stats/options -->
+    <div class="row">
+      <div class="col-12 d-flex align-items-center flex-wrap">
+        <div class="organizer-attribution">
+          <%= link_to organizer_path(challenge.organizer) do %>
+            <%= image_tag challenge.organizer.image_file_url %>
+          <% end %>
+          <span>By&nbsp;
+            <%= link_to organizer_path(challenge.organizer) do %>
+              <%= challenge.organizer.organizer %>
+            <% end %>
+          </span>
+        </div>
+
+        <div class="stats-group" style="margin-right: 0px">
+          <div class="stat-item" style="width: 72px">
+            <center>
+            <span data-toggle="tooltip" data-placement="top" title="No. of views">
+              <img src="/assets/img/icon-views.svg">
+              <%= challenge_stat_count(challenge, 'view') %>
+            </span>
+            </center>
+          </div>
+          <div class="stat-item" style="width: 72px">
+            <center>
+            <span data-toggle="tooltip" data-placement="top" title="No. of users">
+              <img src="/assets/img/icon-users.svg">
+              <%= challenge_stat_count(challenge, 'participant') %>
+            </span>
+            </center>
+          </div>
+          <div class="stat-item" style="width: 72px">
+            <center>
+            <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
+              <img src="/assets/img/icon-submissions.svg">
+              <%= challenge_stat_count(challenge, 'submission') %>
+            </span>
+            </center>
+          </div>
+        </div>
+        <div class="btn-set" aria-hidden="true">
+          <%= render partial: 'shared/votes/button', locals: { votable: challenge, vote: vote } %>
+          <%= render partial: 'shared/challenges/follow_button', locals: { followable: challenge, follow: follow } %>
+        </div>
+      </div>
+    </div>
+    <!-- /organizer/stats/options -->
+  </div>
+</div>
+<!-- /masthead - challenge -->

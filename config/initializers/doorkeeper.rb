@@ -8,14 +8,14 @@ Doorkeeper.configure do
     # If you want to use named routes from your app you need
     # to call them on routes object eg.
     # routes.new_user_session_path
-    current_participant || warden.authenticate!(:scope => :participant)
+    current_participant || warden.authenticate!(scope: :participant)
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications,
   # you need to declare the block below.
   #
   admin_authenticator do
-    current_participant && current_participant.admin? || redirect_to(new_participant_session_url)
+    current_participant&.admin? || redirect_to(new_participant_session_url)
   end
 
   # If you are planning to use Doorkeeper in Rails 5 API-only application, then you might
@@ -77,8 +77,8 @@ Doorkeeper.configure do
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
   #
-  default_scopes  :public
-  #optional_scopes :write, :update
+  default_scopes :public
+  # optional_scopes :write, :update
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then

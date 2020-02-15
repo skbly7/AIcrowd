@@ -1,5 +1,4 @@
 class MarkdownEditorPolicy < ApplicationPolicy
-
   def index?
     participant
   end
@@ -7,5 +6,4 @@ class MarkdownEditorPolicy < ApplicationPolicy
   def presign?
     participant
   end
-
 end

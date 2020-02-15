@@ -1,12 +1,18 @@
-if Rails.env == 'development'
-
+if Rails.env == 'development' || Rails.env == 'staging'
+  SuccessStory.destroy_all
+  DatasetFile.destroy_all
+  ChallengeCallResponse.destroy_all
+  ChallengeCall.destroy_all
   JobPosting.destroy_all
   Blog.destroy_all
   Submission.destroy_all
+  Partner.destroy_all
+  ChallengeParticipant.destroy_all
   Participant.destroy_all
   BaseLeaderboard.destroy_all
   ChallengeRound.destroy_all
   Challenge.destroy_all
+  Partner.destroy_all
   Organizer.destroy_all
 
   # Admin
@@ -30,14 +36,38 @@ if Rails.env == 'development'
       password: 'password',
       password_confirmation: 'password',
       name: "p#{id}",
-      confirmed_at: Time.now)
+      confirmed_at: Time.now,
+      )
   end
+
 
   # Organizers
   Organizer.create!([
-    {id: 21, organizer: "Poznan University of Technology", address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", image_file: "Poznań_University_of_Technology.png", tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
-    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", image_file: "images.jpeg", tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
+    {id: 21, organizer: "Poznan University of Technology", image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
+    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
   ])
+
+  Participant.create!(
+    id: 112233,
+    email: 'test_user@example.com',
+    password: 'password',
+    password_confirmation: 'password',
+    name: 'test_user',
+    confirmed_at: Time.now,
+    bio: "I am a test user, all participant page testing will be done on me",
+    website: "https://www.testuser.com",
+    github: "https://www.github.com/testuser",
+    linkedin: "https://www.linkedin.com/testuser",
+    twitter: "https://www.twitter.com/testuser",
+    slug: "test_user",
+    remote_image_file_url: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
+    affiliation: "Test User Incorporated",
+    country_cd: "IN",
+    address: "TU Block, Pillar number 420",
+    city: "Mumbai",
+    first_name: "Test",
+    last_name: "User",
+    organizer_id: 21)
 
   member_poznac_ids = [1020, 1050, 1110]
 
@@ -65,20 +95,27 @@ if Rails.env == 'development'
       confirmed_at: Time.now)
   end
 
+  # Partners
+  Partner.create!([
+    {id: 22, organizer_id: 21 , image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Spotify", visible: true},
+    {id: 1223, organizer_id: 17 , image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Uber", visible: true}
+  ])
+
   # Challenges
   Challenge.create!([
     {id: 37,
       organizer_id: 21,
       challenge: "Train Schedule Optimisation Challenge",
+      prize_cash: "$1 Million USD",
+      prize_academic: "8",
+      prize_misc: "Some other things",
       status_cd: "running",
       tagline: "Optimizing train schedules ",
-      primary_sort_order_cd: "ascending",
-      secondary_sort_order_cd: "not_used",
       perpetual_challenge: false,
       answer_file_s3_key: nil,
       page_views: 10455,
       participant_count: 195,
-      submission_count: 13,
+      submissions_count: 13,
       score_title: "Score",
       score_secondary_title: "Secondary Score",
       slug: "train-schedule-optimisation-challenge",
@@ -88,7 +125,9 @@ if Rails.env == 'development'
       challenge_client_name: "sbb_train_schedule_optimisation_challenge_2018",
       online_grading: true,
       vote_count: 55,
-      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", license_markdown: "",
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
+      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      license_markdown: "",
       license: "",
       dataset_description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
       dataset_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", image_file: "sbb_challenge.png",
@@ -109,19 +148,210 @@ if Rails.env == 'development'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false},
+      post_challenge_submissions: false,
+      latest_submission: false},
+    {id: 370,
+      organizer_id: 17,
+      challenge: "TEST: Train Schedule Optimisation Challenge",
+      prize_cash: "$100 Billion USD",
+      prize_academic: "80",
+      prize_misc: "LOTS other things",
+      status_cd: "running",
+      tagline: "Optimizing train schedules ",
+      perpetual_challenge: false,
+      answer_file_s3_key: nil,
+      page_views: 104550,
+      participant_count: 100,
+      submissions_count: 5000,
+      score_title: "Score",
+      score_secondary_title: "Secondary Score",
+      slug: "train-schedule-optimisation-challenge",
+      submission_license: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      api_required: false,
+      media_on_leaderboard: false,
+      challenge_client_name: "sbb_train_schedule_optimisation_challenge_2018",
+      online_grading: true,
+      vote_count: 55,
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
+      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      license_markdown: "",
+      license: "",
+      dataset_description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      dataset_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", image_file: "sbb_challenge.png",
+      featured_sequence: 8,
+      dynamic_content_flag: false,
+      dynamic_content: nil,
+      dynamic_content_tab: nil,
+      winner_description_markdown: nil,
+      winner_description: nil,
+      winners_tab_active: false,
+      clef_task_id: nil,
+      clef_challenge: false,
+      submissions_page: true,
+      private_challenge: false,
+      show_leaderboard: true,
+      grader_identifier: "crowdAI_GRADER_POOL",
+      online_submissions: true,
+      grader_logs: true,
+      require_registration: false,
+      grading_history: true,
+      post_challenge_submissions: false,
+    latest_submission: false},
+    {id: 371,
+      organizer_id: 17,
+      challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
+      prize_cash: "$1 Billion USD",
+      prize_academic: "10",
+      prize_misc: "Some things",
+      status_cd: "running",
+      tagline: "Optimizing my schedules ",
+      perpetual_challenge: false,
+      answer_file_s3_key: nil,
+      page_views: 10455,
+      participant_count: 195,
+      submissions_count: 13,
+      score_title: "Score",
+      score_secondary_title: "Secondary Score",
+      slug: "train-schedule-optimisation-challenge",
+      submission_license: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      api_required: false,
+      media_on_leaderboard: false,
+      challenge_client_name: "sbb_train_schedule_optimisation_challenge_2018",
+      online_grading: true,
+      vote_count: 55,
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
+      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      license_markdown: "",
+      license: "",
+      dataset_description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      dataset_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", image_file: "sbb_challenge.png",
+      featured_sequence: 8,
+      dynamic_content_flag: false,
+      dynamic_content: nil,
+      dynamic_content_tab: nil,
+      winner_description_markdown: nil,
+      winner_description: nil,
+      winners_tab_active: false,
+      clef_task_id: nil,
+      clef_challenge: false,
+      submissions_page: true,
+      private_challenge: false,
+      show_leaderboard: true,
+      grader_identifier: "crowdAI_GRADER_POOL",
+      online_submissions: true,
+      grader_logs: true,
+      require_registration: false,
+      grading_history: true,
+      post_challenge_submissions: false,
+    latest_submission: false},
+    {id: 373,
+      organizer_id: 17,
+      challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
+      prize_cash: "$1 Billion USD",
+      prize_academic: "10",
+      prize_misc: "Some things",
+      status_cd: "running",
+      tagline: "Optimizing my schedules ",
+      perpetual_challenge: false,
+      answer_file_s3_key: nil,
+      page_views: 10455,
+      participant_count: 195,
+      submissions_count: 13,
+      score_title: "Score",
+      score_secondary_title: "Secondary Score",
+      slug: "train-schedule-optimisation-challenge",
+      submission_license: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      api_required: false,
+      media_on_leaderboard: false,
+      challenge_client_name: "sbb_train_schedule_optimisation_challenge_2018",
+      online_grading: true,
+      vote_count: 55,
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
+      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      license_markdown: "",
+      license: "",
+      dataset_description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      dataset_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", image_file: "sbb_challenge.png",
+      featured_sequence: 8,
+      dynamic_content_flag: false,
+      dynamic_content: nil,
+      dynamic_content_tab: nil,
+      winner_description_markdown: nil,
+      winner_description: nil,
+      winners_tab_active: false,
+      clef_task_id: nil,
+      clef_challenge: false,
+      submissions_page: true,
+      private_challenge: false,
+      show_leaderboard: true,
+      grader_identifier: "crowdAI_GRADER_POOL",
+      online_submissions: true,
+      grader_logs: true,
+      require_registration: false,
+      grading_history: true,
+      post_challenge_submissions: false,
+    latest_submission: false},
+    {id: 372,
+      organizer_id: 21,
+      challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
+      prize_cash: "$1 Billion USD",
+      prize_academic: "10",
+      prize_misc: "Some things",
+      status_cd: "running",
+      tagline: "Optimizing my schedules ",
+      perpetual_challenge: false,
+      answer_file_s3_key: nil,
+      page_views: 10455,
+      participant_count: 195,
+      submissions_count: 13,
+      score_title: "Score",
+      score_secondary_title: "Secondary Score",
+      slug: "train-schedule-optimisation-challenge",
+      submission_license: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      api_required: false,
+      media_on_leaderboard: false,
+      challenge_client_name: "sbb_train_schedule_optimisation_challenge_2018",
+      online_grading: true,
+      vote_count: 55,
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
+      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      license_markdown: "",
+      license: "",
+      dataset_description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      dataset_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", image_file: "sbb_challenge.png",
+      featured_sequence: 8,
+      dynamic_content_flag: false,
+      dynamic_content: nil,
+      dynamic_content_tab: nil,
+      winner_description_markdown: nil,
+      winner_description: nil,
+      winners_tab_active: false,
+      clef_task_id: nil,
+      clef_challenge: false,
+      submissions_page: true,
+      private_challenge: false,
+      show_leaderboard: true,
+      grader_identifier: "crowdAI_GRADER_POOL",
+      online_submissions: true,
+      grader_logs: true,
+      require_registration: false,
+      grading_history: true,
+      post_challenge_submissions: false,
+    latest_submission: false},
     {id: 30,
       organizer_id: 17,
       challenge: "Visual Doom AI Competition 2018 - Singleplayer Track (1)",
+      prize_cash: "$2 Million USD",
+      prize_travel: "3",
+      prize_academic: "4",
+      prize_misc: "Swag",
       status_cd: "completed",
       tagline: "ViZDoom Reinforcement Learning ",
-      primary_sort_order_cd: "ascending",
-      secondary_sort_order_cd: "ascending",
       perpetual_challenge: false,
       answer_file_s3_key: nil,
       page_views: 7570,
       participant_count: 53,
-      submission_count: 204,
+      submissions_count: 204,
       score_title: "Mean Time (mins)",
       score_secondary_title: "Median Time (mins)",
       slug: "visual-doom-ai-competition-2018-singleplayer-track-1",
@@ -131,6 +361,7 @@ if Rails.env == 'development'
       challenge_client_name: "vizdoom2018_single_player",
       online_grading: true,
       vote_count: 42,
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
       description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", license_markdown: "Example ",
       license: "<p>Example</p>\n", dataset_description_markdown: "Example ", dataset_description: "<p>Example</p>\n",
       image_file: "Doom_cover_square.jpg",
@@ -151,7 +382,8 @@ if Rails.env == 'development'
       grader_logs: true,
       require_registration: false,
       grading_history: false,
-      post_challenge_submissions: false}
+      post_challenge_submissions: false,
+    latest_submission: false}
   ])
 
   ChallengeRound.create!([
@@ -205,22 +437,22 @@ if Rails.env == 'development'
       leaderboard_note: "\n"}
   ])
 
-  # Submissions
-  Submission.create!([
+# Submissions
+Submission.create!([
 
     # Challenge 37
 
-    {id: 13511, challenge_id: 37, participant_id: 1020, score: 80000.2, created_at: "2018-08-15 15:05:56", updated_at: "2018-08-15 15:06:01", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 80000.2, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
+    {id: 13511, challenge_id: 37, participant_id: 1020, score: 80000.2, created_at: "2018-08-15 15:05:56", updated_at: "2018-08-15 15:06:01", score_secondary: 2.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 80000.2, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
     {id: 13509, challenge_id: 37, participant_id: 1020, score: nil, created_at: "2018-08-15 14:40:42", updated_at: "2018-08-15 14:40:46", score_secondary: nil, grading_status_cd: "failed", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
-    {id: 12926, challenge_id: 37, participant_id: 7420, score: 373.70000005, created_at: "2018-08-10 15:48:37", updated_at: "2018-08-10 15:50:48", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "Second submission with slight variation", post_challenge: false, challenge_round_id: 52, score_display: 373.7, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
-    {id: 12939, challenge_id: 37, participant_id: 7420, score: 10373.0, created_at: "2018-08-10 18:35:06", updated_at: "2018-08-10 18:36:55", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "Scoring test", post_challenge: false, challenge_round_id: 52, score_display: 10373.0, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
-    {id: 12949, challenge_id: 37, participant_id: 7420, score: 363.5999981, created_at: "2018-08-10 20:30:48", updated_at: "2018-08-10 20:32:35", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 363.6, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
-    {id: 12988, challenge_id: 37, participant_id: 1235, score: 30581.9166792, created_at: "2018-08-11 08:07:46", updated_at: "2018-08-11 08:08:40", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 30581.917, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
+    {id: 12926, challenge_id: 37, participant_id: 7420, score: 373.70000005, created_at: "2018-08-10 15:48:37", updated_at: "2018-08-10 15:50:48", score_secondary: 4.0, grading_status_cd: "graded", description_markdown: "Second submission with slight variation", post_challenge: false, challenge_round_id: 52, score_display: 373.7, score_secondary_display: 3.0, baseline: false, baseline_comment: nil},
+    {id: 12939, challenge_id: 37, participant_id: 7420, score: 10373.0, created_at: "2018-08-10 18:35:06", updated_at: "2018-08-10 18:36:55", score_secondary: 6.0, grading_status_cd: "graded", description_markdown: "Scoring test", post_challenge: false, challenge_round_id: 52, score_display: 10373.0, score_secondary_display: 5.0, baseline: false, baseline_comment: nil},
+    {id: 12949, challenge_id: 37, participant_id: 7420, score: 363.5999981, created_at: "2018-08-10 20:30:48", updated_at: "2018-08-10 20:32:35", score_secondary: 3.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 363.6, score_secondary_display: 6.0, baseline: false, baseline_comment: nil},
+    {id: 12988, challenge_id: 37, participant_id: 1235, score: 30581.9166792, created_at: "2018-08-11 08:07:46", updated_at: "2018-08-11 08:08:40", score_secondary: 1.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 30581.917, score_secondary_display: 3.0, baseline: false, baseline_comment: nil},
     {id: 12990, challenge_id: 37, participant_id: 7420, score: nil, created_at: "2018-08-11 08:38:59", updated_at: "2018-08-11 08:39:04", score_secondary: nil, grading_status_cd: "failed", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
-    {id: 12994, challenge_id: 37, participant_id: 1235, score: 30581.9166792, created_at: "2018-08-11 09:27:50", updated_at: "2018-08-11 09:28:50", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 30581.917, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
+    {id: 12994, challenge_id: 37, participant_id: 1235, score: 30581.9166792, created_at: "2018-08-11 09:27:50", updated_at: "2018-08-11 09:28:50", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 30581.917, score_secondary_display: 2.0, baseline: false, baseline_comment: nil},
     {id: 13615, challenge_id: 37, participant_id: 1020, score: 60001.6000001, created_at: "2018-08-16 16:01:34", updated_at: "2018-08-16 16:01:53", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 60001.6, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
     {id: 12925, challenge_id: 37, participant_id: 7420, score: 344.5, created_at: "2018-08-10 15:34:15", updated_at: "2018-08-10 15:36:03", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "Trivial not completely working solution to test submission process", post_challenge: false, challenge_round_id: 52, score_display: 344.5, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
-    {id: 12991, challenge_id: 37, participant_id: 3272, score: 765.872345, created_at: "2018-08-12 08:48:59", updated_at: "2018-08-12 08:49:04", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 765.872345, score_secondary_display: nil, baseline: false, baseline_comment: nil},    
+    {id: 12991, challenge_id: 37, participant_id: 3272, score: 765.872345, created_at: "2018-08-12 08:48:59", updated_at: "2018-08-12 08:49:04", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 765.872345, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 12995, challenge_id: 37, participant_id: 3272, score: 777.9166792, created_at: "2018-08-13 09:27:50", updated_at: "2018-08-13 09:28:50", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 777.9166792, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
     {id: 13616, challenge_id: 37, participant_id: 3272, score: nil, created_at: "2018-08-16 16:02:34", updated_at: "2018-08-16 16:03:53", score_secondary: nil, grading_status_cd: "failed", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
 
@@ -430,7 +662,10 @@ if Rails.env == 'development'
     {id: 12823, challenge_id: 37, participant_id: 1, score: nil, created_at: "2018-08-09 14:35:24", updated_at: "2018-08-09 14:36:38", score_secondary: nil, grading_status_cd: "failed", description_markdown: "Test", post_challenge: false, challenge_round_id: 52, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 1163, challenge_id: 30, participant_id: 1817, score: 0.0, created_at: "2017-08-05 06:18:20", updated_at: "2018-02-20 15:20:57", score_secondary: nil, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 1, score_display: 0.0, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 12336, challenge_id: 30, participant_id: 5366, score: 4.5, created_at: "2018-08-06 02:18:41", updated_at: "2018-08-06 03:05:52", score_secondary: 5.0, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: 4.5, score_secondary_display: 5.0, baseline: false, baseline_comment: nil},
-    {id: 12447, challenge_id: 30, participant_id: 5366, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:35", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil}
+    {id: 12447, challenge_id: 30, participant_id: 5366, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:35", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
+    {id: 12448, challenge_id: 30, participant_id: 112233, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:45", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
+    {id: 11816, challenge_id: 30, participant_id: 1, score: 4.0, created_at: "2018-12-30 14:24:29", updated_at: "2018-12-30 14:42:20", score_secondary: 4.0, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: 4.0, score_secondary_display: 4.0, baseline: false, baseline_comment: nil},
+    {id: 11817, challenge_id: 30, participant_id: 1, score: 3.0, created_at: "2018-12-30 15:24:29", updated_at: "2018-12-30 15:42:20", score_secondary: 3.0, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: 3.0, score_secondary_display: 3.0, baseline: false, baseline_comment: nil},
   ])
 
   # Calculate Leaderboards
@@ -442,57 +677,47 @@ if Rails.env == 'development'
     id: 87,
       participant_id: 1,
       title: "Blog number 1",
-      body: "This is a sample blog for testing, it belongs to participant p1",
+      body: "On the newly built data science challenges platform crowdAI there is an interesting Deep Learning challenge called the PlantVillage Disease Classification Challenge. In this challenge, you are required to identify the disease of a plant from an image of its leaf.\nThe dataset include 38 classes of both healthy and diseased leaves. The training dataset has 21917 images.\n38 classes of crop-disease pairs in the dataset\nWe’ll use the popular deep learning platform Torch to solve this problem. This is a hands-on tutorial covering training of AlexNet ImageNet Classification with Deep Convolutional Neural Networks .\nThe tutorial is also accompanied by a repo containing complete working code. It will include ResNet Deep Residual Learning for Image Recognition along with Alexnet.\nThis tutorial assumes familiarity with convolutional neural networks (CNNs) and torch. Here are some resources to get started:\nNeural Networks and Deep Learning book by Michael Nielsen. Chapter 6 is the essential reading.\nTorch tutorials\nTorch cheat sheet\nCNNs learn hierarchical task-specific invariant features. For example, first few layers of CNN may learn to recognize particular type of leaf spots and later layers may learn about pattern of these spots to finally make a decision about disease. An usual, CNNs are a stack of convolutional layers and max-pooling layers.\nCNNs have been very successful in visual recognition tasks. They have been consistently winning ImageNet large scale visual recognition challenge (ILSVRC). ImageNet is a huge database of 15 million tagged images. A standard approach for a problem like ours is to take an ImageNet trained model and fine tune it to our problem. However this is against the rules of the PlantVillage challenge. So, we’ll train our networks from scratch.\nLet’s quickly start by building the AlexNet model.",
       published: true,
       vote_count: 29,
       view_count: 200,
       seq: 2993,
-      posted_at: Time.now)
+      posted_at: Time.now,
+      slug: "b_1")
 
-  Blog.create!(
-    id: 91,
-      participant_id: 1051,
-      title: "Blog number 2",
-      body: "This is a sample blog for testing, it belongs to participant p1051. This participant belongs to an orgnization.",
-      published: true,
-      vote_count: 14,
-      view_count: 231,
-      seq: 2231,
-      posted_at: Time.now)
-
-  JobPosting.create!(
-    id: 102,
-    title: "Job posting 1",
-    organisation: "Cloud AI",
-    contact_name: "J.J. Thompson",
-    contact_email: "jjthompson@atom.com",
-    contact_phone: "666-999-666",
-    posting_date: "2018-08-06",
-    closing_date: "2019-11-06",
-    status_cd: "open",
-    description: "Guy needed to build new elements using generative networks",
-    location: "Bangalore",
-    country: "India",
-    page_views: 1234,
-    created_at: Time.now,
-    job_url: "www.atomsforu.com"
+  DatasetFile.create!(
+    id: 123,
+    description: "This is a test dataset",
+    challenge_id: 37,
+    title: "test_dataset_file",
+    dataset_file_s3_key: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
+    hosting_location: "s3",
+    external_url: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
+    external_file_size: "1 GB"
     )
 
-  JobPosting.create!(
-    id: 105,
-    title: "Job posting 2",
-    organisation: "Cloud AI",
-    contact_name: "J.G. Thompson",
-    contact_email: "jgthompson@atom.com",
-    contact_phone: "666-999-666",
-    posting_date: "2018-08-06",
-    closing_date: "2018-11-06",
-    status_cd: "closed",
-    description: "Guy needed to build new DNA samples using generative networks",
-    location: "Bangalore",
-    country: "India",
-    page_views: 1234,
-    created_at: Time.now,
-    job_url: "www.dnaforu.com"
-    )
+  Dir[File.join(Rails.root, 'db', 'seeds/*', '*.rb')].sort.each do |seed|
+    Dir.chdir(File.dirname(seed)) do
+      load seed
+    end
+  end
+
+  ChallengeParticipant.create!(
+    challenge_id: 100,
+    participant_id: 112233,
+    email: "test_user@example.com",
+    name: "test_user",
+    registered: true,
+    accepted_dataset_toc: true)
+
+  ChallengeParticipant.create!(
+    challenge_id: 100,
+    participant_id: 7,
+    email: "p7@example.com",
+    name: "p7")
+
+  ParticipationTerms.create!(
+    terms_markdown: "Sample Participation Terms. Please update at '/admin/participation_terms'"
+  )
+
 end

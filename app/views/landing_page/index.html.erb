@@ -1,64 +1,178 @@
-<div class="content">
-  <div class="row">
-    <h1>Crowdsourcing AI<br/> to solve real-world problems</h1>
-    <p class="large">AICrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, through challenges.</p>
-  </div>
-
-  <div class="row button-group">
-    <% if current_participant %>
-      <%= link_to "Host a Challenge",
-            landing_page_host_path,
-            class: 'btn btn-primary btn-large' %>
-    <% else %>
-      <%= link_to "Sign up",
-            new_participant_registration_path,
-            class: "btn btn-primary btn-large" %>
-      <%= link_to "Host a Challenge",
-            landing_page_host_path,
-            class: 'btn btn-secondary btn-large' %>
-    <% end %>
-  </div>
-
-  <% if @partners.present? %>
+<div class="masthead masthead-home bg-white">
+  <div class="container-fluid">
     <div class="row">
-      <div class="section-header">
-        <h6>Some of our users</h6>
-        <%#= link_to 'See all', '#', class: 'btn btn-secondary' %>
+
+      <div class="col-lg-12 col-xl-6">
+        <h1><span class="text-primary">Crowdsourcing AI</span> to solve real-world problems</h1>
+        <p>AIcrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, through challenges.</p>
+          <%= link_to "Organize a challenge", landing_page_host_path , :class=>"btn btn-secondary mt-4"%>
       </div>
 
-      <div class="grid-users">
-        <% @partners.each_with_index do |partner,index| %>
-          <%= image_tag partner.image_file.url, class: users_group(index) %>
-        <% end %>
-      </div>
+      <% if @partners.present? %>
+        <div class="col-lg-12 col-xl-6">
+          <div class="logos-organizers">
+            <% @partners.each_with_index do |partner,index| %>
+            <div class="logo-organizer">
+              <%= image_tag partner.image_file.url, class: "img-fluid" %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <% if @blog_posts.present? %>
-    <div class="row">
-      <div class="section-header">
-        <h6>Blog</h6>
-        <%= link_to 'See all', blogs_path, class: 'btn btn-secondary' %>
-      </div>
-
-      <div class="grid-blog-previews">
-        <% @blog_posts.each do |post| %>
-          <%= render partial: 'blog_post', locals: { post: post } %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="row">
-    <div class="section-header">
-      <h6>Featured Challenges</h6>
-      <%= link_to 'See all',
-            challenges_path,
-            class: "btn btn-secondary" %>
-    </div>
-
-    <ul class="list-challenges">
-      <%= concept(Challenge::Cell::ListDetail, collection: @challenges, current_participant: current_participant) %>
-    </ul>
   </div>
 </div>
+
+
+<!-- section -->
+<section class="section-p-md bg-light">
+
+  <!-- challenge cards -->
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- section header -->
+      <div class="col-12">
+        <header class="section-header-decorative">
+          <div>
+            <h4>Featured challenges</h4>
+          </div>
+
+          <%= link_to 'See all',
+            challenges_path,
+            class: "btn btn-secondary btn-sm" %>
+
+        </header>
+      </div>
+      <!-- /section header -->
+      <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
+    </div>
+  </div>
+  <!-- /challenge cards -->
+</section>
+<!-- section -->
+
+
+<!-- section -->
+<section class="section-p-md border-top">
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- testimonial carousel -->
+      <div class="col-sm-12 col-md-8">
+
+        <div id="carouselTestimonial" class="carousel carousel-testimonials slide carousel-fade" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselTestimonial" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselTestimonial" data-slide-to="1"></li>
+          </ol>
+
+          <div class="carousel-inner">
+
+            <!-- testimonial -->
+            <div id="testimonial-1" class="carousel-item active">
+              <blockquote class="blockquote-testimonial">
+                <img class="avatar" src="/assets/img/testimonial-1.jpeg">
+                <p class="mb-0">"Crowdsourcing far exceeded our expectations - you not only get new solutions, but also a deeper insight to the problem you are trying to solve."</p>
+                <footer class="blockquote-footer">Erik Nygren, Deep Learning and Artificial Intelligence Research, SBB CFF FFS</footer>
+              </blockquote>
+            </div>
+            <!-- /testimonial -->
+
+            <!-- testimonial -->
+            <div id="testimonial-2" class="carousel-item">
+              <blockquote class="blockquote-testimonial">
+                <img class="avatar" src="/assets/img/testimonial-2.jpeg">
+                <p class="mb-0">Thanks to the agile structure of the platform, it was easy to design an ML challenge outside of the standard framework of the training/test data challenges. For new challenges, I would choose AIcrowd over other platforms.</p>
+                <footer class="blockquote-footer">Łukasz Kidziński, Postdoctoral Researcher, Stanford</footer>
+              </blockquote>
+            </div>
+            <!-- /testimonial -->
+          </div>
+        </div>
+      </div>
+      <!-- /testimonial carousel -->
+
+      <!-- top contributors -->
+      <div class="col-sm-12 col-md-4">
+        <header class="section-header-decorative">
+          <div>
+            <h4>LATEST USERS</h4>
+          </div>
+        </header>
+
+        <div class="card">
+          <ul class="list-group list-group-flush list-group-latest-contributors">
+            <% @participants.each do |participant| %>
+              <!-- user -->
+              <li class="list-group-item">
+                <%= link_to participant_path(participant) do %>
+                  <%= image_tag participant.image_url, class: "avatar" %>
+                  <span class="text-link"><%= participant.name %></span>
+                <% end %>
+              </li>
+              <!-- /user -->
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <!-- /top contributors -->
+
+    </div>
+  </div>
+</section>
+<!-- /section -->
+
+<!-- section -->
+<section class="section-pb-md">
+
+  <!-- blog post previews -->
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- section header -->
+      <div class="col-12">
+        <header class="section-header-decorative">
+          <div>
+            <h4>From the blog</h4>
+          </div>
+          <%= button_to 'See all', blogs_path, class: "btn btn-secondary btn-sm", method: :get %>
+        </header>
+      </div>
+      <!-- /section header -->
+      <% @blog_posts.each do |post| %>
+            <%= render partial: 'blog_post', locals: {post: post} %>
+      <% end %>
+    </div>
+  </div>
+  <!-- /blog post previews -->
+
+</section>
+<!-- /section -->
+
+<!-- section -->
+<section class="section-p-md bg-light border-top">
+  <div class="logo-grid">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <header class="section-header-decorative">
+            <div>
+              <h4>Thank you</h4>
+            </div>
+          </header>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <% if @partners.present? %>
+              <% @partners.each_with_index do |partner,index| %>
+                <div class="logo">
+                  <%= image_tag partner.image_file.url, class: "img-fluid" %>
+                </div>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /section -->

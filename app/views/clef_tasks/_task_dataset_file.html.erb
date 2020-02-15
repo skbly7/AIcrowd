@@ -1,0 +1,30 @@
+<!-- item -->
+<li class="list-group-item">
+  <div>
+    <%= link_to file_expiring_url(task_dataset_file), class: 'text-link', data: { :'dataset-file-id' => task_dataset_file.id } do %>
+      <%= file_title(task_dataset_file) %> (<%= file_size(task_dataset_file) %>)
+    <% end %>
+    <span class="description">
+      <%= task_dataset_file.description %>
+    </span>
+  </div>
+
+  <% if !Pundit.policy(current_participant, task_dataset_file).destroy? %>
+    <%= link_to "Download", file_expiring_url(task_dataset_file), class: 'btn btn-sm btn-secondary', data: { :'dataset-file-id' => task_dataset_file.id } %>
+  <% end %>
+
+  <% if Pundit.policy(current_participant, task_dataset_file).destroy? %>
+    <div style="display:flex">
+      <%= link_to "Download", file_expiring_url(task_dataset_file), class: 'btn btn-sm btn-secondary', data: { :'dataset-file-id' => task_dataset_file.id } %>
+
+      <%= link_to 'Edit', edit_clef_task_task_dataset_file_path(clef_task, task_dataset_file), class: 'btn btn-secondary' %>
+
+      <%= link_to 'Delete',
+                  clef_task_task_dataset_file_path(clef_task, task_dataset_file),
+                  method: :delete,
+                  class: 'btn btn-secondary',
+                  data: { confirm: 'Are you sure?' } %>
+    </div>
+  <% end %>
+</li>
+<!-- /item -->

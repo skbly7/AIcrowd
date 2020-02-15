@@ -1,0 +1,19 @@
+<% if current_participant.present? %>
+  <% if follow.present? %>
+    <%= link_to "Unfollow",
+                follows_destroy_follow_path(followable, follow.id),
+                id:     follow_link_id(followable),
+                class:  'btn btn-secondary btn-sm',
+                method: :delete,
+                remote: true %>
+  <% else %>
+    <%= link_to "Follow",
+                follows_create_follow_path(followable),
+                id:     follow_link_id(followable),
+                class:  'btn btn-secondary btn-sm',
+                method: :post,
+                remote: true %>
+  <% end %>
+<% else %>
+  <%= link_to "Follow", new_participant_session_path, class: 'btn btn-secondary btn-sm' %>
+<% end %>

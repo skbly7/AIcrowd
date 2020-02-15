@@ -1,0 +1,6 @@
+## Crowdai.org provider
+
+To setup a new client using crowdai.org as a provider visit crowdai.org/oauth/applications and click on `NEW APPLICATION`.  The redirect URI will be of the form `participants/auth/oauth2_generic/callback` and needs to match the full redirect URI exactly.  For example, on staging the route is currently `https://aicrowd-staging.herokuapp.com/participants/auth/oauth2_generic/callback`.  We only use the default scope so you can leave the `Scopes` field blank. When you save this form it will provide you a client secret and client id.  You will need to set the environment variables `CROWDAI_OAUTH_KEY` and `CROWDAI_OAUTH_SECRET`.  In development this can be done via application.yml.  The client needs to use https to authenticate via crowdai.org, otherwise you will see an error.
+
+## Other providers
+Other providers should be very similar to the crowdai.org setup.  Github has a "developer settings" tab where you can add additional oauth applications.  We use the aicrowd-bot account.

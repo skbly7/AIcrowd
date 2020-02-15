@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe EmailPreferencesTokenService, api: true do
-
   let!(:participant) { create :participant }
   let!(:email_preference) { create :email_preference, participant: participant }
 
@@ -26,36 +25,39 @@ RSpec.describe EmailPreferencesTokenService, api: true do
         let!(:email_preference) { create :email_preference, participant: participant1 }
         let!(:participant2) { create :participant }
         let!(:email_preference) { create :email_preference, participant: participant2 }
-        let!(:token) { described_class.new(participant1).instance_eval{ generate_token } }
+        let!(:token) { described_class.new(participant1).instance_eval { generate_token } }
+
         before do
-          #sign_in participant2
+          # sign_in participant2
         end
 
         subject { described_class.new(participant1) }
-        #it { expect (subject.validate_token).to eq('invalid_participant')}
+        # it { expect (subject.validate_token).to eq('invalid_participant')}
       end
 
       context 'valid_token' do
         let!(:participant) { create :participant }
         let!(:email_preference) { create :email_preference, participant: participant }
-        let!(:token) { described_class.new(participant).instance_eval{ generate_token } }
+        let!(:token) { described_class.new(participant).instance_eval { generate_token } }
 
         subject { described_class.new(participant) }
+
         it { expect(subject.validate_token(token)).to eq('valid_token') }
+
         it 'deletes the token' do
-          expect {
+          expect do
             subject.validate_token(token)
-          }.to change(EmailPreferencesToken, :count).by(-1)
+          end.to change(EmailPreferencesToken, :count).by(-1)
         end
       end
 
       context 'token_expired' do
         let!(:participant) { create :participant }
         let!(:email_preference) { create :email_preference, participant: participant }
-        let!(:token) { described_class.new(participant).instance_eval{ generate_token } }
+        let!(:token) { described_class.new(participant).instance_eval { generate_token } }
 
         before do
-          Timecop.travel(DateTime.current + 50.days )
+          Timecop.travel(DateTime.current + 50.days)
         end
 
         after do
@@ -63,11 +65,13 @@ RSpec.describe EmailPreferencesTokenService, api: true do
         end
 
         subject { described_class.new(participant) }
+
         it { expect(subject.validate_token(token)).to eq('token_expired') }
+
         it 'deletes the token' do
-          expect {
+          expect do
             subject.validate_token(token)
-          }.to change(EmailPreferencesToken, :count).by(-1)
+          end.to change(EmailPreferencesToken, :count).by(-1)
         end
       end
 
@@ -77,6 +81,7 @@ RSpec.describe EmailPreferencesTokenService, api: true do
         let!(:token) { "4UBVoJhVdhEZCmOZW4G3AMbQgHPXoz8D" }
 
         subject { described_class.new(participant) }
+
         it { expect(subject.validate_token(token)).to eq('invalid_token') }
       end
     end
@@ -85,20 +90,20 @@ RSpec.describe EmailPreferencesTokenService, api: true do
   context 'private methods' do
     describe 'preferences_token_url' do
       it do
-        expect(subject.instance_eval{ preferences_token_url }).to be_a_valid_url
+        expect(subject.instance_eval { preferences_token_url }).to be_a_valid_url
       end
     end
 
     describe 'generate_token' do
       it 'generates a token' do
-        expect((subject.instance_eval{ generate_token }).length).to eq(32)
+        expect((subject.instance_eval { generate_token }).length).to eq(32)
       end
+
       it 'saves the token' do
-        expect {
-          subject.instance_eval{ generate_token }
-        }.to change(EmailPreferencesToken, :count).by(1)
+        expect do
+          subject.instance_eval { generate_token }
+        end.to change(EmailPreferencesToken, :count).by(1)
       end
     end
   end
-
 end

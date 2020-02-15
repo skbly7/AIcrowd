@@ -1,14 +1,11 @@
 class SubmissionDetailPresenter
-
-  def initialize(submission:,challenge:,view_context:)
-    @view = view_context
+  def initialize(submission:, challenge:, view_context:)
+    @view       = view_context
     @submission = submission
-    @challenge = challenge
+    @challenge  = challenge
   end
 
-  def challenge
-    @challenge
-  end
+  attr_reader :challenge
 
   def participant
     @participant ||= @submission.participant
@@ -20,8 +17,8 @@ class SubmissionDetailPresenter
 
   def grader_logs
     if challenge.grader_logs
-      s3_key = "grader_logs/#{@challenge.slug}/grader_logs_submission_#{@submission.id}.txt"
-      s3 = S3Service.new(s3_key)
+      s3_key      = "grader_logs/#{@challenge.slug}/grader_logs_submission_#{@submission.id}.txt"
+      s3          = S3Service.new(s3_key)
       grader_logs = s3.filestream
     end
     return grader_logs
@@ -30,5 +27,4 @@ class SubmissionDetailPresenter
   def h
     @view
   end
-
 end

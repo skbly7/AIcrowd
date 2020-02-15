@@ -1,0 +1,99 @@
+<% members = @team.team_participants.includes(:participant) %>
+<% if members.length == 1 && members.first.participant_id == current_participant&.id %>
+  <div class="mb-5">
+    <%= t('.team_members_length_1_warning') %>
+  </div>
+<% end %>
+<div class="row">
+  <div class="col-12">
+    <header class="section-header">
+      <div>
+        <h4><%= t('.members.title') %></h4>
+        <h5><%= t('.members.limit', current: members.count, max: @team.challenge.max_team_participants) %></h5>
+      </div>
+      <%= team_member_invite_button(@team) %>
+    </header>
+    <ul class="list-group list-group-flush-px-0 list-group-teams">
+      <% members.each do |tp| %>
+        <li class="list-group-item">
+          <%= link_to tp.participant do %>
+            <%= image_tag tp.participant.image_url, class: "avatar" %>
+            <span class="text-link"><%= tp.participant.name %></span>
+            <% if tp.role_organizer? %>
+              <span class="badge badge-success"><%= t('.members.organizer_badge') %></span>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if policy(@team).show_invitations? %>
+      <header class="section-header mt-5">
+        <div>
+          <h4><%= t('.pending_invitations.title') %></h4>
+          <% issues = {}; can_invite_now = policy(@team).create_invitations?(issues) %>
+          <% if can_invite_now || issues[:list].exclude?(:participant_not_organizer) %>
+            <h5><%= t('.pending_invitations.remaining', count: @team.invitations_left_clamped) %></h5>
+          <% end %>
+        </div>
+      </header>
+      <% if @pending_invitations.length > 0 %>
+        <ul class="list-group list-group-flush-px-0 list-group-teams">
+          <% @pending_invitations.each do |inv| %>
+            <li class="list-group-item">
+              <div>
+                <% if inv.invitee.is_a?(Participant) %>
+                  <%= link_to(inv.invitee,
+                    title: "Invited #{time_ago_in_words(inv.created_at)} ago",
+                    data: {
+                      toggle: :tooltip,
+                    },
+                  ) do %>
+                    <%= image_tag inv.invitee.image_url, class: "avatar" %>
+                    <span class="text-link"><%= inv.invitee.name %></span>
+                  <% end %>
+                <% elsif inv.invitee.is_a?(EmailInvitation) %>
+                  <%= inv.invitee.email %>
+                <% else %>
+                  ?
+                <% end %>
+              </div>
+              <%= team_invitation_cancel_button(inv) %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <i><%= t('.pending_invitations.none') %></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- team member invite modal -->
+<div class="modal fade" id="invite-team-member-modal" tabindex="-1" role="dialog" aria-labelledby="invite-team-member-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_for(TeamParticipant.new, url: challenge_team_invitations_path(@team.challenge, @team)) do |f| %>
+        <div class="modal-header">
+          <h4 class="modal-title" id="invite-team-member-modal-label"><%= t('.form.title') %></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label><%= t('.form.invitee.label') %></label>
+            <div class="input-group mb-3">
+              <%= text_field_tag(:invitee, '', class: 'form-control', placeholder: t('.form.invitee.placeholder'), data: { auto_focus: true }) %>
+            </div>
+          </div>
+          <div class="btn-set">
+            <%= f.submit t('.form.submit'), class: 'btn btn-primary' %>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- /team member invite modal -->

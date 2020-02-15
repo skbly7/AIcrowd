@@ -1,0 +1,55 @@
+<main>
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h4><%= @challenge.challenge %></h4>
+          <h1>Challenge Rules</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- section -->
+  <div class="section-p-sm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <%= render 'challenge_rules', challenge_rules: @challenge_rules %>
+          <% if needs_to_agree_to_terms_or_rules?(@challenge) %>
+            <%= form_for [@challenge, @challenge_participant], validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>
+              <%= f.hidden_field :challenge_rules_accepted_version, value: @challenge_rules.version %>
+
+              <div class="form-group form-check">
+                <%= check_box("rules", "accepted", {class: 'form-check-input requires-agreement-checkbox', 'data-target': 'accept-challenge-rules-button'}, "yes", "no") %>
+                <label for="rules_accepted">
+                  <p> I have read and agree to the challenge rules (required) </p>
+                </label>
+              </div>
+
+              <% if @challenge_rules.has_additional_checkbox %>
+                <div class="form-group form-check">
+                  <%= f.check_box :challenge_rules_additional_checkbox, {class: 'form-check-input'}, "true", "false" %>
+                  <%= f.label :challenge_rules_additional_checkbox do %>
+                    <%= sanitize(@challenge_rules.additional_checkbox_text) %>
+                  <% end %>
+                </div>
+              <% end %>
+              <div class="btn-set" aria-hidden="true">
+                <%= f.button ("Save"), class: 'btn btn-primary requires-agreement', id: 'accept-challenge-rules-button', disabled: true %>
+              </div>
+            <% end %>
+          <% elsif @challenge_rules.has_additional_checkbox %>
+            <input type="checkbox" disabled <%= 'checked' if @challenge_participant.challenge_rules_additional_checkbox %>>
+            <label>
+              <%= sanitize(@challenge_rules.additional_checkbox_text) %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+
+</main>
+<!-- /main content -->

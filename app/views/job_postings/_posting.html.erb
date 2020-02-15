@@ -1,17 +1,20 @@
-<li>
-  <div class="details">
-    <h5><%= link_to job.title, job_posting_path(job.id) %></h5>
-    <div class="ellipsis"><%= job.organisation %></div>
-  </div>
-  <div class="location">
-    <% if job.remote.present? %>
-      <span>Remote (anywhere)</span>
-    <% else %>
-      <% if job.location.present? && job.country.present? %>
-        <%= flag(job.country) %>
-        <%= job.location %>,&nbsp;
-        <%= job.country_name %>
-      <% end %>
-    <% end %>
-  </div>
-</li>
+<!-- position -->
+<div class="col-sm-12 col-md-4">
+	<div class="card card-position">
+		<div class="card-body">
+			<h5 class="card-title">
+				<%= link_to job.title, job_posting_path(job.slug) %>
+			</h5>
+			<p class="card-text">
+				<a href="<%=job_posting_path(job.slug)%>">
+					<svg width="12" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M5.6 0A5.596 5.596 0 0 0 0 5.6C0 9.8 5.6 16 5.6 16s5.6-6.2 5.6-10.4C11.2 2.504 8.696 0 5.6 0zm0 7.6a2 2 0 1 1 .001-4.001A2 2 0 0 1 5.6 7.6z" fill="#F0524D" fill-rule="nonzero"/></svg>&nbsp;
+					<%= job.location.blank? ? job.country_name : job.location + ', ' + job.country_name %>
+					<% if job.remote.present? %>
+						<span> or Remote</span>
+					<% end %>
+				</a>
+			</p>
+		</div>
+	</div>
+</div>
+<!-- /position -->

@@ -1,7 +1,7 @@
 language: ruby
 cache: bundler
 sudo: required
-dist: trusty
+dist: xenial
 addons:
     postgresql: "9.6"
     chrome: stable
@@ -10,27 +10,38 @@ services:
     - postgresql
     - redis-server
     - docker
+    - xvfb
 
 rvm:
-  - 2.5.1
+  - 2.5.5
 
 env:
   global:
+    - CC_TEST_REPORTER_ID=b39c125055f57f4e85437969cec5c46ee3372f8a35a45d729fd31614aaa31e47
     - DB=postgres
+    # Start only s3 on localstack
+    - SERVICES=s3
 
 before_script:
   - cp config/application.yml.example config/application.yml
   - psql -c 'create database crowdai_test;' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - docker run -d -p 4572:4572 localstack/localstack
-  - sleep 3 # give xvfb and localstack some time to start
+  - docker pull localstack/localstack
+  - docker run -d -e SERVICES="s3" -e LOCALSTACK_HOSTNAME="localhost" -e LOCALSTACK_HOSTNAME="localhost" -p 8080:8080  -p 4572:4572 -v "/tmp/localstack:/tmp/localstack" -v "/var/run/docker.sock:/var/run/docker.sock" -e DOCKER_HOST="unix:///var/run/docker.sock" -e HOST_TMP_FOLDER="/tmp/localstack" "localstack/localstack" 
+  - mkdir ~/fog
+  - sleep 2 # give xvfb and localstack some time to start
 
 script:
-  - bundle exec rake parallel:setup
-  - bundle exec rake parallel:spec
+  - bundle exec rake db:migrate
+  - bundle exec rake spec
+  - bundle exec rubocop --fail-level error
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 branches:
   only:

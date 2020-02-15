@@ -1,5 +1,5 @@
-meta_product_name: "AICrowd"
-meta_title: "AICrowd"
-meta_description: "Fighting for Open Science with Open Data"
-meta_image: "misc/aicrowd-head.png"                      
-twitter_account: "@crowd_ai"   # required for Twitter Cards
+meta_product_name: "AIcrowd"
+meta_title: "AIcrowd"
+meta_description: "Crowdsourcing AI to solve real-world problems"
+meta_image: "misc/aicrowd-head.png"
+twitter_account: "@aicrowdHQ" # required for Twitter Cards

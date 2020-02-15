@@ -1,0 +1,173 @@
+{
+  "addons": [
+    "logdna",
+    "heroku-postgresql",
+    "heroku-postgresql",
+    "redistogo",
+    "rollbar"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/skbly7/heroku-rails-config-gen"
+    },
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_REGION": {
+      "required": true
+    },
+    "AWS_S3_BUCKET": {
+      "required": true
+    },
+    "AWS_S3_SHARED_BUCKET": {
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "CLOUDFRONT_ASSETS_DOMAIN": {
+      "required": true
+    },
+    "CLOUDFRONT_IMAGES_DOMAIN": {
+      "required": true
+    },
+    "CROWDAI_API_KEY": {
+      "required": true
+    },
+    "CROWDAI_OAUTH_KEY": {
+      "required": true
+    },
+    "CROWDAI_OAUTH_SECRET": {
+      "required": true
+    },
+    "DEVISE_SECRET_KEY": {
+      "required": true
+    },
+    "DISCOURSE_API_KEY": {
+      "required": true
+    },
+    "DISCOURSE_API_USERNAME": {
+      "required": true
+    },
+    "DISCOURSE_DOMAIN_NAME": {
+      "required": true
+    },
+    "DOMAIN_NAME": {
+      "required": true
+    },
+    "GITHUB_OAUTH_KEY": {
+      "required": true
+    },
+    "GITHUB_OAUTH_SECRET": {
+      "required": true
+    },
+    "GOOGLE_ANALYTICS_KEY": {
+      "required": true
+    },
+    "GRADER": {
+      "required": true
+    },
+    "HEROKU_POSTGRESQL_GRAY_URL": {
+      "required": true
+    },
+    "HEROKU_POSTGRESQL_NAVY_URL": {
+      "required": true
+    },
+    "HEROKU_POSTGRESQL_PURPLE_URL": {
+      "required": true
+    },
+    "HOST": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "LOGDNA_KEY": {
+      "required": true
+    },
+    "MAINTENANCE_PAGE_URL": {
+      "required": true
+    },
+    "MANDRILL_KEY": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "REDIS_PROVIDER": {
+      "required": true
+    },
+    "REDISTOGO_URL": {
+      "required": true
+    },
+    "ROLLBAR_ACCESS_TOKEN": {
+      "required": true
+    },
+    "ROLLBAR_ENDPOINT": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "SMTP_ADDRESS": {
+      "required": true
+    },
+    "SMTP_DOMAIN": {
+      "required": true
+    },
+    "SMTP_PASSWORD": {
+      "required": true
+    },
+    "SMTP_PORT": {
+      "required": true
+    },
+    "SMTP_USERNAME": {
+      "required": true
+    },
+    "SSO_SECRET": {
+      "required": true
+    },
+    "WEB_CONCURRENCY": {
+      "required": true
+    },
+    "YARN_PRODUCTION": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    },
+    "worker": {
+      "quantity": 1
+    }
+  },
+  "name": "aicrowd-review",
+  "scripts": {
+    "postdeploy": "rails review:bootstrap"
+  },
+  "stack": "heroku-18"
+}

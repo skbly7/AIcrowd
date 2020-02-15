@@ -1,58 +1,29 @@
-<div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant) %>
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
 
-  <div class="row">
-    <div class="article">
+      <!-- sub-nav – vertical -->
+      <div class="col-lg-2 sub-nav-vertical-container">
+        <ul class="nav flex-column sticky-top-sub-nav" id="table-of-contents">
+        </ul>
+      </div>
+      <!-- /sub-nav – vertical -->
 
-      <% if @challenge.description.present? %>
-        <h2>Overview</h2>
-        <div class='markdown-wrap'>
-          <%= @challenge.description.html_safe %>
+      <!-- md content -->
+      <div class="col-md-8 col-lg-7" id="description-wrapper">
+        <div class="markdown-wrap">
+          <div class="md-content">
+            <%= @challenge.description.html_safe %>
+          </div>
         </div>
-      <% end %>
-
-      <% if @challenge.challenge_partners.any? %>
-        <h2>Partners</h2>
-        <div class='markdown-wrap'>
-          <% @challenge.challenge_partners.each do |partner|%>
-            <%= link_to partner.partner_url, target: :_blank do %>
-              <%= image_tag partner.image_file.url, class: 'img-logo' %>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
-
-      <% if @challenge.evaluation.present? %>
-        <h2>Evaluation</h2>
-        <div class='markdown-wrap'>
-          <%= sanitize(@challenge.evaluation) %>
-        </div>
-      <% end %>
-
-      <% if @challenge.rules.present? %>
-        <h2>Rules</h2>
-        <div class='markdown-wrap'>
-          <%= sanitize(@challenge.rules) %>
-        </div>
-      <% end %>
-
-      <% if @challenge.prizes.present? %>
-        <h2>Prizes</h2>
-        <div class='markdown-wrap'>
-          <%= sanitize(@challenge.prizes) %>
-        </div>
-      <% end %>
-
-      <% if @challenge.resources.present? %>
-        <h2>Resources</h2>
-        <div class='markdown-wrap'>
-          <%= sanitize(@challenge.resources) %>
-        </div>
-      <% end %>
+      </div>
+      <!-- /md content -->
 
     </div>
   </div>
-</div>
+</section>
+<!-- /section -->

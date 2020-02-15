@@ -1,6 +1,5 @@
 require "rails_helper"
 
-
-feature "participant deletes account" do
+describe "participant deletes account" do
   # TODO
 end

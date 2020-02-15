@@ -42,26 +42,36 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700|Roboto:400,400i,500,500i,700" rel="stylesheet">
     <script src="https://use.fontawesome.com/bee91422da.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap-reboot.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
     <% if Rails.env.production? %>
       <%= render partial: 'layouts/google_analytics_head' %>
       <%= render partial: 'layouts/rollbar_head' %>
     <% end %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag    'application-redesign', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application' %>
   </head>
 
-  <body id='<%= body_id %>'>
+  <body id='<%= body_id %>' data-turbolinks="false">
     <%= render partial: 'layouts/loader' %>
-    <div id='page-content'>
+    <div class='content'>
       <%= render partial: 'layouts/header' %>
-      <%= render 'layouts/flash_messages' %>
+      <div id="flash-messages-wrapper">
+        <%= render 'layouts/flash_messages' %>
+      </div>
       <%= yield %>
       <%= insert_paloma_hook %>
-      <%= render partial: 'layouts/footer' %>
     </div>
+    <%= render partial: 'layouts/footer' %>
     <%= render partial: 'layouts/google_analytics_body' %>
   </body>
 </html>

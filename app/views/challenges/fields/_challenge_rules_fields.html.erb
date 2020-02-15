@@ -1,0 +1,21 @@
+<div class="section-container nested-fields">
+  <div class="form-group">
+    <label>Rules (markdown)</label>
+    <%= markdown_editor do |m| %>
+      <%= f.text_area :terms_markdown, class: "form-control txt-med" %>
+    <% end %>
+    <hr>
+  </div>
+
+  <div class="form-group">
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :has_additional_checkbox, text: "Has Additional Checkbox?" } %>
+  </div>
+  <hr>
+
+  <div class="form-group">
+    <label>Additional Checkbox Text</label>
+  </div>
+  <%= markdown_editor do |m| %>
+    <%= f.text_area :additional_checkbox_text_markdown, class: "form-control txt-sml" %>
+  <% end %>
+</div>

@@ -1,85 +1,209 @@
-<div class="sub-nav">
-  <div class="row">
-    <ul>
-      <li class=<%= tab_class('overview') %> >
-        <%= link_to 'Overview',
-              challenge_path(challenge),
-              class: tab_class('overview') %>
+<!-- sub-nav bar -->
+<div class="sub-nav-bar sticky-top">
+  <div class="container-fluid">
+    <ul class="nav">
+      <li class="nav-item">
+        <%= link_to 'Overview', challenge_path(challenge), class: tab_class('overview') + " nav-link nav-link-01", "data-turbolinks": false %>
       </li>
-      <li class=<%= tab_class('leaderboard') %> >
-          <%= link_to 'Leaderboard',
-                challenge_leaderboards_path(challenge),
-                class: tab_class('leaderboard') %>
-      </li>
-      <% if challenge.discussions_visible.present? %>
-        <li class=<%= tab_class('discussion') %> >
-          <%= link_to 'Discussion',
-              challenge_topics_path(challenge),
-              class: tab_class('discussion') %>
-        </li>
-      <% end %>
-      <% if challenge.clef_task.present? %>
-        <li class=<%= tab_class('clef_dataset') %> >
-          <%= link_to 'Dataset',
-                clef_task_task_dataset_files_path(
-                  challenge.clef_task, challenge_id: challenge.id),
-                class: tab_class('clef_dataset') %>
-        </li>
-      <% else %>
-        <li class=<%= tab_class('dataset') %> >
-          <%= link_to 'Dataset',
-                challenge_dataset_files_path(challenge),
-                class: tab_class('dataset') %>
-        </li>
-      <% end %>
-
-      <% if current_participant %>
-        <li>
-          <%= link_to 'Submissions',
-                challenge_submissions_path(challenge),
-                class: tab_class('submissions') %>
-        </li>
-      <% end %>
-      <% if policy(challenge).edit? %>
-        <% if challenge.clef_task %>
-          <li class=<%= tab_class('participants') %> >
-            <%= link_to 'Participants',
-                  challenge_clef_task_path(challenge),
-                  class: tab_class('participants') %>
-          </li>
-        <% else %>
-          <li class=<%= tab_class('participants') %> >
-            <%= link_to 'Participants',
-                  challenge_participant_challenges_path(challenge),
-                  class: tab_class('participants') %>
+      <% if !policy(challenge).starting_soon_mode? %>
+        <% unless challenge.challenge_rounds.none? || !challenge.show_leaderboard && !policy(challenge).edit? %>
+          <li class="nav-item">
+            <%= link_to 'Leaderboard', challenge_leaderboards_path(challenge), class: tab_class('leaderboard') + " nav-link nav-link-02", "data-turbolinks": false %>
           </li>
         <% end %>
       <% end %>
-      <% if challenge.winners_tab_active.present? %>
-        <li class=<%= tab_class('winner') %> >
-          <%= link_to 'Winners',
-                challenge_winners_path(challenge),
-                class: tab_class('winner') %>
-        </li>
+      <li class="nav-item">
+        <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', challenge.slug[0..49])),
+                    class: tab_class('discussion') + " nav-link nav-link nav-link-03" %>
+      </li>
+        <% if challenge.clef_task.present? %>
+          <li class="nav-item">
+            <%= link_to 'Resources',
+                  clef_task_task_dataset_files_path(
+                    challenge.clef_task, challenge_id: challenge.id),
+                  class: tab_class('dataset') + " nav-link nav-link-03", "data-turbolinks": false %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Resources',
+                  challenge_dataset_files_path(challenge),
+                  class: tab_class('dataset') + " nav-link nav-link-03", "data-turbolinks": false %>
+          </li>
+        <% end %>
+
+      <% unless policy(challenge).starting_soon_mode? %>
+        <% if challenge.submissions_page.present? || policy(challenge).edit? %>
+          <li class="nav-item"><%= link_to 'Submissions', challenge_submissions_path(challenge), class: tab_class('submissions') + " nav-link nav-link-05", "data-turbolinks": false %></li>
+        <% end %>
+
+        <% if policy(challenge).edit? %>
+          <% if challenge.clef_task #&& challenge.clef_task.eua_required? %>
+            <li class="nav-item"><%= link_to 'Participants', clef_task_challenge_path(challenge), class: tab_class('participants') + " nav-link nav-link-05 ", "data-turbolinks": false %></li>
+          <% else %>
+            <li class="nav-item"><%= link_to 'Participants', challenge_participant_challenges_path(challenge), class: tab_class('participants') + " nav-link nav-link-05", "data-turbolinks": false %></li>
+          <% end %>
+        <% end %>
+        <% unless needs_to_agree_to_terms_or_rules?(challenge) %>
+          <li class="nav-item">
+            <%= link_to 'Rules',
+                        [challenge, challenge.current_challenge_rules],
+                        class: "nav-link nav-link-06" %>
+          </li>
+        <% end %>
+        <% if challenge.winners_tab_active.present? %>
+          <li class="nav-item"><%= link_to 'Winner', challenge_winners_path(challenge), class: "nav-link nav-link-07", "data-turbolinks": false %></li>
+        <% end %>
+        <% if challenge.dynamic_content_tab.present? %>
+          <li class="nav-item"><%= link_to challenge.dynamic_content_tab, challenge_dynamic_contents_path(challenge), class: "nav-link nav-link-08", "data-turbolinks": false %></li>
+        <% end %>
       <% end %>
-      <% if challenge.dynamic_content_tab.present? %>
-        <li class=<%= tab_class('dynamic') %> >
-          <%= link_to challenge.dynamic_content_tab,
-                challenge_dynamic_contents_path(challenge),
-                class: tab_class('dynamic') %>
-        </li>
-      <% end %>
+
+      <!-- more dropdown md -->
+      <div class="dropdown-divider"></div>
+      <li class="nav-item dropdown more-md">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <svg width="16" height="4" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/>
+          </svg>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <% if needs_to_agree_to_terms_or_rules?(challenge) %>
+            <%= link_to "Participate", required_terms_or_rules_path(challenge), {:class => "dropdown-item strong"} %>
+          <% else %>
+            <%= link_to "Rules", [challenge, challenge.current_challenge_rules], {:class => "dropdown-item strong"} %>
+          <% end %>
+        </div>
+      </li>
+
+      <!-- /more dropdown md -->
+
+      <!-- more dropdown sm -->
+      <li class="nav-item dropdown more-sm">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <svg width="16" height="4" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/>
+          </svg>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <% unless policy(challenge).starting_soon_mode? %>
+            <%= link_to 'Submissions', challenge_submissions_path(challenge), class: "dropdown-item" %>
+          <% end %>
+
+          <% if needs_to_agree_to_terms_or_rules?(challenge) %>
+            <div class="dropdown-divider"></div>
+            <%= link_to "Participate", required_terms_or_rules_path(challenge), {:class => "dropdown-item strong"} %>
+          <% else %>
+            <%= link_to "Rules", [challenge, challenge.current_challenge_rules], {:class => "dropdown-item strong"} %>
+          <% end %>
+        </div>
+      </li>
+      <!-- /more dropdown sm -->
+
+      <!-- more dropdown xs -->
+      <li class="nav-item dropdown more-xs">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <svg width="16" height="4" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/>
+          </svg>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', challenge.slug)),
+                      class: "dropdown-item" %>
+          <% if challenge.clef_task.present? %>
+            <%= link_to 'Resources', clef_task_task_dataset_files_path(challenge.clef_task, challenge_id: challenge.id), class: "dropdown-item" %>
+          <% else %>
+            <%= link_to 'Resources', challenge_dataset_files_path(challenge), class: "dropdown-item" %>
+          <% end %>
+          <% unless policy(challenge).starting_soon_mode? %>
+            <%= link_to 'Submissions', challenge_submissions_path(challenge), class: "dropdown-item" %>
+          <% end %>
+
+          <% if policy(challenge).edit? %>
+            <% if challenge.clef_task #&& challenge.clef_task.eua_required? %>
+              <%= link_to 'Participants', clef_task_challenge_path(challenge), class: "dropdown-item" %>
+            <% else %>
+              <%= link_to 'Participants', challenge_participant_challenges_path(challenge), class: "dropdown-item" %>
+            <% end %>
+          <% end %>
+
+          <% if needs_to_agree_to_terms_or_rules?(challenge) %>
+            <div class="dropdown-divider"></div>
+            <%= link_to "Participate", required_terms_or_rules_path(challenge), {:class => "dropdown-item strong"} %>
+          <% else %>
+            <%= link_to "Rules", [challenge, challenge.current_challenge_rules], {:class => "dropdown-item strong"} %>
+          <% end %>
+        </div>
+      </li>
+      <!-- /more dropdown xs -->
     </ul>
-    <% if current_tab == 'dataset' && policy(challenge).update? %>
-      <%= link_to 'Add File',
-            new_challenge_dataset_file_path(challenge),
-            class: "btn btn-secondary pull-right" %>
+
+    <% if !policy(challenge).has_accepted_participation_terms? %>
+      <%= link_to 'Participate',
+                  [challenge, ParticipationTerms.current_terms],
+                  class: "btn btn-primary btn-sm pull-right" %>
+    <% elsif !policy(challenge).has_accepted_challenge_rules? %>
+      <%= link_to 'Participate',
+                  [challenge, challenge.current_challenge_rules],
+                  class: "btn btn-primary btn-sm pull-right" %>
+    <% else %>
+      <%= my_team_view_or_create_button(challenge) %>
+      <% unless policy(challenge).starting_soon_mode? %>
+        <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
+          <%= link_to 'Create Submission',
+                      new_challenge_submission_path(challenge),
+                      class: "btn btn-primary btn-sm pull-right" %>
+        <% end %>
+      <% end %>
     <% end %>
-    <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
-      <%= link_to 'Create Submission',
-            new_challenge_submission_path(challenge),
-            class: "btn btn-secondary pull-right" %>
+
+    <% if policy(challenge).edit? %>
+      <%= link_to edit_challenge_path(challenge), title: "Edit challenge", data: {turbolinks: false}, class: "nav-link" do %>
+        <button class="btn btn-secondary btn-sm ml-1 pull-right" role="button">Edit Challenge</button>
+      <% end %>
     <% end %>
 
   </div>
 </div>
+<!-- /sub-nav bar -->
+
+<!-- create team modal -->
+<div class="modal fade" id="create-team-modal" tabindex="-1" role="dialog" aria-labelledby="create-team-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_for(Team.new, url: challenge_teams_path(challenge_id: challenge.friendly_id)) do |f| %>
+        <div class="modal-header">
+          <h4 class="modal-title" id="create-team-modal-label">Create a team for this challenge</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Team Name</label>
+            <div class="input-group mb-3">
+              <%= f.text_field(:name,
+                               class: 'form-control validated-field',
+                               placeholder: 'Team name',
+                               data: {
+                                   auto_focus: true,
+                                   error_description_selector: 'team-name-error-message',
+                                   validation_type: 'regex',
+                                   validation_regex_pattern: '^[a-zA-Z0-9.\-_{}\[\]]+$'
+                               },
+                  ) %>
+              <div id="team-name-error-message" style="display: none; color: red">
+                <small><i>A team name may only contain basic letters, numbers, and any of
+                  <code>-_.{}[]</code></i></small>
+              </div>
+            </div>
+          </div>
+          <div class="btn-set">
+            <%= f.submit 'Create', class: 'btn btn-primary', disabled: true %>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- /create team modal -->

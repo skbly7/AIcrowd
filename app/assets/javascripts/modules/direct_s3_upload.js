@@ -19,20 +19,9 @@ $(document).on('turbolinks:load', function() {
       maxFileSize:      20,
 
       add: function(e, data) {
-        //console.log('test');
-        //var modelFile = $('.s3File')[0].files[0];
         data.submit().then(function(){
           form.submit();
         });
-        /*if (modelFile && modelFile.size > 681574400 ) {
-          submitButton.prop('disabled', false);
-          progressBar
-            .css("background", "red")
-            .text("Upload failed: please limit your archive to 650MB.");
-        } else {
-          console.log("submitted ");
-          data.submit();
-        } */
       },
 
       progressall: function (e, data) {

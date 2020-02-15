@@ -12,7 +12,7 @@ Create a database named crowdai_development using postgresql
 
 * Log into psql server using: `sudo -u postgres psql`.
 * You will be prompted with `postgres=#`.
-* Create a new database using: `CREATE DATABASE crowdai_development`.
+* Create a new database using: `CREATE DATABASE crowdai_development;`.
 
 ### Ruby
 
@@ -24,9 +24,9 @@ Install rvm for Ruby management (http://rvm.io)
 
 **Ubuntu users:** You may need to enable `Run command as a login shell` in Ubuntu's Terminal, under `Edit > Profile Preferences > Title and Command`. Then close the terminal and reopen it. You may also want to run `source ~/.rvm/scripts/rvm` to load RVM.
 
-Then, use RVM to install version 2.5.1 of Ruby:
+Then, use RVM to install version 2.5.5 of Ruby:
 
-`rvm install 2.5.1`
+`rvm install 2.5.5`
 
 
 ### Gems with Bundler
@@ -38,7 +38,9 @@ Ruby dependencies, or Gems, are managed with Bundler.
 
 ### Assets with npm
 
-Install npm using: `sudo apt-get install npm`
+Move into the `AIcrowd` folder using: `cd AIcrowd`.
+
+Install npm using: `sudo apt-get install npm`.
 
 Install npm packages using: `npm install .`.
 

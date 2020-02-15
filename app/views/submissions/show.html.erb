@@ -1,45 +1,91 @@
-<div class="detail detail-gray">
-  <%= link_to challenge_submissions_path(@submission.challenge_id) do %>
-    <i class="fa fa-times" aria-hidden="true"></i>
-  <% end %>
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+<!-- section -->
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <%= link_to "&#8592; Back to challenge".html_safe, challenge_submissions_path(@submission.challenge_id) %>
+      </div>
 
-  <div class="row">
-    <%= render partial: 'submissions/show/header',
-          locals: {
-            challenge: @presenter.challenge,
-            participant: @presenter.participant,
-            entry: @submission,
-            submission_id: @submission.id } %>
+      <!-- submission details -->
+      <div class="col-sm-12 col-md-6">
+        <div class="d-flex">
+          <h2 class="mr-2">Submission #<%= @submission.id %></h2><span class="badge <%= submission_grade_class(@submission) %>"><%= @submission.grading_status_cd %></span>
+        </div>
+
+        <% if submission_view_description(@submission) %>
+          <div class="mb-5">
+            <p><%= @submission.description %></p>
+          </div>
+        <% end %>
+
+        <div class="d-flex">
+          <div class="mr-4">
+            <h4><%= @submission.challenge_round&.score_title %></h4>
+            <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
+          </div>
+
+          <div>
+            <h4><%= @submission.challenge_round&.score_secondary_title %></h4>
+            <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
+          </div>
+        </div>
+
+        <% if @submission.meta.present? %>
+          <div class="section-header mt-4 pt-5 border-top">
+            <h3>Meta parameters</h3>
+          </div>
+          <% submission_meta_hash(@submission).each do |key, value| %>
+            <% if not key.start_with?('private') %>
+              <div class="d-flex mt-4">
+                <div class="mr-4">
+                  <h4> <%= key %> </h4>
+                  <span>
+                    <% if not key.include?('URL') %>
+                      <a><%= value %></a>
+                    <% else %>
+                      <%= value %>
+                    <% end %>
+                  </span>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <div class="section-header mt-4 pt-4 border-top">
+          <h4>Share</h4>
+
+          <div class="d-flex">
+            <input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{@submission.short_url}" %>' >
+            <button id="copyurlbutton" onclick="copyLink()" class="btn btn-secondary btn-sm mr-2">Copy URL</button>
+
+            <span data-title="Check out this link on AIcrowd " data-desc="<%= @submission.challenge.challenge %>" data-url="<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Facebook" %>">
+              <a data-url="<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Facebook" %>" class="btn btn-facebook btn-sm mr-2" rel="nofollow" data-site="facebook" onclick="return SocialShareButton.share(this)" title="Share to Facebook" href="#" data-toggle="tooltip" data-placement="top" title="Share to Facebook">
+                <img src="/assets/img/icon-facebook.svg">
+              </a>
+            </span>
+
+            <span data-title="Check out this link on AIcrowd " data-desc="<%= @submission.challenge.challenge %>" data-url='<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Twitter" %>'>
+              <a data-url='<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Twitter" %>' class="btn btn-twitter btn-sm" rel="nofollow" data-site="twitter" onclick="return SocialShareButton.share(this)" title="Share to Twitter" href="#" data-toggle="tooltip" data-placement="top" title="Share to Twitter">
+                <img src="/assets/img/icon-twitter.svg">
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- /submission details -->
+      <div class="col-sm-12 col-md-6">
+        <!--Detail media start-->
+        <% if @challenge.media_on_leaderboard %>
+          <div class="media">
+            <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, size: :large } %>
+          </div>
+        <% end %>
+        <!--Detail media end-->
+      </div>
+    </div>
   </div>
-</div>
-<div class="detail">
-  <div class="row">
-    <%= render partial: 'submissions/show/header_media',
-          locals: {
-            challenge: @presenter.challenge,
-            participant: @presenter.participant,
-            entry: @submission,
-            submission_id: @submission.id } %>
-    <%= render partial: 'submissions/show/meta', locals: { submission: @submission } %>
-
-
-    <%= render partial: 'submissions/show/share',
-          locals: { submission: @submission }%>
-
-    <%= render partial: 'submissions/show/description',
-          locals: { submission: @submission }  %>
-
-    <% if @presenter.grading_history? %>
-      <%= render partial: 'submissions/show/grading_history',
-            locals: { submission: @submission } %>
-    <% end %>
-
-    <% if @presenter.grader_logs.present? %>
-      <%= render partial: 'submissions/show/codemirror' %>
-    <% end %>
-
-    <%# removed by Yannis as a short Term fix %>
-    <%# render partial: 'submissions/show/comments',
-          locals: { submission: @submission } %>
-  </div>
-</div>
+</section>
+<!-- /section -->

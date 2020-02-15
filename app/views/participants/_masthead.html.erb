@@ -1,0 +1,100 @@
+<!-- masthead – user -->
+<div class="masthead masthead-user">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex">
+          <%= image_tag participant.image_url, class: 'avatar' %>
+          <div class="masthead-content">
+            <div class="d-flex">
+              <%= image_tag participant.image_url, class: "avatar-sm" %>
+              <h1>
+                <%= participant.name %>
+              </h1>
+            </div>
+            <div class="masthead-info">
+              <% if participant.first_name.present? || participant.last_name.present? %>
+                <div class="masthead-info-item">
+                  <header>
+                    <h4>Name</h4>
+                  </header>
+                  <span><%= participant.first_name %></span>
+                  <span><%= participant.last_name %></span>
+                </div>
+              <% end %>
+
+              <% if participant.affiliation.present? %>
+                <div class="masthead-info-item">
+                  <header>
+                    <h4>Organization</h4>
+                  </header>
+                  <span><%= participant.affiliation %></span>
+                </div>
+              <% end %>
+
+              <% if participant.country_cd.present? || participant.city.present? %>
+                <div class="masthead-info-item">
+                  <header>
+                    <h4>Location</h4>
+                  </header>
+                  <% if participant.city.present? && participant.country_cd.present? %>
+                    <span><%= participant.city %>, <%= participant.country_cd %></span>
+                  <% else %>
+                    <% if participant.country_cd.present? %>
+                      <span><%= participant.country_cd %></span>
+                    <% else %>
+                      <span><%= participant.city %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <% if policy(participant).edit? %>
+                <div class="masthead-info-item api-key">
+                  <header>
+                    <h4>API key</h4>
+                    <%= link_to participant_regen_api_key_path(participant_id: participant.id) do %>
+                      <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Generate new API key">
+                        <%= image_tag '/assets/img/icon-refresh.svg' %>
+                      </button>
+                    <% end %>
+                  </header>
+                  <span><%= participant.api_key %></span>
+                </div>
+              <% end %>
+
+              <% if participant.twitter.present? || participant.github.present? || participant.linkedin.present? || participant.website.present? %>
+                <div class="masthead-info-item">
+                  <header>
+                    <h4>Connect</h4>
+                  </header>
+                  <% if participant.twitter.present? %>
+                    <%= link_to url_for(participant.twitter) do %>
+                      <span>Twitter <%= image_tag '/assets/img/icon-external-link.svg' %></span>
+                    <% end %>
+                  <% end %>
+                  <% if participant.github.present? %>
+                    <%= link_to url_for(participant.github) do %>
+                      <span>GitHub <%= image_tag '/assets/img/icon-external-link.svg' %></span>
+                    <% end %>
+                  <% end %>
+                  <% if participant.linkedin.present? %>
+                    <%= link_to url_for(participant.linkedin) do %>
+                      <span>LinkedIn <%= image_tag '/assets/img/icon-external-link.svg' %></span>
+                    <% end %>
+                  <% end %>
+                  <% if participant.website.present? %>
+                    <%= link_to url_for(participant.website) do %>
+                      <span>Portfolio <%= image_tag '/assets/img/icon-external-link.svg' %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead – user -->

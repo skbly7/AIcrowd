@@ -14,7 +14,7 @@ class ChallengeCallResponsesController < ApplicationController
       Admin::ChallengeCallResponseNotificationJob
           .perform_later(@challenge_call_response)
       redirect_to challenge_call_show_path(
-          @challenge_call,@challenge_call_response)
+        @challenge_call, @challenge_call_response)
     else
       render :new
     end
@@ -25,6 +25,7 @@ class ChallengeCallResponsesController < ApplicationController
   end
 
   private
+
   def challenge_call_response_params
     params
       .require(:challenge_call_response)

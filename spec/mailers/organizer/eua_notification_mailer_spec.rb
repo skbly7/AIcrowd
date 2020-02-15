@@ -1,6 +1,5 @@
 require 'spec_helper'
 RSpec.describe Organizer::EuaNotificationMailer, type: :mailer, api: true do
-
   describe 'methods' do
     let!(:organizer_participant) { create :participant, organizer: organizer }
     let!(:organizer) { create :organizer, :clef }
@@ -10,9 +9,9 @@ RSpec.describe Organizer::EuaNotificationMailer, type: :mailer, api: true do
     let!(:email_preference) { create :email_preference, :every_email, participant: organizer_participant }
 
     it 'successfully sends a message' do
-      #puts organizer_participant.id
+      # puts organizer_participant.id
       puts clef_task.id
-      #puts participant.id
+      # puts participant.id
       res = described_class.new.sendmail(organizer_participant.id, clef_task.id, participant.id)
       man = MandrillSpecHelper.new(res)
       expect(man.status).to eq 'sent'
@@ -37,5 +36,4 @@ RSpec.describe Organizer::EuaNotificationMailer, type: :mailer, api: true do
       expect(man.merge_var('EMAIL_PREFERENCES_LINK')).to be_a_valid_html_fragment
     end
   end
-
 end

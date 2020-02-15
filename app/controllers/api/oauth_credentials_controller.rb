@@ -9,6 +9,7 @@ class Api::OauthCredentialsController < ApplicationController
   end
 
   private
+
   def current_resource_owner
     if doorkeeper_token
       Participant.find(doorkeeper_token.resource_owner_id) if doorkeeper_token

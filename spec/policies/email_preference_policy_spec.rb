@@ -8,6 +8,7 @@ describe EmailPreferencePolicy do
 
   context 'for a public participant' do
     let(:participant) { nil }
+
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:create) }
@@ -19,6 +20,7 @@ describe EmailPreferencePolicy do
 
   context 'for a participant themself' do
     let(:participant) { user }
+
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:create) }
@@ -34,6 +36,7 @@ describe EmailPreferencePolicy do
 
   context 'for another participant' do
     let(:participant) { build(:participant) }
+
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:create) }
@@ -45,6 +48,7 @@ describe EmailPreferencePolicy do
 
   context 'for an admin' do
     let(:participant) { build(:participant, :admin) }
+
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:create) }
@@ -53,5 +57,4 @@ describe EmailPreferencePolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
   end
-
 end

@@ -5,9 +5,16 @@ RSpec.describe GdprExportJob, type: :job do
 
   let!(:participant) { create :participant }
 
+  after do
+    clear_enqueued_jobs
+    clear_performed_jobs
+  end
+
   describe 'queues the job' do
-    subject(:job) { described_class.perform_later(
-      participant_id: participant.id) }
+    subject(:job) do
+      described_class.perform_later(
+        participant_id: participant.id)
+    end
 
     it 'queues the job' do
       expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
@@ -20,10 +27,5 @@ RSpec.describe GdprExportJob, type: :job do
     it 'executes with no errors' do
       perform_enqueued_jobs { job }
     end
-  end
-
-  after do
-    clear_enqueued_jobs
-    clear_performed_jobs
   end
 end

@@ -1,0 +1,108 @@
+<div class="challenges-form__thin-tab">
+  <div class="form-group">
+    <span class="label-text">Challenge Title</span>
+    <%= f.text_field :challenge, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Tagline</span>
+    <%= f.text_field :tagline, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Options</span>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :require_registration, text: "Registration required" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_leaderboard, text: "Show leaderboard" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :media_on_leaderboard, text: "Show media on leaderboard" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :submissions_page, text: "Show submissions details" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :grading_history, text: "Show grading history" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :grader_logs, text: "Show grader logs" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :discussions_visible, text: "Show discussions" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :latest_submission, text: "Use latest submissions on Leaderboard" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :teams_allowed, text: "Allow users to team up" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :hidden_challenge, text: "Hide Challenge (url needed to access and register)" } %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Max Number of Participants per Team</span>
+    <%= f.text_field :max_team_participants, class: "form-control" %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.label :team_freeze_time, 'Team Freeze Time (UTC)' %>
+    <%= f.text_field :team_freeze_time, class: "form-control", data: { controller: 'flatpickr' } %>
+  </div>
+
+
+  <div class="form-group">
+    <span class="label-text">Challenge status</span>
+    <% if current_participant.admin? %>
+      <%= status_dropdown_helper(builder: f) %>
+    <% else %>
+      <%= f.text_field :status_cd, readonly: true, class: "form-control" %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Featured sequence</span>
+    <% if current_participant.admin? %>
+      <%= f.text_field :featured_sequence, class: "form-control" %>
+    <% else %>
+      <%= f.text_field :featured_sequence, readonly: true, class: "form-control" %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Card image</span>
+    <%= image_tag challenge.image_file.url, class: 'form-challenge-card-image' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.file_field :image_file %>
+    <% if @challenge.persisted? %>
+      <% remove_image_class = @challenge.image_file.present? ? '' : 'challenges-form__link--hidden' %>
+      <%= link_to 'Delete', remove_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text #{remove_image_class}" %>
+    <% end %>
+    <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Organizer</span>
+    <% if @challenge.new_record? && current_participant&.admin? %>
+      <%= f.select :organizer_id, @organizers_for_select, { include_blank: true } %>
+    <% else %>
+      <input class="form-control" type='text' value='<%= @challenge.organizer&.organizer || current_participant.organizer&.organizer %>' readonly>
+      <%= f.hidden_field :organizer_id, value: @challenge.organizer_id || current_participant.organizer_id %>
+    <% end %>
+  </div>
+
+  <div class='form-group'>
+    <span class="label-text">Challenge ID</span>
+    <%= f.text_field :id, disabled: true, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Challenge client name</span>
+    <%= f.text_field :challenge_client_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Grader identifier</span>
+    <%= f.text_field :grader_identifier, class: "form-control" %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-12">
+      <label for="otherScoresFieldnames">Fieldnames for other scores <br/> (comma seperated, max 5 fields)</label>
+      <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Discourse category ID</span>
+    <%= f.text_field :discourse_category_id, class: "form-control" %>
+  </div>
+
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'overview' } %>
+</div>

@@ -21,11 +21,6 @@
     <% if @grader_logs.present? %>
       <%= render partial: 'submissions/show/codemirror' %>
     <% end %>
-
-    <%= render partial: 'leaderboards/show/comments',
-          locals: {
-            submission: @submission,
-            entry: @entry } %>
   </div>
   <%= render partial: 'leaderboards/show/meta',
         locals: { submission: @submission } %>

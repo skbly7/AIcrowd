@@ -1,18 +1,26 @@
-<div class='content'>
-  <div class="masthead">
+<!-- masthead -->
+<div class="masthead">
+  <div class="container-fluid">
     <div class="row">
-      <h2>Challenges</h2>
+      <div class="col-12">
+        <h1>Challenges</h1>
+      </div>
     </div>
   </div>
-  <%= concept(Challenge::Cell::ChallengesSubnav,
-                @all_challenges,
-                challenge_filter: @challenge_filter,
-                current_participant: current_participant) %>
-  <div class="row">
-    <ul class="list-challenges">
-      <%= render partial: 'challenges' %>
-    </ul>
-  </div>
-  <%= render partial: 'shared/load_more',
-        locals: { collection: @challenges } %>
 </div>
+<!-- /masthead -->
+
+<!-- challenge cards -->
+<div class="section-pt-sm-pb-md">
+  <div class="container-fluid">
+    <div class="row" id="challenges-div">
+      <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
+    </div>
+
+	  <!-- load more -->
+	  <span id="more-anchor"></span>
+	  <%= render partial: 'shared/load_more', locals: { collection: @challenges} %>
+	  <!-- /load more -->
+  </div>
+</div>
+<!-- /challenge cards -->

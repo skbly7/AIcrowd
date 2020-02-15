@@ -1,0 +1,60 @@
+<div class="content bg-graph">
+  <!-- masthead -->
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+
+      <div class="d-flex justify-content-between">
+        <div>
+          <h4>Success story</h4>
+          <h1><%= @success_story.title %></h1>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <div class="d-none d-sm-block">
+            <% if @success_story.image_file? %>
+            <%= image_tag @success_story.image_file_url, class: 'partner-logo' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /masthead -->
+
+  <!-- section -->
+  <div class="section-pt-sm-pb-md">
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- md content -->
+        <div class="col">
+          <div class="md-content">
+            <% if @success_story.html_content? %>
+            <%= @success_story.html_content.html_safe %>
+            <% elsif @success_story.byline? %>
+            <%= @success_story.byline.html_safe %>
+            <% else %>
+            <p> No content for this success story yet </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- section -->
+  <div class="section-p-md border-top bg-white">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="section-header-mb-sm">
+            <h4>Interested in hosting a challenge?</h4>
+          </div>
+          <p>Then head over to our <%= link_to 'organize a challenge page', landing_page_host_path %> to get the ball rolling.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+</div>

@@ -1,5 +1,4 @@
 class ParticipantChallengePolicy < ApplicationPolicy
-
   def index?
     participant
   end
@@ -9,11 +8,11 @@ class ParticipantChallengePolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def participant_sql(email:)
-      %Q[
+      %[
         participant_challenges.status_cd IN ('running','completed','starting_soon')
         AND participant_challenges.private_challenge IS FALSE
         OR (participant_challenges.private_challenge IS TRUE
@@ -25,10 +24,10 @@ class ParticipantChallengePolicy < ApplicationPolicy
     end
 
     def resolve
-      if participant && participant.admin?
+      if participant&.admin?
         scope.all
       else
-        if participant && participant.organizer_id
+        if participant&.organizer_id
           scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id = ?", participant.organizer_id)
         elsif participant
           scope.where(participant_sql(email: participant.email))
@@ -38,5 +37,4 @@ class ParticipantChallengePolicy < ApplicationPolicy
       end
     end
   end
-
 end

@@ -37,7 +37,7 @@
             { action: 'change->filter-sidebar#filterChanged' }
           } %>
 
-      <label><%= @challenge.score_title %></label>
+      <label><%= @current_round&.score_title %></label>
       <div class="twin-container">
         <div class="twin-field">
           <%= f.text_field :score_display_gteq,
@@ -51,8 +51,8 @@
         </div>
       </div>
 
-      <% unless @challenge.secondary_sort_order_cd == 'not_used' %>
-        <label><%= @challenge.score_secondary_title %></label>
+      <% unless @current_round&.secondary_sort_order_cd == 'not_used' %>
+        <label><%= @current_round&.score_secondary_title %></label>
         <fieldset>
           <div class="twin-container">
             <div class="twin-field">

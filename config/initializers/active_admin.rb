@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  #config.site_title = "crowdAI"
+  # config.site_title = "crowdAI"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -16,7 +16,7 @@ ActiveAdmin.setup do |config|
   #
   # Note: Aim for an image that's 21px high so it fits in the header.
   #
-  # config.site_title_image = "misc/crowdai-head.png"
+  config.site_title_image = "misc/aicrowd-head.png"
 
   # == Default Namespace
   #
@@ -238,8 +238,8 @@ ActiveAdmin.setup do |config|
   # To disable/customize for the :admin namespace:
   #
   config.namespace :admin do |admin|
-       # Disable the links entirely
-      admin.download_links = [:csv,:json]
+    # Disable the links entirely
+    admin.download_links = [:csv, :json]
   end
   #
   #     # Only show XML & PDF options
@@ -290,10 +290,9 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
-  meta_tags_options = { viewport: 'width=device-width, initial-scale=1' }
-  config.meta_tags = meta_tags_options
+  meta_tags_options                     = { viewport: 'width=device-width, initial-scale=1' }
+  config.meta_tags                      = meta_tags_options
   config.meta_tags_for_logged_out_pages = meta_tags_options
-
 end
 
 module ActiveAdmin
@@ -325,7 +324,7 @@ module ActiveAdmin
       end
 
       def per_page
-        return 30_000 if %w(text/csv application/xml application/json).include?(request.format)
+        return 30_000 if ['text/csv', 'application/xml', 'application/json'].include?(request.format)
 
         return max_per_page if active_admin_config.paginate == false
 

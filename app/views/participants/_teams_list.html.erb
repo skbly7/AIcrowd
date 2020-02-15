@@ -1,0 +1,56 @@
+<%
+  teams = @participant.teams.includes(:challenge)
+  pending_invitations = if policy(@participant).show_pending_invitations?
+                          @participant.invitee_team_invitations.status_pendings.includes(team: :challenge)
+                        else
+                          []
+                        end
+  sections = []
+  sections << :pending_invitations if pending_invitations.length > 0
+  sections << :teams if teams.length > 0
+%>
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if sections.empty? %>
+          <%= @participant.name %> has not joined any teams yet...
+        <% else %>
+          <% if pending_invitations.length > 0 %>
+            <h4>Pending Invitations</h4>
+            <ul class="list-group list-group-flush-px-0 list-group-teams">
+              <% pending_invitations.each do |inv| %>
+                <li class="list-group-item">
+                  <div>
+                    <%= link_to(inv.team.name, challenge_team_path(inv.team.challenge, inv.team), class: 'text-link') %>
+                    <span><%= inv.team.challenge.challenge %></span>
+                  </div>
+                  <div>
+                    <%= link_to('Accept',  team_invitation_acceptances_path(inv),  class: 'btn btn-sm btn-secondary') %>
+                    <%= link_to('Decline', team_invitation_declinations_path(inv), class: 'btn btn-sm btn-secondary') %>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+          <% if teams.length > 0 %>
+            <% if sections.length > 1 %>
+              <h4 class="pt-6">My Teams</h4>
+            <% end %>
+            <ul class="list-group list-group-flush-px-0 list-group-teams">
+              <% teams.each do |team| %>
+                <li class="list-group-item">
+                  <div>
+                    <%= link_to(team.name, challenge_team_path(team.challenge, team), class: 'text-link') %>
+                    <span><%= team.challenge.challenge %></span>
+                  </div>
+                  <%= link_to('View', challenge_team_path(team.challenge, team), class: 'btn btn-secondary btn-sm') %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

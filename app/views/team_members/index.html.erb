@@ -1,0 +1,88 @@
+<!-- main content -->
+<main class="bg-graph">
+
+  <!-- masthead -->
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+
+      <!-- title -->
+      <div class="row">
+        <div class="col-12">
+          <h1>Our Team</h1>
+        </div>
+      </div>
+      <!-- /title -->
+
+    </div>
+  </div>
+  <!-- /masthead -->
+
+  <!-- section -->
+  <div class="section-pt-sm-pb-md">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- md content -->
+        <div class="col-sm-12 col-md-6">
+          <div class="md-content">
+            <p class="lead">
+              These are the people that make AIcrowd work. If you'd like to join the team, please take a look at our
+              <%= link_to 'open positions', job_postings_url %>.
+            </p>
+          </div>
+        </div>
+        <!-- /md content -->
+
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+
+  <!-- section -->
+  <div class="section-pb-md">
+    <div class="container-fluid">
+      <% @section_to_member_hash.each do |section, array_of_members| %>
+
+        <% unless section == "MAIN" %>
+          <!-- section header -->
+          <header class="section-header mt-5">
+            <div>
+              <h4><%= section %></h4>
+            </div>
+          </header>
+          <!-- /section header -->
+          <% if @description_list.include? section %>
+            <div class="md-content">
+              <p class="mb-5">
+                <%= @description_list[section] %>
+              </p>
+            </div>
+          <% end %>
+        <% end %>
+        <!-- team -->
+        <div class="row list-group-users">
+          <% array_of_members.each do |member| %>
+            <!-- user -->
+            <div class="col-xs-12 col-sm-6">
+              <div class="list-group-item-user">
+                <%= link_to(member.participant) do %>
+                  <%= image_tag member.participant.image_url, class: 'avatar' %>
+                <% end %>
+                <div>
+                  <%= link_to member.participant, class: "text-link" do %>
+                    <%= member.name %></a>
+                  <% end %>
+                  <span class="description"><%= member.title %></span>
+                </div>
+              </div>
+            </div>
+            <!-- /user -->
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- /team -->
+    </div>
+  </div>
+  <!-- /section -->
+</main>
+<!-- /main content -->

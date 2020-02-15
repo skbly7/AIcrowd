@@ -1,3 +1,4 @@
 <div class="load-more">
-  <%= link_to_next_page collection, 'Load More', remote: true %>
+	<%= link_to_next_page collection, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe, remote: true do %>
+    <%end%>
 </div>

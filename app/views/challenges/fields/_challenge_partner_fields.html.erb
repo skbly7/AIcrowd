@@ -1,0 +1,24 @@
+<div class="section-container nested-fields">
+  <div class="twin-container">
+    <div class="twin-field">
+      <div class="upload">
+        <div class='markdown-wrap'>
+          <% if f.object.image_file.present? %>
+            <%= image_tag f.object.image_file.url, class: 'img-logo' %>
+          <% else %>
+            <%= image_tag default_image_url, class: 'img-logo' %>
+          <% end %>
+        </div>
+        <%= f.file_field :image_file, class: 'file-upload' %>
+        <br/>
+        <span>Your image will be cropped if necessary. 5MB limit</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <span class="label-text">Partner Url</span>
+      <%= f.text_field :partner_url , class: "form-control" %>
+    </div>
+
+  </div>
+  <%= link_to_remove_association "remove", f, class: 'pull-right btn btn-primary' %>
+</div>

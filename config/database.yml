@@ -7,6 +7,10 @@ development:
   <<: *default
   database: crowdai_development
 
+staging:
+  <<: *default
+  database: crowdai_development
+
 test:
   <<: *default
   database: crowdai_test<%= ENV['TEST_ENV_NUMBER'] %>

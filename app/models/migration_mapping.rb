@@ -1,0 +1,2 @@
+class MigrationMapping < ApplicationRecord
+end

@@ -1,5 +1,4 @@
 ActiveAdmin.register OrganizerApplication do
-
   controller do
     def permitted_params
       params.permit!
@@ -15,7 +14,4 @@ ActiveAdmin.register OrganizerApplication do
     column :organization
     actions
   end
-
-
-
 end

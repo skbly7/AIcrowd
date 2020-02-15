@@ -1,0 +1,11 @@
+function handleImageRemoval() {
+  const detailFormCardImage = document.getElementById('challenges-form-card-image');
+  const removeCardImageLink = document.getElementById('challenges-form-remove-card-image');
+  const cardImageInput      = document.getElementById('challenge_image_file');
+
+  detailFormCardImage.setAttribute('src', '<%= @challenge.image_file&.url.to_s %>');
+  removeCardImageLink.classList.add('challenges-form__link--hidden');
+  cardImageInput.value = '';
+}
+
+handleImageRemoval();

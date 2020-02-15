@@ -15,7 +15,7 @@ The broker will coordinate all work for crowdAI, and perform the following funct
 - Provide a session token to the client
 - Send submissions to the **crowdAI Grader**
 - Post grades to the **crowdAI Webapp** on the leaderboard
-- Accept submitted code and post to Github to a private repo, with a user's permission at the per submission level. At the end of the challenge the repo will be made public.
+- Accept submitted code and post to Gitlab to a private repo, with a user's permission at the per submission level. At the end of the challenge the repo will be made public.
 - Communicate submission results back to the client
 - Provide grading progress visual to the client
 

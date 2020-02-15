@@ -2,31 +2,21 @@ require "rails_helper"
 
 RSpec.describe GdprExportMailer, type: :mailer, api: true do
   let!(:participant) { create :participant }
-  let!(:comment) { create :comment, participant: participant }
-  let!(:comment2) { create :comment, participant: participant }
 
-  let(:gdpr_fields) {
+  let(:gdpr_fields) do
     [
       {
-        table: 'Participant',
+        table:    'Participant',
         id_field: 'id',
-        fields: [
+        fields:   [
           :id,
           :email,
           :address,
           :name
         ]
-      },
-      {
-        table: 'Comment',
-        id_field: 'participant_id',
-        fields: [
-          :id,
-          :comment_markdown
-        ]
       }
     ]
-  }
+  end
 
   describe '#methods' do
     it 'produces an Base64 encoded attachment' do
@@ -45,53 +35,26 @@ RSpec.describe GdprExportMailer, type: :mailer, api: true do
 
     context 'Participant' do
       it "#rows" do
-        stub_const("GDPR_FIELDS",gdpr_fields)
+        stub_const("GDPR_FIELDS", gdpr_fields)
         rows = described_class.new.rows(
-          rec: GDPR_FIELDS[0],
+          rec:            GDPR_FIELDS[0],
           participant_id: participant.id)
         expect(rows.first).to eq(
-          [participant.id, participant.email, participant.address, participant.name ])
+          [participant.id, participant.email, participant.address, participant.name])
       end
 
       it '#plucked' do
-        stub_const("GDPR_FIELDS",gdpr_fields)
+        stub_const("GDPR_FIELDS", gdpr_fields)
         fields = described_class.new.plucked(rec: GDPR_FIELDS[0])
         expect(fields).to eq("id,email,address,name")
       end
 
       it '#query' do
-        stub_const("GDPR_FIELDS",gdpr_fields)
+        stub_const("GDPR_FIELDS", gdpr_fields)
         query = described_class.new.query(rec: GDPR_FIELDS[0], participant_id: participant.id)
         expect(query).to eq(
           "Participant.where(id: #{participant.id})")
       end
     end
-
-    context 'Comment' do
-      it "#rows" do
-        stub_const("GDPR_FIELDS",gdpr_fields)
-        rows = described_class.new.rows(
-          rec: GDPR_FIELDS[1],
-          participant_id: participant.id)
-        expect(rows.first).to eq(
-          [comment.id,comment.comment_markdown])
-        expect(rows.second).to eq(
-          [comment2.id,comment2.comment_markdown])
-      end
-
-      it '#plucked' do
-        stub_const("GDPR_FIELDS",gdpr_fields)
-        fields = described_class.new.plucked(rec: GDPR_FIELDS[1])
-        expect(fields).to eq("id,comment_markdown")
-      end
-
-      it '#query' do
-        stub_const("GDPR_FIELDS",gdpr_fields)
-        query = described_class.new.query(rec: GDPR_FIELDS[1], participant_id: participant.id)
-        expect(query).to eq(
-          "Comment.where(participant_id: #{participant.id})")
-      end
-    end
-
   end
 end

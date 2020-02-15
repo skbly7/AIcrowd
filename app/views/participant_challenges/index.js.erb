@@ -1,5 +1,5 @@
 $(".load-more").remove();
-$("ul.list-host-members").append("<%= j render partial: 'participant_challenges' %>");
+$("#pc-ul").append("<%= j render partial: 'participant_challenge_rows' %>");
 $("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @participant_challenges } %>");
 $('html, body').animate({
    scrollTop: $(document).height()-$(window).height()},

@@ -1,0 +1,18 @@
+<div class="sub-nav-bar sticky-top">
+  <div class="container-fluid">
+    <ul class='nav'>
+      <li class="nav-item"><a id="challenge-edit-details-tab" class="nav-link active challenges-form-tab-link" data-toggle='tab' data-current-tab="details" href="#tab-details">Details</a></li>
+      <% if challenge.persisted? %>
+        <li class="nav-item"><a id="challenge-edit-overview-tab" class="nav-link challenges-form-tab-link" data-toggle='tab' data-current-tab="overview" href="#tab-overview">Overview</a></li>
+        <li class="nav-item"><a id="challenge-edit-rounds-tab" class="nav-link challenges-form-tab-link" data-toggle='tab' data-current-tab="rounds" href="#tab-rounds">Rounds</a></li>
+        <li class="nav-item"><a id="challenge-edit-private-challenge-tab" class="nav-link challenges-form-tab-link" data-toggle='tab' data-current-tab="private-challenge" href="#tab-private">Private Challenge</a></li>
+        <li class="nav-item"><a id="challenge-edit-submissions-tab" class="nav-link challenges-form-tab-link" data-toggle='tab' data-current-tab="submissions" href="#tab-submissions">Submissions</a></li>
+        <li class="nav-item"><a id="challenge-edit-winner-tab" class="nav-link challenges-form-tab-link" data-toggle='tab' data-current-tab="winner" href="#tab-winner">Winner</a></li>
+        <li class="nav-item"><a id="challenge-edit-rules-tab" class="nav-link challenges-form-tab-link" data-toggle='tab' data-current-tab="rules" href="#tab-rules">Rules</a></li>
+        <% if current_participant.admin? %>
+          <li class="nav-item"><a id="challenge-edit-admin-tab" class="nav-link challenges-form-tab-link" data-toggle='tab' data-current-tab="admin" href="#tab-dynamic">Admin</a></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

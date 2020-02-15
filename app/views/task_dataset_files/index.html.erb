@@ -1,11 +1,17 @@
-<div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
-  <%= concept(ParticipantClefTask::Cell,
-                @clef_task,
-                current_participant: current_participant,
-                challenge_id: @challenge.id) %>
-</div>
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+
+<!-- section -->
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <ul class="list-group list-group-flush-px-0 list-group-dataset">
+          <h4><%= @clef_task.task %> dataset files</h4>
+          <hr/>
+          <%= render_challenge_resources(@current_participant_clef_task, @clef_task, @challenge) %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

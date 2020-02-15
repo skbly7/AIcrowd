@@ -1,0 +1,17 @@
+<div>
+  <div class="form-group">
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :private_challenge, text: "Private Challenge" } %>
+  </div>
+
+  <%= render partial: 'challenges/fields/invitations_table_fields', locals: { challenge: @challenge, f: f } %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'submissions' } %>
+
+  <% if @challenge.persisted? %>
+    <div class="mt-6">
+      <%= form_tag import_challenge_invitations_path(@challenge), multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Invite Participants from CSV", class: 'btn' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

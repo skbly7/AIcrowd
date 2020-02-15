@@ -1,5 +1,4 @@
 module TabsHelper
-
   def current_tab
     case controller.controller_name
     when 'challenges'
@@ -17,7 +16,7 @@ module TabsHelper
     when 'winners'
       'winner'
     when 'dynamic_contents'
-      'dynamic'
+      'admin'
     when 'submissions'
       'submissions'
     when 'clef_tasks'
@@ -29,7 +28,6 @@ module TabsHelper
     end
   end
 
-
   def tab_class(tab)
     if tab == current_tab
       return 'active'
@@ -37,5 +35,4 @@ module TabsHelper
       return ''
     end
   end
-
 end

@@ -1,57 +1,67 @@
-<div class='content'>
-  <div class="masthead">
+<div class="masthead masthead-open">
+  <div class="container-fluid">
     <div class="row">
-      <div class="info">
-        <h2><%= title %></h2>
+      <div class="col-12">
+        <h1>Edit organizer</h1>
       </div>
     </div>
   </div>
-  <div class="row">
-    <%= form_for organizer, validate: true, html: { class: "sgl-col", multipart: true  } do |f| %>
-      <fieldset>
-        <label>Host Name</label>
-        <%= f.text_field :organizer %>
-        <label>Profile Picture</label>
-        <div class="upload">
-          <%= concept(Image::Cell,
-                        organizer,
-                        klass: 'img-thumb',
-                        current_participant: current_participant) %>
-          <%= f.file_field :image_file, class: 'file-upload' %>
-          <% if organizer.image_file.present? %>
-            <%= link_to 'Delete', organizer_remove_image_path(organizer) %>
-          <% end %>
-          <span>Your image will be cropped if necessary. 5MB limit</span>
-        </div>
-        <label>Tagline<label>
-        <%= f.text_field :tagline, placeholder: "140 characters max." %>
-        <div class="twin-container">
-          <div class="twin-field">
-            <label>API Key</label>
-          </div>
-          <div class="twin-field">
-             <%= awesome_link 'refresh', 'Regenerate Key', organizer_regen_api_key_path(organizer) %>
-          </div>
-        </div>
-        <label><%= organizer.api_key %></label>
-        <br/>
-        <label>Description<label>
-        <%= f.text_area :description %>
-        <label>Address</label>
-        <%= f.text_area :address %>
-        <fieldset class="checkbox">
-          <div>
-            <%= f.check_box :clef_organizer %>
-            <label for="">CLEF Organizer</label>
-          </div>
-        </fieldset>
-        <%= render partial: 'submit_buttons', locals: { f: f  } %>
-      </fieldset>
-    <% end %>
-  </div>
-  <div class="additional">
+</div>
+<div class="section-p-md">
+  <div class="container-fluid">
     <div class="row">
-      <a data-remodal-target="modal">Delete host</a>
+      <div class="col-12">
+        <%= form_for organizer, validate: true, html: { class: "form-rg", multipart: true  } do |f| %>
+          <div class="form-group">
+            <%= f.label :organizer, 'Organizer name' %>
+            <%= f.text_field :organizer, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :tagline, 'Tagline' %>
+            <%= f.text_field :tagline, class: 'form-control', 'aria-describedby': "organizerTaglineHelp" %>
+            <small id="organizerTaglineHelp" class="form-text text-muted">Max. 140 characters</small>
+          </div>
+
+          <div class="form-group">
+            <span class="label-text">Avatar</span>
+            <div class="custom-file mt-1">
+              <%= f.file_field :image_file, class: 'custom-file-input' %>
+              <%= f.label :image_file, 'Choose file', class: 'custom-file-label', 'aria-describedby': "avatarHelp" %>
+              <small id="avatarHelp" class="form-text text-muted">Your image will be cropped to a square aspect ratio if required. 5 MB limit</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :description, 'Description' %>
+            <%= f.text_area :description, class: 'form-control', rows: 3 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :address, 'Address' %>
+            <%= f.text_area :address, placeholder: 'Optional...', class: 'form-control', rows: 3 %>
+          </div>
+
+          <!-- CLEF organizer related -->
+          <div class="form-group">
+            <%= f.label :clef_organizer, 'CLEF organizer?' %>
+            <%= f.check_box :clef_organizer %>
+          </div>
+          <!--/CLEF organizer related-->
+
+          <div class="form-group">
+            <%= f.label :api_key, class: 'd-flex justify-content-between' do %>
+              API key
+              <%= link_to organizer_regen_api_key_path(organizer), class: 'btn btn-secondary btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Generate new API key' do %>
+                <img src="https://d33wubrfki0l68.cloudfront.net/45ec489693f5253ba2c8d86750482b24bfe0a0ec/72a48/assets/img/icon-refresh.svg">
+              <% end %>
+            <% end %>
+            <%= f.text_field :api_key, class: 'form-control', readonly: 'readonly' %>
+          </div>
+
+          <%= render partial: 'shared/submit_buttons', locals: { f: f  } %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

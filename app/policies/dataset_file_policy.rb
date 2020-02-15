@@ -1,5 +1,4 @@
 class DatasetFilePolicy < ApplicationPolicy
-
   def index?
     participant
   end
@@ -29,7 +28,7 @@ class DatasetFilePolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def resolve
@@ -40,5 +39,4 @@ class DatasetFilePolicy < ApplicationPolicy
       end
     end
   end
-
 end

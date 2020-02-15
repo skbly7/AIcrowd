@@ -1,5 +1,4 @@
 ActiveAdmin.register ChallengeCall do
-
   sidebar "Details", only: [:show, :edit] do
     ul do
       li link_to "Responses", admin_challenge_call_challenge_call_responses_path(challenge_call)
@@ -10,12 +9,13 @@ ActiveAdmin.register ChallengeCall do
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
+
     def permitted_params
       params.permit!
     end
   end
 
-  filter :organizer, :as => :select, :collection => Organizer.all.collect {|organizer| [organizer.organizer, organizer.id] }
+  filter :organizer, as: :select, collection: Organizer.all.map { |organizer| [organizer.organizer, organizer.id] }
   filter :headline
 
   index do
@@ -28,12 +28,11 @@ ActiveAdmin.register ChallengeCall do
     column :headline
     column :closing_date
     column :website
-    column :crowdai
     column :reponses do |res|
       res.challenge_call_responses.count
     end
     column 'link' do |res|
-      "https://www.crowdai.org/call-for-challenges/#{res.slug}/apply"
+      "https://www.aicrowd.com/call-for-challenges/#{res.slug}/apply"
     end
     actions
   end
@@ -41,13 +40,12 @@ ActiveAdmin.register ChallengeCall do
   form do |f|
     f.inputs "Challenge Call" do
       f.input :title
-      f.input :organizer, :as => :select, member_label: :organizer
+      f.input :organizer, as: :select, member_label: :organizer
       f.input :headline
       f.input :description_markdown
       f.input :closing_date
       f.input :website
-      f.input :crowdai
-      f.input :slug, :input_html => { :disabled => true }
+      f.input :slug, input_html: { disabled: true }
     end
     f.actions
   end
@@ -71,5 +69,4 @@ ActiveAdmin.register ChallengeCall do
       end
     end
   end
-
 end

@@ -80,12 +80,6 @@ h5 {
   font-weight: 500;
 }
 
-.list-topics h5 {
-  &:visited {
-    font-weight: 400;
-  }
-}
-
 h6 {
   color: $color-accent-dark;
   font-size: 15px;
@@ -142,16 +136,6 @@ sup {
   font-size: 10px;
 }
 
-/*
-code {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  font-size: 14px;
-  padding: 2px 4px;
-  color: $color-grey-87;
-  background: $color-grey-03;
-  border-radius: 3px;
-}
-*/
 code.block {
   display: block;
   width: 100%;
@@ -165,11 +149,4 @@ code.block {
 
 .color-accent {
   color: $color-accent-dark;
-}
-
-// added by Sean
-.list-topics h5 {
-  &:visited {
-    font-weight: 400;
-  }
 }

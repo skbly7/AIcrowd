@@ -18,14 +18,15 @@ class Api::BaseController < ApplicationController
 
   def auth_by_api_key_and_client_id
     authenticate_or_request_with_http_token do |token, options|
-      (token == ENV['CROWDAI_API_KEY'] || validate_client_name_and_api_key(request.params['challenge_client_name'],token) )
+      (token == ENV['CROWDAI_API_KEY'] || validate_client_name_and_api_key(request.params['challenge_client_name'], token))
     end
   end
 
-  def validate_client_name_and_api_key(challenge_client_name,api_key)
+  private
+
+  def validate_client_name_and_api_key(challenge_client_name, api_key)
     challenge = Challenge.where(challenge_client_name: challenge_client_name).first
     organizer = Organizer.where(api_key: api_key).first
     challenge.present? && organizer.present? && challenge.organizer_id == organizer.id
   end
-
 end

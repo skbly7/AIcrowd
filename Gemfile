@@ -1,32 +1,34 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
-#source 'https://rails-assets.org'
+# source 'https://rails-assets.org'
 source 'http://insecure.rails-assets.org' # something wrong with Rails assets
 
 # Rails assets gems
 gem 'rails-assets-isInViewport'
 gem 'rails-assets-jQuery-File-Upload'
 
-ruby '2.5.1'
-gem 'rails', '5.2.2'
+ruby '2.5.5'
+gem 'rails', '5.2.2.1'
 
+gem 'ahoy_matey'
+gem 'blazer', github: "aicrowd/blazer"
 gem 'active_model_serializers'
 gem 'activeadmin', '1.4.3'
 gem 'authtrail'
 gem 'aws-sdk', '~> 2.2'
 gem 'browser'
 gem 'carrierwave', '~> 1.0'
-gem 'cells-rails'
-gem 'cells'
-gem 'cells-erb'
 gem 'cookies_eu'
 gem 'cocoon'
 gem 'country_select'
 gem 'codemirror-rails'
 gem 'crowdai_admin'
-gem 'client_side_validations'
+gem 'client_side_validations', '~> 16.1'
 gem 'coffee-rails'
 gem 'compass-rails'
-gem 'devise'
+gem 'devise', '~> 4.6.1'
+gem 'discourse_api', '~> 0.38.0'
 gem 'doorkeeper', '~> 5.0.0.rc1'
 gem 'erbse', '0.1.1'
 gem 'excon'
@@ -37,6 +39,7 @@ gem 'figaro'
 gem 'fog'
 gem 'file_validators'
 gem 'gibbon'
+gem 'http'
 gem 'httparty'
 gem 'informant-rails'
 gem 'include_media_rails'
@@ -54,7 +57,6 @@ gem 'maxminddb'
 gem 'mandrill-api'
 gem 'momentjs-rails', '~> 2.9'
 gem 'mini_magick'
-gem 'merit'
 gem 'net-ssh'
 gem 'oj', '~> 3.0'
 gem 'omniauth-github'
@@ -69,6 +71,7 @@ gem 'puma_worker_killer'
 gem 'pundit'
 gem 'prometheus-client'
 gem "rack", ">= 2.0.6"
+gem "rack-cors"
 gem 'remotipart'
 gem 'ransack'
 gem 'rouge'
@@ -87,19 +90,21 @@ gem 'sidekiq', '~> 5.1.1'
 gem 'sidekiq-cron', '~> 0.6.3'
 gem 'sidekiq-history'
 gem 'sidekiq-failures'
-gem 'sidekiq-unique-jobs'
-gem 'sinatra', '~> 2.0.2', :require => nil
+gem 'sidekiq-unique-jobs', '~> 6.0.15'
+gem 'sinatra', '~> 2.0.2', require: nil
+gem 'stringex'
 gem 'therubyracer', platforms: :ruby
 gem 'turbolinks', '~> 5.1'
-gem 'trailblazer', '2.0.7'
-gem 'trailblazer-rails', '1.0.9'
 gem 'uglifier', '~> 4.1.10'
 gem 'validate_url'
 gem 'valid_email2'
 gem 'webpacker', '~> 2.0'
 
+gem 'irbtools', require: 'irbtools/binding'
+
 group :development do
-  gem 'brakeman', :require => false
+  gem "letter_opener"
+  gem 'brakeman', require: false
   gem 'derailed_benchmarks'
   gem 'guard'
   gem 'lol_dba'
@@ -111,6 +116,7 @@ group :development do
   gem 'sdoc', '~> 0.4.0'
   gem 'scss_lint', require: false
   gem 'web-console'
+  gem 'gitlab-styles', '~> 2.8'
 end
 
 group :development, :test do
@@ -130,15 +136,16 @@ group :test do
   gem 'factory_bot_rails'
   gem 'chromedriver-helper'
   gem 'capybara'
-  gem 'capybara-email'
   gem 'capybara-screenshot'
-  gem 'database_cleaner'
   gem 'launchy'
-  gem 'nokogiri' #, '~> 1.8'
+  gem 'nokogiri' # , '~> 1.8'
   gem 'pundit-matchers', git: 'https://github.com/crowdAI/pundit-matchers'
   gem 'rails-controller-testing'
-  gem 'rspec-retry'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
   gem 'selenium-webdriver'
   gem 'timecop'
+  gem 'vcr', '~> 5.0'
+  gem 'webmock', '~> 3.7', '>= 3.7.6'
 end
+
+gem "safely_block", "~> 0.2.2"

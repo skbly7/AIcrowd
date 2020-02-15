@@ -2,8 +2,8 @@ class OngoingLeaderboard < SqlView
   self.primary_key = :id
   after_initialize :readonly!
 
+  include PolymorphicSubmitter
   belongs_to :challenge
-  belongs_to :participant
 
   default_scope { order(seq: :asc) }
 end

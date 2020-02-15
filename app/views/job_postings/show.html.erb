@@ -1,61 +1,44 @@
-<div class="content">
-  <div class="masthead-detailed">
-    <div class="row">
-      <div class="info info-tutorial">
-        <h2 class='wrapper'><%= @job_posting.title %></h2>
-        <p class="large"><%= @job_posting.organisation %></p>
-        <p>
-          <% if @job_posting.contact_email.present? ||
-                @job_posting.contact_phone.present? || @job_posting.contact_name.present? %>
-              Contact:<br/>
-          <% end %>
-          <% if @job_posting.contact_name.present? %>
-            <b><%= @job_posting.contact_name %></b><br/>
-          <% end %>
-          <% if @job_posting.contact_email.present? %>
-            <%= @job_posting.contact_email %><br/>
-          <% end %>
-          <% if @job_posting.contact_email.present? &&
-              @job_posting.contact_phone.present? %>
-              &middot;
-          <% end %>
-          <%= @job_posting.contact_phone %>
+<!-- masthead -->
+<main class="bg-graph">
+<div class="masthead masthead-open">
+	<div class="container-fluid  bg-graph">
 
-          <% if @job_posting.posting_date.present? %>
-            <br/>Posted
-            <%= @job_posting.posting_date %>
-          <% end %>
-          <% if @job_posting.closing_date.present? %>
-            <br/>Closes
-            <%= @job_posting.closing_date %>
-          <% end %>
-        </p>
-        <p>
-          <% if @job_posting.remote.present? %>
-            <b>Remote</b><br/>
-          <% end %>
-          <% if @job_posting.location.present? &&
-              @job_posting.country.present? %>
-            <%= @job_posting.location %>,&nbsp;
-            <%= @job_posting.country_name %>
-          <% end %>
-        </p>
+		<div class="d-flex justify-content-between">
+			<div>
+				<h1><%= @job_posting.title %></h1>
+				<p style="margin-top:12px">
+					<svg width="12" height="16" xmlns="http://www.w3.org/2000/svg" style="margin-top:-4px"><path d="M5.6 0A5.596 5.596 0 0 0 0 5.6C0 9.8 5.6 16 5.6 16s5.6-6.2 5.6-10.4C11.2 2.504 8.696 0 5.6 0zm0 7.6a2 2 0 1 1 .001-4.001A2 2 0 0 1 5.6 7.6z" fill="#F0524D" fill-rule="nonzero"/></svg>
+					<%= @job_posting.location.blank? ? @job_posting.country_name : @job_posting.location + ', ' + @job_posting.country_name %>
+					<% if @job_posting.remote.present? %>
+						<span> or Remote
+					<%end %>
+				</p>
+			</div>
+		</div>
 
-        <p>
-          <% if @job_posting.job_url %>
-            <% if @job_posting.job_url.include?("http://") || @job_posting.job_url.include?("https://") %>
-              <%= link_to URI.parse(@job_posting.job_url).host, @job_posting.job_url %>
-            <% end %>
-          <% end %>
-        </p>
-      </div>
-    </div>
-  </div>
+	</div>
 </div>
+<!-- /masthead -->
 
-  <div class="row">
-    <div class="article">
-      <p><%= simple_format(sanitize(@job_posting.description, attributes: ["href", "target"]), {}, sanitize: false) %>
-    </div>
-  </div>
+<!-- section -->
+<div class="section-pt-sm-pb-md">
+	<div class="container-fluid">
+		<div class="row">
+
+			<!-- md content -->
+			<div class="col">
+				<div class="md-content">
+					<%= @job_posting.description.html_safe %>
+
+					<a class="btn btn-primary" href="<%= @job_posting.job_url %>" role="button">
+						Apply now
+					</a>
+				</div>
+			</div>
+			<!-- /md content -->
+
+		</div>
+	</div>
 </div>
+</main>
+<!-- /main content -->

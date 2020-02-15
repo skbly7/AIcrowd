@@ -1,25 +1,25 @@
 require 'rails_helper'
 
-feature "participant accesses challenge", js: true do
-let!(:challenge) { create(:challenge, :running) }
-let!(:draft_challenge) { create(:challenge, :draft) }
-let!(:participant) { create(:participant) }
+describe "participant accesses challenge", :js do
+  let!(:challenge) { create(:challenge, :running) }
+  let!(:draft_challenge) { create(:challenge, :draft) }
+  let!(:participant) { create(:participant) }
 
   describe "participant can view challenges list" do
-    before(:example) do
+    before do
       log_in participant
-      visit '/'
+      visit '/challenges'
     end
+
     specify { expect(page).to have_link challenge.challenge }
-    specify { expect(page).to have_link 'Knowledge Base' }
+    # specify { expect(page).to have_link 'Knowledge Base' }
     specify { expect(page).to have_link 'Challenges' }
   end
 
-
   describe "participant can view challenge details" do
-    before(:example) do
+    before do
       log_in participant
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
@@ -30,54 +30,41 @@ let!(:participant) { create(:participant) }
   describe "participant" do
     before do
       log_in participant
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
-    scenario "can follow Overview link" do
+    it "can follow Overview link" do
       click_link "Overview"
       expect(page).to have_content 'Overview'
     end
 
-    scenario "can follow Leaderboard link" do
+    it "can follow Leaderboard link" do
       click_link "Leaderboard"
       expect(page).to have_content 'Leaderboard'
     end
 
-    scenario "can follow Discussion link" do
-      click_link "Discussion"
-      expect(page).to have_content 'Discussion'
-      click_link 'New Topic'
-      expect(page).to have_content 'Discussion'
-    end
-
-    scenario "can follow Dataset link" do
-      click_link "Dataset"
-      expect(page).to have_content 'Dataset'
+    it "can follow Resources link" do
+      click_link "Resources"
+      expect(page).to have_content 'Resources'
     end
   end
 
   describe "access restricted parts of the challenge" do
-    before(:example) do
+    before do
       log_in participant
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
-    scenario "follow Leaderboard link" do
+    it "follow Leaderboard link" do
       click_link "Leaderboard"
       expect(page).to have_content 'Leaderboard'
     end
 
-    scenario "follow Discussion link" do
-      click_link "Discussion"
-      expect(page).to have_content 'Discussion'
+    it "follow Resources link" do
+      click_link "Resources"
+      expect(page).to have_content 'Resources'
     end
-
-    scenario "follow Dataset link" do
-      click_link "Dataset"
-      expect(page).to have_content 'Dataset'
-    end
-
   end
 end

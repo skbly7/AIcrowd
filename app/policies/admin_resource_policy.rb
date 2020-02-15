@@ -1,7 +1,6 @@
 class AdminResourcePolicy < ApplicationPolicy
-
   def index?
-    participant && participant.admin?
+    participant&.admin?
   end
 
   def show?
@@ -27,5 +26,4 @@ class AdminResourcePolicy < ApplicationPolicy
   def destroy?
     index?
   end
-
 end

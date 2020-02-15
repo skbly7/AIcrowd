@@ -1,11 +1,32 @@
-<% if @participant_challenges.blank? %>
-  <li>
-    <div class="details">
-      <h5>No participants yet...</h5>
+<!-- section -->
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if @participant_challenges.blank? and @count_of_unknown.zero? %>
+          <div class="md-content">
+            <%= "No participants for this challenge yet" %>
+          </div>
+        <% else %>
+          <ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
+            <% unless @count_of_unknown.zero? %>
+              <li class="list-group-item">
+                <%= link_to '#' do %>
+                  <%= image_tag default_image_url, class: 'avatar' %>
+                  <span class="text-link"> Unknown Participant </span>
+                  <span class="badge badge-primary">x<%= @count_of_unknown %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <%= render partial: 'participant_challenge_rows' %>
+          </ul>
+          <!-- load more -->
+          <span id="more-anchor"></span>
+          <%= render partial: 'shared/load_more', locals: {collection: @participant_challenges} %>
+          <!-- /load more -->
+        <% end %>
+      </div>
     </div>
-  </li>
-<% else %>
-  <%= concept(ParticipantChallenge::Cell::ListDetail,
-              collection: @participant_challenges,
-              current_participant: current_participant) %>
-<% end %>
+  </div>
+</div>
+<!-- /section -->

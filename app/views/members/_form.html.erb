@@ -1,14 +1,18 @@
-<div class='row'>
-  <%= form_for :member, url: organizer_members_path, method: :post, html: { class: "dbl-col" } do |f| %>
-    <fieldset>
-      <div class="twin-container">
-        <div class="twin-field">
-          <%= f.text_field :email, placeholder: 'Email address' %>
-        </div>
-        <div class="twin-field">
-          <%= f.submit 'Invite to team', class: 'btn btn-primary' %>
-        </div>
+<div class="section-p-md pb-0">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <%= form_for :member, url: organizer_members_path, method: :post, html: { class: "form-rg" } do |f| %>
+          <div class="form-group">
+            <%= f.label :email, 'Email address' %>
+            <%= f.text_field :email, placeholder: 'Email address', class: 'form-control', 'aria-describedby': 'emailHelp' %>
+            <small id="emailHelp" class="form-text text-muted">Must already have an AIcrowd account</small>
+          </div>
+          <div class="btn-set">
+            <%= f.submit 'Invite to team', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
       </div>
-    </fieldset>
-  <% end %>
+    </div>
+  </div>
 </div>

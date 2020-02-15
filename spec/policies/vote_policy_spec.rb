@@ -7,6 +7,7 @@ describe VotePolicy do
 
   context 'for a public participant' do
     let(:participant) { nil }
+
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:create) }
@@ -18,6 +19,7 @@ describe VotePolicy do
 
   context 'for a participant' do
     let(:participant) { build(:participant) }
+
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to permit_action(:create) }
@@ -26,5 +28,4 @@ describe VotePolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:destroy) }
   end
-
 end

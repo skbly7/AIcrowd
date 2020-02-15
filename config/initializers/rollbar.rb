@@ -1,13 +1,13 @@
 Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
-  config.enabled=false
+  config.enabled = false
 
   # Here we'll disable in 'test':
   if Rails.env.production?
-    config.enabled = true
+    config.enabled      = true
     config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
-    config.environment = 'production'
+    config.environment  = 'production'
   end
 
   # By default, Rollbar will try to call the `current_user` controller method
@@ -68,5 +68,5 @@ Rollbar.configure do |config|
   # environment variable like this: `ROLLBAR_ENV=staging`. This is a recommended
   # setup for Heroku. See:
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
-  #config.environment = ENV['ROLLBAR_ENV'].presence || Rails.env
+  # config.environment = ENV['ROLLBAR_ENV'].presence || Rails.env
 end

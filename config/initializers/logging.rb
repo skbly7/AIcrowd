@@ -1,3 +1,1 @@
-unless Rails.env.test?
-  ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-end
+ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT) unless Rails.env.test?

@@ -1,19 +1,59 @@
-<div class='content'>
-  <div class="masthead">
-    <div class="row">
-      <h2>Reorder Challenges</h2>
+<!-- page content -->
+<div class="content">
+  <!-- masthead -->
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h2>Reorder Challenges Featured Sequence</h2>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row">
-      <ul id = "sortable", class="list-challenges">
-            <% @challenges.each do |challenge| %>
-              <li id = '<%= challenge.id %>'> <%= challenge.challenge %> </li>
-            <% end %>
-      </ul>
+  <!-- /masthead -->
+
+  <!-- section -->
+  <div class="section-pb-md">
+    <div class="container-fluid">
+      <div class="row">
+        <h4> Drag to reorder </h4>
+        <table class="table table-striped table-hover">
+          <tr class="font-weight-bold">
+            <th>Challenge Name</th>
+            <th>Status</th>
+            <th class="text-center">Old Seq</th>
+            <th class="text-center">New Seq</th>
+          </tr>
+          <tbody id="sortable" class="list-challenges">
+          <% @challenges.each do |challenge| %>
+            <tr class='challenge-list-row p-3' id='<%= challenge.id %>'>
+              <td>
+                <%= challenge.challenge %>
+                <% if challenge.hidden_challenge %>
+                  <span class="badge badge-secondary">Hidden</span>
+                <% end %>
+                <% if challenge.private_challenge %>
+                  <span class="badge badge-secondary">Private</span>
+                <% end %>
+              </td>
+              <td><%= challenge.status_cd %></td>
+              <td class="text-center"> <%= challenge.featured_sequence %> </td>
+              <td class="text-center new-seq"> <%= challenge.featured_sequence %> </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+      <h4 class="pull-right"> Green Challenges are shown on the landing page </h4>
+
+      <div class="row p-3">
         <%= form_tag assign_order_challenges_path do %>
           <%= hidden_field_tag(:order) %>
-          <%= submit_tag "Save", class: 'btn btn-primary pull-left' %>
+          <%= submit_tag "Save New Order", class: 'btn btn-primary pull-left m-2' %>
+          <%= link_to "Cancel Reorder", challenges_path, class: 'btn btn-secondary pull-right m-2' %>
         <% end %>
+      </div>
+    </div>
   </div>
+  <!-- /section -->
 </div>
-

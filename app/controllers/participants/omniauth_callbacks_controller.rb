@@ -4,18 +4,20 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
   end
 
   def oauth2_generic
-    @user = Participant.from_omniauth(request.env["omniauth.auth"])
+    puts 'OAUTH:'
+    puts request.env['omniauth.auth']
+    @user = Participant.from_omniauth(request.env['omniauth.auth'])
     if @user.persisted?
-      if(!@user.confirmed?)
+      if !@user.confirmed?
         @user.confirm
         token = @user.send(:set_reset_password_token)
         redirect_to edit_password_path(@user, reset_password_token: token)
       else
-        set_flash_message(:notice, :success, kind: "Crowdai") if is_navigational_format?
+        set_flash_message(:notice, :success, kind: 'GitHub') if is_navigational_format?
         sign_in_and_redirect @user
       end
     else
-      session["devise.omniauth_data"] = request.env["omniauth.auth"]
+      session['devise.omniauth_data'] = request.env['omniauth.auth']
       redirect_to new_participant_registration_path
     end
   end

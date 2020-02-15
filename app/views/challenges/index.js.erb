@@ -1,8 +1,8 @@
 $(".load-more").remove();
-$("ul.list-challenges").append("<%= j render partial: 'challenges' %>");
-$(".row").last().after("<%= j render partial: 'shared/load_more', locals: { collection: @challenges } %>");
+$("#challenges-div").append("<%= j render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>");
+$("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @challenges } %>");
 $('html, body').animate({
-   scrollTop: $(document).height()-$(window).height()},
-   1400,
-   "easeOutQuint"
+        scrollTop: $(document).height()-$(window).height()},
+    1400,
+    "easeOutQuint"
 );

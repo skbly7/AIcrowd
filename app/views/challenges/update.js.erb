@@ -1,0 +1,36 @@
+function handleChallengeUpdate() {
+  const challengeForWrapper  = document.getElementById('challenges-form__wrapper');
+  const flashMessagesWrapper = document.getElementById('flash-messages-wrapper');
+  const currentUrl           = new URL(window.location);
+  const currentTab           = currentUrl.searchParams.get('step');
+  const nextTab              = "<%= params[:next_step] %>";
+  const updateSuccessful     = "<%= @challenge.errors.none? %>";
+
+  currentUrl.searchParams.set('step', nextTab);
+  window.history.pushState(null, null, currentUrl.toString());
+
+  window.scrollTo(0, 0);
+
+  // Show alert and correct tab after scrolling is completed
+  setTimeout(function() {
+    challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge %>";
+
+    if (updateSuccessful === 'true') {
+      if (nextTab.length) {
+        $(`#challenge-edit-${nextTab}-tab`).tab('show');
+      }
+
+      flashMessagesWrapper.innerHTML = "<%= j render 'layouts/flash_message', type: 'notice', message: 'Challenge updated.' %>";
+    } else {
+      if (currentTab.length) {
+        // Active tabs are disabled, thus I need to make it inactive to make it work
+        $(`#challenge-edit-rounds-tab`).removeClass('active');
+        $(`#challenge-edit-${currentTab}-tab`).tab('show');
+
+        flashMessagesWrapper.innerHTML = "<%= j render 'layouts/flash_message', type: 'error', message: 'This tab couldn\'t be saved because of errors. Please correct them.' %>";
+      }
+    }
+  }, window.pageYOffset / 4);
+}
+
+handleChallengeUpdate();

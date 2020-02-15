@@ -6,5 +6,4 @@ class GdprExportsController < ApplicationController
     GdprExportJob.perform_later(
       participant_id: current_participant.id)
   end
-
 end

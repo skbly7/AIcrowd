@@ -1,12 +1,10 @@
-<div class='content'>
-  <%= render partial: 'masthead', locals: { organizer: @organizer } %>
-  <%= render partial: 'subnav', locals: { organizer: @organizer, challenges: @challenges } %>
+<%= render partial: 'masthead', locals: { organizer: @organizer } %>
+<%= render partial: 'subnav', locals: { organizer: @organizer, challenges: @challenges } %>
 
-  <div class="row">
-    <ul class="list-challenges">
-      <%= concept(Challenge::Cell::ListDetail,
-                    collection: @challenges,
-                    current_participant: current_participant) %>
-    </ul>
-  </div>
+<div class="section-p-sm bg-light">
+	<div class="container-fluid">
+		<div class="row">
+      <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
+		</div>
+	</div>
 </div>

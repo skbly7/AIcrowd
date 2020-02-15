@@ -19,11 +19,13 @@ development: &development
   MAILCHIMP_LIST_ID: "REDACTED"
   DEVISE_SECRET_KEY: "bf2c609dce6a10cd29b36c7e639d0e34"
   SECRET_KEY_BASE: "b40bed63477347e21a257ced8760f305"
-
+  DISCOURSE_DOMAIN_NAME: 'https://discourse-staging.aicrowd.com'
+  DISCOURSE_API_KEY: "REDACTED"
+  DISCOURSE_API_USERNAME: "REDACTED"
+  FOG_LOCAL_ROOT: '~/fog'
 test:
   <<: *development
   MANDRILL_KEY: "G_rHM-BQ9DF6IG2wKa3-Pw"
-#  CAPYBARA_BROWSER_NAME: 'firefox'
 
 staging:
   DOMAIN_NAME:  "REDACTED"

@@ -9,16 +9,14 @@ class Notification < ApplicationRecord
   validates :notification_type, presence: true
 
   NOTIFICATION_TYPE = {
-    'Comment' => :comment,
-    'Mention' => :mention,
-    'Graded' => :graded,
+    'Mention'        => :mention,
+    'Graded'         => :graded,
     'Grading Failed' => :grading_failed,
-    'Leaderboard' => :leaderboard,
-    'Article' => :article
-  }
+    'Leaderboard'    => :leaderboard,
+    'Article'        => :article
+  }.freeze
 
   def read?
-    self.read_at.present?
+    read_at.present?
   end
-
 end

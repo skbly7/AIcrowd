@@ -1,27 +1,28 @@
 <div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
+  <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+  <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-  <% if @challenge.dataset_note.present?  %>
-    <div class='row'>
-      <div class="leaderboard-note">
-        <%= sanitize(@challenge.dataset_note) %>
+  <!-- section -->
+  <section class="section-p-sm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <header class="section-header">
+            <div>
+              <h4> Resources </h4>
+            </div>
+            <% if policy(@challenge).edit? %>
+              <%= link_to "New File", new_challenge_dataset_file_path(@challenge), class: 'btn btn-sm btn-secondary' %>
+            <% end %>
+          </header>
+          <ul class="list-group list-group-flush-px-0 list-group-dataset">
+            <hr/>
+            <% @dataset_files.each do |dataset_file| %>
+              <%= render partial: 'shared/challenges/dataset_file', locals: { dataset_file: dataset_file, challenge: @challenge } %>
+            <% end %>
+          </ul>
+        </div>
       </div>
     </div>
-  <% end %>
-
-  <div class="row">
-    <% if @challenge.require_toc_acceptance && !@challenge_participant.accepted_dataset_toc %>
-        <%= render partial: 'toc_form' %>
-    <% else %>
-      <ul class="list-datasets">
-          <%= concept(Dataset::Cell::ListDetail,
-                      collection: @dataset_files,
-                      current_participant: current_participant) %>
-      </ul>
-    <% end %>
-  </div>
+  </section>
 </div>

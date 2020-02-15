@@ -1,6 +1,9 @@
 ActiveAdmin.register Blog do
-
   controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
+
     def permitted_params
       params.permit!
     end
@@ -10,6 +13,7 @@ ActiveAdmin.register Blog do
     selectable_column
     column :seq
     column :title
+    column :slug
     column :participant
     column :published
     column :vote_count
@@ -22,6 +26,7 @@ ActiveAdmin.register Blog do
     f.inputs do
       f.input :participant
       f.input :title
+      f.input :slug
       f.input :seq
       f.input :published
       f.input :body_markdown
@@ -34,6 +39,7 @@ ActiveAdmin.register Blog do
     attributes_table do
       row :participant
       row :title
+      row :slug
       row :seq
       row :published
       row :body do
@@ -44,5 +50,4 @@ ActiveAdmin.register Blog do
       row :updated_at
     end
   end
-
 end

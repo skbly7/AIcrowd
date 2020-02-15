@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :reserved_userhandle do
-    name { "MyString" }
+    name { FFaker::Name.unique.first_name }
   end
 end

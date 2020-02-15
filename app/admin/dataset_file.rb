@@ -1,5 +1,4 @@
 ActiveAdmin.register DatasetFile do
-
   belongs_to :challenge
   navigation_menu :challenge
 
@@ -8,5 +7,4 @@ ActiveAdmin.register DatasetFile do
       params.permit!
     end
   end
-
 end

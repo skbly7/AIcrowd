@@ -3,31 +3,31 @@ class Organizer < ApplicationRecord
   include ApiKey
 
   friendly_id :organizer,
-    use: [:slugged, :finders, :history]
+              use: [:slugged, :finders, :history]
   has_many :challenges,
-    dependent: :destroy
+           dependent: :destroy
   has_many :participants,
-    dependent: :nullify
+           dependent: :nullify
   has_many :clef_tasks,
-    dependent: :destroy
+           dependent: :destroy
   has_many :challenge_calls,
-    dependent: :destroy
+           dependent: :destroy
   validates :organizer,
-    presence: true
+            presence: true
   mount_uploader :image_file, ImageUploader
-  validates_length_of :tagline,
-    maximum: 140,
-    allow_blank: true
   validates :tagline,
-    presence: true
+            length: { maximum:     140,
+                      allow_blank: true }
+  validates :tagline,
+            presence: true
   after_create :set_api_key
 
   def approved?
-    self.approved
+    approved
   end
 
   def clef?
-    self.clef_organizer
+    clef_organizer
   end
 
   def should_generate_new_friendly_id?

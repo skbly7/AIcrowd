@@ -18,9 +18,9 @@
         </label>
       <% end %>
 
-      <label>Submission description</label>
+      <strong>Submission description</strong>
       <%= markdown_editor do |m| %>
-        <%= f.text_area :description_markdown, class: "txt-med" %>
+        <%= f.text_area :description_markdown, class: "form-control" %>
       <% end %>
 
       <% if @challenge.license.present? %>
@@ -29,9 +29,7 @@
         </p>
       <% else %>
         <p class="margin-bottom">
-            After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AICrowd participants. All submitted content will be licensed under Creative Commons (CC).<br>
-              By making your submission you indicate your agreement with these terms.
-            </p>
+        </p>
         <% end %>
         <%= f.fields_for :submission_files do |f| %>
 
@@ -47,9 +45,9 @@
         <% if @challenge.running? %>
           <p class="margin-bottom">
             <% if @reset_dttm %>
-              <strong>You have <%= pluralize(@submissions_remaining,'submission') %> remaining until <%= @reset_dttm %>.</strong>
+              <label>You have <%= pluralize(@submissions_remaining,'submission') %> remaining until <%= @reset_dttm %>.</label>
             <% else %>
-              <strong>You have <%= pluralize(@submissions_remaining,'submission') %> remaining.</strong>
+              <label>You have <%= pluralize(@submissions_remaining,'submission') %> remaining.</label>
             <% end %>
           </p>
         <% end %>

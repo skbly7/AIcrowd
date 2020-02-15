@@ -1,5 +1,4 @@
 class VotePolicy < ApplicationPolicy
-
   def create?
     participant
   end
@@ -15,5 +14,4 @@ class VotePolicy < ApplicationPolicy
   def destroy?
     edit?
   end
-
 end

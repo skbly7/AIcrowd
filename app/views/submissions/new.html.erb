@@ -1,20 +1,24 @@
-<div class="content">
-	<div class="masthead">
-		<div class="row">
-			<div class="info">
-				<h6><%= @challenge.challenge %></h6>
-				<h2>Create Submission</h2>
-			</div>
-		</div>
-	</div>
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-  <% if @submissions_remaining == 0 %>
-    <%= render partial: 'submissions/new/no_submissions' %>
-  <% else %>
-    <% if @challenge.organizer.clef? %>
-      <%= render partial: 'submissions/new/clef_form' %>
-    <% else %>
-      <%= render partial: 'submissions/new/form' %>
-    <% end %>
-  <% end %>
-</div>
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-lg-7" id="description-wrapper">
+			  <% if @submissions_remaining == 0 %>
+			    <%= render partial: 'submissions/new/no_submissions' %>
+			  <% else %>
+			    <% if @challenge.organizer.clef? %>
+			      <%= render partial: 'submissions/new/clef_form' %>
+			    <% else %>
+			      <%= render partial: 'submissions/new/form' %>
+			    <% end %>
+			  <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /section -->
+
+</main>

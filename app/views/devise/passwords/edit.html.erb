@@ -1,23 +1,50 @@
-<div class="content background-grey">
-  <div class="row">
-    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'panel', method: :put }) do |f| %>
-    <%= devise_error_messages! %>
-    <%= f.hidden_field :reset_password_token %>
-    <fieldset>
-      <div class="panel-body">
-        <h2>Change your password</h2>
+
+
+<!-- masthead -->
+<div class="masthead masthead-open">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>Change your password</h1>
+        
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'form-rg', method: :put }) do |f| %>
+        <%= devise_error_messages! %>
         <br/>
-        <%= f.label :password, "New password" %>
+        <%= f.hidden_field :reset_password_token %>
+        <fieldset>
+          
+          <div class="form-group">
+            <span class="label-text"><%= f.label :password, "New password" %></span>
+            <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: 'form-control' %>
+          </div>
 
-        <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
-
-        <%= f.label :password_confirmation, "Confirm new password" %>
-        <%= f.password_field :password_confirmation, autocomplete: "off" %>
-
-        <%= f.button 'Change my password', type: 'submit', class: 'btn btn-primary btn-login' %>
-
+          <div class="form-group">
+            <span class="label-text"><%= f.label :password_confirmation, "Confirm new password" %></span>
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+          </div>
+            <%= f.button 'Change my password', type: 'submit', class: 'btn btn-primary btn-login' %>
+        </fieldset>
+        <% end %>
+        <br/>
+        <br/>
+        
       </div>
-    </fieldset>
-    <% end %>
+    </div>
   </div>
 </div>
+
+
+<!-- section -->
+<div class="section-p-md border-top bg-white">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="section-header-mb-sm">
+          <h4>Not registered?</h4>
+        </div>
+        <%= link_to 'Sign up'.html_safe , new_participant_registration_path, {class: "btn btn-secondary", role:"button"} %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /section -->

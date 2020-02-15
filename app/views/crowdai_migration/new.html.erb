@@ -1,0 +1,89 @@
+<!-- masthead -->
+<div class="masthead masthead-open">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h4>Welcome to AIcrowd</h4>
+        <h1>CrowdAI User Migration</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead -->
+
+<!-- section -->
+<div class="section-p-xs">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 md-content col-md-offset-1">
+        <%= image_tag("misc/aicrowd.gif") %>
+        <div>
+          <h2> What will be migrated to AIcrowd </h2>
+          <ul>
+            <li> All submissions made by the participant on CrowdAI </li>
+            <li> All leaderboard rankings </li>
+            <li> Challenge participation history </li>
+            <li> Challenge follows and likes </li>
+            <li> Agreement to rules and conditions </li>
+            <li> All public and private repositories from gitlab.crowdai.org </li>
+          </ul>
+        </div>
+        <div>
+          <h2> What will NOT be migrated to AIcrowd </h2>
+          <ul>
+            <li> Any challenge related discussions including topics and comments </li>
+            <li> User preferences regarding email, notifications or updates </li>
+            <li> Challenge invitations </li>
+            <li> Access to hosting organization </li>
+          </ul>
+        </div>
+        <div>
+          <h2> Note: </h2>
+          <ul>
+            <li> Your existing AIcrowd activity will remain untouched</li>
+            <li> Post successful migration, all previous references (e.g. leaderboard rankings) to your crowdAI user-id will reflect the new AIcrowd user-id </li>
+            <li> For users not migrated yet, the corresponding crowdAI references will show up as anonymous. </li>
+            <li> Migration of gitlab repositories can take up to 3 months, notification via email will be sent once the migration is complete </li>
+          </ul>
+        </div>
+        <div>
+          <h2> For any further queries or support related to migration feel free to contact help@aicrowd.com </h2>
+        </div>
+      </div>
+    </div>
+      <div class="row section-p-sm">
+        <div class="col-2">
+          <%= form_tag crowdai_migration_save_path, validate: true, html: {class: "form-rg mt-5", multipart: true} %>
+          <%= hidden_field_tag :data, value: @data %>
+          <%= button_tag ("Confirm Migration"), class: 'btn btn-primary', disabled: @current_participant.nil? %>
+        </div>
+      </div>
+    <%# end %>
+  </div>
+</div>
+
+<% unless @current_participant %>
+  <div class="section">
+    <div class="container-fluid">
+     <h4>Please Log in to the AIcrowd account you want to migrate your data to</h4>
+    </div>
+  </div>
+  <div class="section-p-sm border-top bg-white">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="section-header-mb-sm">
+            <h4>Not registered?</h4>
+          </div>
+          <%= link_to 'Sign up'.html_safe, new_participant_registration_path, {class: "btn btn-secondary", role: "button"} %>
+        </div>
+        <div class="col">
+          <div class="section-header-mb-sm">
+            <h4>Already have an account?</h4>
+          </div>
+          <%= link_to 'Log in'.html_safe, new_participant_session_path, {class: "btn btn-secondary", role: "button"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

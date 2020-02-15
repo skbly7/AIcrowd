@@ -1,9 +1,6 @@
 ActiveAdmin.register Doorkeeper::AccessGrant do
   actions :index, :show
 
-  #belongs_to :doorkeeper_application
-  #navigation_menu :application
-
   index do
     column :id
     column :resource_owner_id
@@ -12,8 +9,4 @@ ActiveAdmin.register Doorkeeper::AccessGrant do
     column :scopes
     actions
   end
-
 end
-
-
-#admin_doorkeeper_applications

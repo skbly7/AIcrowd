@@ -1,54 +1,74 @@
-<div class='article'>
-  <h2><%= @challenge_call.headline %></h2>
-  <div class='markdown-wrap'>
-    <%= simple_format(@challenge_call.description) %>
-  </div>
+<!-- section -->
+<div class="section-pt-sm-pb-md">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <%= form_for [@challenge_call,@challenge_call_response], validate: true, html: { class: "form-rg" } do |f| %>
+
+                <div class="form-group">
+                    <label>Organization/company name</label>
+                    <%= f.text_field :organization, class: "form-control" %>
+                </div>
+
+                <div class="form-group">
+                    <label>Contact name</label>
+                    <%= f.text_field :contact_name, class: "form-control" %>
+                    <small class="form-text text-muted">The name of the person you'd like us to contact</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Contact email address</label>
+                    <%= f.text_field :email, class: "form-control" %>
+                </div>
+
+                <div class="form-group">
+                    <label>Contact phone number</label>
+                    <%= f.text_field :phone, class: "form-control" %>
+                </div>
+
+                <div class="form-group">
+                    <label>Challenge title</label>
+                    <%= f.text_field :challenge_title, class: "form-control" %>
+                </div>
+
+                <div class="form-group">
+                    <label>Challenge description</label>
+                    <%= f.text_area :challenge_description, class: "form-control" %>
+                    <small class="form-text text-muted">Please give a general overview of the challenge, what problem it should solve, and how it will be run.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Challenge impact</label>
+                    <%= f.text_area :motivation, class: "form-control" %>
+                    <small class="form-text text-muted">Explain the significance of the task and describe the potential impact of the challenge. Please also provide a brief overview of existing work in the area of the challenge, and describe the current baseline solution to the problem addressed. How can the challenge improve this baseline?</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Challenge structure</label>
+                    <%= f.text_area :timeline, class: "form-control" %>
+                    <small class="form-text text-muted">Describe the structure of the challenge, i.e. what (if anything) do you provide in terms of data, and what do you provide in terms of the evaluation framework? What do the participants have to submit?</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Challenge evaluation</label>
+                    <%= f.text_area :evaluation_criteria, class: "form-control" %>
+                    <small class="form-text text-muted">How will the submissions be evaluated, and why? Please give as much detail as possible - this is usually where most of the work lies, and a clear evaluation scheme really helps</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Organizer details</label>
+                    <%= f.text_area :organizers_bio, class: "form-control" %>
+                    <small class="form-text text-muted">Please tell us something about the organizer(s), in particular with respect to the challenge? Have you already run challenges before?</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Resources</label>
+                    <%= f.text_area :other, class: "form-control" %>
+                    <small class="form-text text-muted">What prizes can you provide for the winners of the challenge? Do you have additional sponsorships secured? Is this challenge part of a workshop, a series, or anything else that is important to know?</small>
+                </div>
+                <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
+                <% end %>
+            </div>
+        </div>
+    </div>
 </div>
-
-<%= form_for [@challenge_call,@challenge_call_response], html: { class: "sgl-col" } do |f| %>
-  <fieldset>
-    <label>Organization name</label>
-    <%= f.text_field :organization, label: "Organization name" %>
-
-    <label>Contact name</label>
-    <%= f.text_field :contact_name %>
-
-    <label>Contact email address</label>
-    <%= f.text_field :email %>
-
-    <label>Contact phone number</label>
-    <%= f.text_field :phone %>
-
-    <label>Challenge title</label>
-    <%= f.text_field :challenge_title %>
-
-    <label>Challenge description</label>
-    <p class="description">Give a general overview of the challenge, what problem it should solve, and how it will be run.</p>
-    <%= f.text_area :challenge_description %>
-
-    <label>Impact of the challenge</label>
-    <p class="description">Explain the significance of the task and describe the potential impact of the challenge. Please also provide a brief overview of existing work in the area of the challenge, and describe the current baseline solution to the problem addressed. How can the challenge improve this baseline?</p>
-    <%= f.text_area :motivation %>
-
-    <label>Challenge structure</label>
-    <p class="description">Describe the structure of the challenge, i.e. what (if anything) do you provide in terms of data, and what do you provide in terms of the evaluation framework? What do the participants have to submit?</p>
-    <%= f.text_area :timeline %>
-
-    <label>Challenge evaluation</label>
-    <p class="description">How will the submissions be evaluated, and why? Please give as much detail as possible - this is usually where most of the work lies, and a clear evaluation scheme helps a lot.</p>
-    <%= f.text_area :evaluation_criteria %>
-
-    <label>Organiser details</label>
-    <p class="description">Please tell us something about the organizer(s), in particular with respect to the challenge? Have you already run challenges before?</p>
-    <%= f.text_area :organizers_bio %>
-
-    <label>Resources</label>
-    <p class="description">What prizes can you provide for the winners of the challenge? Do you have additional sponsorships secured? Is this challenge part of a workshop, a series, or anything else that is important to know?</p>
-    <%= f.text_area :other %>
-  </fieldset>
-
-  <div class="button-group">
-    <%= f.button :submit, class: "btn btn-primary" %>
-    <%= link_to 'Cancel', root_path, class: 'btn btn-secondary' %>
-  </div>
-<% end %>

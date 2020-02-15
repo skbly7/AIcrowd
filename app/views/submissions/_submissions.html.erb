@@ -1,0 +1,29 @@
+<% submissions.each do |submission| %>
+  <%
+    participant     = submission.participant
+    challenge       = submission.challenge
+    challenge_round = submission.challenge_round
+  %>
+
+  <tr>
+    <td><strong><%= submission.id %></strong></td>
+    <td>
+      <% if participant.present? %>
+        <%= link_to participant.name, participant_path(participant) %>
+      <% else %>
+        <span>#</span>
+      <% end %>
+    </td>
+    <td><span class="badge <%= submission_grade_class(submission) %>"><%= submission.grading_status_cd %></span></td>
+    <td><%= submission_formatted_value(submission, submission.score_display) %></td>
+    <% if challenge_round&.score_secondary_title.present? %>
+      <td><%= submission_formatted_value(submission, submission.score_secondary_display) %></td>
+    <% end %>
+    <td><%= submission_enable_links_in_raw_text(submission.grading_message) %></td>
+    <td class="text-right"><%= local_time(submission.created_at, "%a, %e %b %Y") %> <br>
+      <%= local_time(submission.created_at, "%H:%M:%S") %></td>
+    <% if challenge.submissions_page %>
+      <td class="text-right"><%= link_to "View", challenge_submission_path(challenge, submission.id), class: "btn btn-secondary btn-sm" %></td>
+    <% end %>
+  </tr>
+<% end %>

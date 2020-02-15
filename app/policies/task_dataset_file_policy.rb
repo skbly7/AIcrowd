@@ -1,5 +1,4 @@
 class TaskDatasetFilePolicy < DatasetFilePolicy
-
   def index?
     participant
   end
@@ -15,5 +14,4 @@ class TaskDatasetFilePolicy < DatasetFilePolicy
   def destroy?
     new?
   end
-
 end

@@ -1,0 +1,39 @@
+<% @page_title = "#{@team.name} | Accept Invitation" %>
+<main>
+  <div class="masthead masthead-team">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center flex-sm-wrap">
+          <h1>Accept Team Invitation</h1>
+        </div>
+      </div>
+
+      <div class="row masthead-info">
+        <div class="col-sm-12 col-md-6">
+          <header>
+            <h4>You’re about to join “<%= link_to(@team.name, challenge_team_path(@team.challenge, @team)) %>”</h4>
+          </header>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <p>Things you should know before joining a team:</p>
+      <ul>
+        <li>A team is only valid for one challenge. In this case: “<%= link_to(@challenge.challenge, @challenge) %>”</li>
+        <li>Joining will make you a member of the team for the duration of the challenge</li>
+        <li>All team members will share equal leaderboard spots and prizes</li>
+        <li>You may only be a member of a single team per challenge</li>
+        <li>Any other invitations you have received for other teams will be automatically declined</li>
+        <li>If you already have an existing team (with no members besides yourself), it will be deleted and all pending invitations you sent out will be automatically canceled</li>
+        <li><b>IMPORTANT: Team membership is not cancellable for the duration of the challenge!</b></li>
+      </ul>
+      <p>If all of that seems ok, then you can start collaborating right away!</p>
+      <%= form_for team_invitation_acceptances_path(@invitation) do |f| %>
+        <%= f.submit 'Join', class: 'btn btn-primary' %>
+        <%= link_to 'Return to Challenge', @challenge, class: 'btn btn-secondary' %>
+      <% end %>
+    </div>
+  </div>
+</main>

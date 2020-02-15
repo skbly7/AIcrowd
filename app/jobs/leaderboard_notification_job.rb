@@ -4,9 +4,7 @@ class LeaderboardNotificationJob < ApplicationJob
   def perform(submission)
     subscribed_participant_ids(submission).each do |participant_id|
       email_preference = EmailPreference.where(participant_id: participant_id).first
-      if email_preference.receive_every_email
-        LeaderboardNotificationMailer.new.sendmail(participant_id, submission.id)
-      end
+      LeaderboardNotificationMailer.new.sendmail(participant_id, submission.id) if email_preference.receive_every_email
     end
   end
 
@@ -15,11 +13,9 @@ class LeaderboardNotificationJob < ApplicationJob
     ids.uniq
   end
 
-
   def admin_ids
     Participant.where(admin: true).pluck(:id)
   end
-
 
   def challenge_participant_ids(submission)
     ParticipantChallenge
@@ -27,6 +23,4 @@ class LeaderboardNotificationJob < ApplicationJob
         .where(participant_challenges: { challenge_id: submission.challenge_id }, email_preferences: { my_leaderboard: true })
         .pluck(:participant_id)
   end
-
-
 end

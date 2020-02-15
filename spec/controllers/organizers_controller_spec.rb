@@ -1,23 +1,16 @@
-  require 'rails_helper'
+require 'rails_helper'
 
-RSpec.describe OrganizersController, type: :controller do
+describe OrganizersController, type: :controller do
   render_views
 
-  let(:valid_attributes) {
-    FactoryBot.attributes_for(:organizer)
-  }
-
-  let(:invalid_attributes) {
-    FactoryBot.attributes_for(:organizer,:invalid)
-  }
+  let(:valid_attributes)   { FactoryBot.attributes_for(:organizer) }
+  let(:invalid_attributes) { FactoryBot.attributes_for(:organizer, :invalid) }
 
   context 'as an admin' do
-    let(:participant) { create :participant, :admin }
-    let(:organizer) { create :organizer }
+    let(:participant) { create(:participant, :admin) }
+    let(:organizer)   { create(:organizer) }
 
-    before do
-      sign_in participant
-    end
+    before { sign_in participant }
 
     describe "GET #show" do
       it "assigns the requested organizer as @organizer" do
@@ -68,9 +61,7 @@ RSpec.describe OrganizersController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) {
-          { organizer: 'new name', description: 'some new description' }
-        }
+        let(:new_attributes) { { organizer: 'new name', description: 'some new description' } }
 
         it "updates the requested organizer" do
           put :update, params: { id: organizer.id, organizer: new_attributes }
@@ -85,8 +76,8 @@ RSpec.describe OrganizersController, type: :controller do
         end
 
         it "redirects to the organizer" do
-          put :update, params: { id: organizer.to_param, organizer: valid_attributes }
-          #expect(response).to redirect_to(organizer)
+          put :update, params: { id: organizer.id, organizer: valid_attributes }
+          expect(response).to redirect_to(organizer.reload)
         end
       end
 
@@ -103,18 +94,19 @@ RSpec.describe OrganizersController, type: :controller do
       end
     end
 
-    #describe "DELETE #destroy" do
-    #  it "destroys the requested organizer" do
-    #    expect {
-    #      delete :destroy, params: { id: organizer.id }
-    #    }.to change(Organizer, :count).by(-1)
-    #  end
-    #
-    #  it "redirects to the organizers list" do
-    #    delete :destroy, params: { id: organizer.id }
-    #    expect(response).to redirect_to('/')
-    #  end
-    #end
-  end
+    describe "DELETE #destroy" do
+      before { organizer }
 
+      it "destroys the requested organizer" do
+        expect {
+          delete :destroy, params: { id: organizer.id }
+        }.to change { Organizer.count }.by(-1)
+      end
+
+      it "redirects to the organizers list" do
+        delete :destroy, params: { id: organizer.id }
+        expect(response).to redirect_to organizers_path
+      end
+    end
+  end
 end

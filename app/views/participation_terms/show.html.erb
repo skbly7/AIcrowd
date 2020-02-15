@@ -1,0 +1,46 @@
+<main>
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h4><%= @challenge.challenge %></h4>
+          <h1>Participation Terms</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- section -->
+  <div class="section-p-sm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+
+          <!-- terms & conditions -->
+          <div class="md-content">
+            <%= sanitize(@participation_terms.terms) %>
+          </div>
+
+          <%= form_for current_participant, url: participant_accept_terms_path(current_participant), validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>
+
+            <%= hidden_field_tag("challenge_id", @challenge.id) %>
+            <%= f.hidden_field :participation_terms_accepted_version, value: @participation_terms.version %>
+
+            <div class="form-group form-check">
+              <%= check_box("terms", "accepted", {class: 'form-check-input requires-agreement-checkbox', 'data-target': 'accept-participation-terms-button'}, "yes", "no") %>
+              <label for="terms_accepted"> I have read and agree to the participation terms (required) </label>
+            </div>
+            <div class="btn-set" aria-hidden="true">
+              <%= f.button "Save", class: 'btn btn-primary requires-agreement', id: 'accept-participation-terms-button', disabled: true %>
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+
+</main>
+<!-- /main content -->

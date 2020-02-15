@@ -1,0 +1,53 @@
+<!-- md content -->
+<div class="col-md-8 col-lg-7" id="description-wrapper">
+  <div class="markdown-wrap">
+    <div class="md-content">
+      <% if clef_task.eua_required? %>
+        <h3>Complete the EUA</h3>
+        <p>In order to obtain access to the dataset in this challenge you are required to fill in and sign an End User Agreement (EUA) document.</p>
+        <p>Please perform the following steps:</p>
+        <ul>
+          <li>Download the EUA document and print it</li>
+          <li>Fill in the required information in the EUA document and sign it</li>
+          <li>Scan and re-upload the EUA document</li>
+        </ul>
+        <p>Upon the approval of your completed EUA document by an ImageCLEF organizer, you will obtain access to the dataset. You will also be automatically registered with CLEF, the main organizer of all CLEF labs.</p>
+
+        <%= form_for ParticipantClefTask.new(clef_task_id: clef_task.id), url: participant_clef_tasks_path, validate: true, html: { class: 'sgl-col' }, method: :post do |f| %>
+          <%= f.hidden_field :clef_task_id, value: clef_task.id %>
+          <%= f.hidden_field :challenge_id, value: challenge_id %>
+          <fieldset>
+            <p style="font-weight:600">End User Agreement file:</p>
+
+            <%= link_to asset_path(clef_task.eua_file.url), target: :_blank, id: 'eua-file', data: { :'clef-task-id' => clef_task.id } do %>
+              <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+            <% end %>
+
+            <br/>
+            <div class="upload">
+              <p style="font-weight:600">Upload your signed EUA here:</p>
+              <%= f.file_field :eua_file, class: 'file-upload' %>
+              <span>PDF only, 10MB limit</span>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <div class="button-group">
+              <%= f.submit 'Submit', class: 'btn btn-primary' %>
+            </div>
+          </fieldset>
+        <% end %>
+      <% else %> <!-- IF NO EUA REQUIRED -->
+        <h3>Get Access</h3>
+        <p>By agreeing you are considered as registered for this challenge's task. The registration data will be shared with CLEF.</p>
+
+        <%= form_for ParticipantClefTask.new(clef_task_id: clef_task.id), url: participant_clef_tasks_path, validate: true, html: { class: 'sgl-col' }, method: :post do |f| %>
+          <%= f.hidden_field :clef_task_id, value: clef_task.id %>
+          <%= f.hidden_field :challenge_id, value: challenge_id %>
+          <%= f.submit 'Agree', class: 'btn btn-primary' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- /md content -->

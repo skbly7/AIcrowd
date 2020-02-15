@@ -1,5 +1,4 @@
 ActiveAdmin.register Partner do
-
   controller do
     def permitted_params
       params.permit!
@@ -23,7 +22,7 @@ ActiveAdmin.register Partner do
   index do
     selectable_column
     column "Image" do |partner|
-      image_tag(partner.image_file.url, width: '50')
+      image_tag(partner.image_file.url, width: 50) if partner.image_file.present?
     end
     column :name
     column :organizer
@@ -36,7 +35,7 @@ ActiveAdmin.register Partner do
     attributes_table do
       row :name
       row :image_file do
-        image_tag(partner.image_file.url, width: 150)
+        image_tag(partner.image_file.url, width: 150) if partner.image_file.present?
       end
       row :organizer
       row :visible
@@ -47,16 +46,15 @@ ActiveAdmin.register Partner do
   form do |f|
     f.inputs "Organizer" do
       f.input :organizer,
-        :as => :select,
-        :collection => Organizer.all.sort.collect {|organizer| [organizer.organizer, organizer.id] }
+              as:         :select,
+              collection: Organizer.all.sort.map { |organizer| [organizer.organizer, organizer.id] }
       f.input :name
       f.input :image_file,
-        as: :file,
-        hint: f.object.image_file.present? ? image_tag(f.object.image_file.url) : content_tag(:span, "no portrait yet")
+              as:   :file,
+              hint: f.object.image_file.present? ? image_tag(f.object.image_file.url) : content_tag(:span, "no portrait yet")
       f.input :visible
       f.input :seq
     end
     f.actions
   end
-
 end

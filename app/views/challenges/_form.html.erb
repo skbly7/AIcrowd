@@ -1,0 +1,51 @@
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <%= form_with model: @challenge, id: 'challenges-form', class: 'form-rg challenges-form', multipart: true, validate: true, local: @challenge.new_record? do |f| %>
+          <p id="challenges-form-errors" class="challenges-form__errors-paragraph"><%= @challenge.errors.full_messages.to_sentence %></p>
+
+          <% hidden_field_tag :step, id: 'challenges-form-step', value: :overview %>
+
+          <div class='tab-content'>
+            <div id='tab-details' class="tab-pane fade show active">
+              <%= render partial: 'challenges/tabs/details_form', locals: { f: f, challenge: challenge } %>
+            </div>
+
+            <% if challenge.persisted? %>
+              <div id='tab-rules' class="tab-pane fade">
+                <%= render partial: 'challenges/tabs/rules_form', locals: { f: f, challenge: challenge } %>
+              </div>
+
+              <div id='tab-rounds' class="tab-pane fade">
+                <%= render partial: 'challenges/tabs/rounds_form', locals: { f: f, challenge: challenge } %>
+              </div>
+
+              <div id='tab-overview' class="tab-pane fade">
+                <%= render partial: 'challenges/tabs/overview_form', locals: { f: f, challenge: challenge } %>
+              </div>
+
+              <div id='tab-private' class="tab-pane fade">
+                <%= render partial: 'challenges/tabs/private_challenge_form', locals: { f: f, challenge: challenge } %>
+              </div>
+
+              <div id='tab-submissions' class="tab-pane fade">
+                <%= render partial: 'challenges/tabs/submissions_form', locals: { f: f, challenge: challenge } %>
+              </div>
+
+              <div id='tab-winner' class="tab-pane fade">
+                <%= render partial: 'challenges/tabs/winner_form', locals: { f: f, challenge: challenge } %>
+              </div>
+
+              <% if current_participant.admin? %>
+                <div id='tab-dynamic' class="tab-pane fade">
+                  <%= render partial: 'challenges/tabs/admin_form', locals: { f: f, challenge: challenge } %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

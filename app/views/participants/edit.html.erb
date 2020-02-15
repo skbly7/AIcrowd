@@ -1,72 +1,132 @@
-<div class='content'>
-  <div class="masthead">
+<!-- masthead -->
+<div class="masthead masthead-open">
+  <div class="container-fluid">
     <div class="row">
-      <div class="info">
-        <h2>Edit Profile</h2>
+      <div class="col-12">
+        <h1>Edit profile</h1>
       </div>
     </div>
   </div>
-  <div class="row">
-    <%= form_for @participant, validate: true, html: { class: "sgl-col" } do |f| %>
-    <fieldset>
-      <label>Username</label>
-      <%= f.text_field :name %>
-      <label>First name</label>
-      <%= f.text_field :first_name %>
-      <label>Last name</label>
-      <%= f.text_field :last_name %>
+</div>
+<!-- /masthead -->
 
-      <label>Personal Data</label>
-      <p id='gdpr-text'>Download your personal data that has been collected by AICrowd.</p>
-      <div class="button-group">
-        <%= link_to 'Download',
+<!-- section -->
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- edit profile -->
+      <div class="col-12">
+
+        <%= form_for @participant, validate: true, html: { class: "form-rg" } do |f| %>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <%= f.text_field :name, class: "form-control" %>
+            <small id="usernameHelp" class="form-text text-muted">Max. 255 characters. No spaces</small>
+          </div>
+
+          <div class="form-group">
+            <label for="firstName">First name</label>
+            <%= f.text_field :first_name, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last name</label>
+            <%= f.text_field :last_name, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <span class="label-text">Avatar</span>
+            <div class="custom-file mt-1">
+              <%= f.file_field :image_file, class: 'custom-file-input' %>
+              <label class="custom-file-label" for="customFile" aria-describedby="avatarHelp">Choose file</label>
+              <small id="avatarHelp" class="form-text text-muted">Your image will be cropped to a square aspect ratio if required. 5 MB limit</small>
+            </div>
+          </div>
+
+          <% if @participant.image_file.present? %>
+            <%= link_to 'Delete', participant_remove_image_path(@participant) %>
+          <% end %>
+
+          <div class="form-group">
+            <label for="orgCo">Affiliation</label>
+            <%= f.text_field :affiliation, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <label for="location">Address</label>
+            <%= f.text_field :address , class: "form-control"%>
+          </div>
+
+          <div class="form-group">
+            <label for="location">City</label>
+            <%= f.text_field :city , class: "form-control"%>
+          </div>
+
+          <div class="form-group">
+            <label for="location">Country</label>
+                  <%= f.country_select :country_cd, { include_blank: '--- Select a country ---'}, { class: 'form-control' }  %>
+          </div>
+
+          <div class="form-group">
+            <label for="bio">Bio</label>
+            <%= f.text_area :bio, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <label for="basic-url">GitHub profile</label>
+            <div class="input-group mb-3">
+              <%= f.text_field :github, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="basic-url">LinkedIn profile</label>
+            <div class="input-group mb-3">
+              <%= f.text_field :linkedin, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="basic-url">Twitter profile</label>
+            <div class="input-group mb-3">
+              <%= f.text_field :twitter, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="personalWebsite">Personal website</label>
+            <%= f.text_field :website, class: 'form-control' %>
+          </div>
+
+          <div class="btn-set" aria-hidden="true">
+            <%= f.button "Update profile", class: 'btn btn-primary' %>
+            <%= button_to 'Cancel', participant_path(@participant), {class: "btn btn-secondary", type: "button"} %>
+          </div>
+
+         <% end %>
+      </div>
+      <!-- /edit profile -->
+
+    </div>    
+  </div>
+</div>
+<!-- /section -->
+
+<!-- section -->
+<div class="section-p-md border-top">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h4>Personal data</h4>
+        <p id='gdpr-text'>Download your personal data that has been collected by AIcrowd.</p>
+        <%= button_to 'Download',
               gdpr_exports_path,
               method: :post, remote: true,
               id: 'gdpr-button',
-              class: 'btn btn-primary' %>
+              class: "btn btn-primary" %>
       </div>
-      <br/>
-
-      <label>Profile Picture</label>
-      <div class="upload">
-        <%= concept(Image::Cell,
-                        @participant,
-                        klass: 'img-thumb',
-                        current_participant: current_participant) %>
-        <%#= f.file_field :profile_image,
-              multiple: false,
-              direct_upload: true,
-              options: { class: 'file-upload' } %>
-
-        <%= f.file_field :image_file, class: 'file-upload' %>
-        <% if @participant.image_file.present? %>
-          <%= link_to 'Delete', participant_remove_image_path(@participant) %>
-        <% end %>
-        <span>Your image will be cropped if necessary. 5MB limit</span>
-      </div>
-      <label>Affiliation</label>
-      <%= f.text_field :affiliation %>
-      <label>Address</label>
-      <%= f.text_field :address %>
-      <label>City</label>
-      <%= f.text_field :city %>
-      <label>Country</label>
-      <%= f.country_select :country_cd, { include_blank: '--- Select a country ---'}, { class: 'country-select-box' }  %>
-      <label>Bio</label>
-      <%= f.text_area :bio %>
-      <label>Github</label>
-      <%= f.text_field :github, placeholder: "URL (e.g. www.github.com/AIcrowd)", class: 'url' %>
-      <label>LinkedIn</label>
-      <%= f.text_field :linkedin, placeholder: "URL (e.g. www.linkedin.com/in/aicrowd)", class: 'url' %>
-      <label>Twitter</label>
-      <%= f.text_field :twitter, placeholder: "URL (e.g. www.twitter.com/aicrowd)", class: 'url' %>
-      <label>Website</label>
-      <%= f.text_field :website, placeholder: "URL (e.g. www.aicrowd.com)", class: 'url' %>
-      <div class="button-group">
-        <%= f.button "Save", class: 'btn btn-primary' %>
-        <%= link_to 'Cancel', participant_path(@participant), class: "btn btn-secondary" %>
-      </div>
-    </fieldset>
-    <% end %>
+    </div>
   </div>
 </div>
+<!-- /section -->

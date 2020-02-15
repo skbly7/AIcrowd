@@ -1,18 +1,18 @@
 # Application Documentation
 
-This is the process documentation for crowdAI. It is a work in progress, and portions may be incomplete or out of date.
+This is the process documentation for AIcrowd. It is a work in progress, and portions may be incomplete or out of date.
 
-If you see something that needs some improved documentation, please go ahead and make a [pull request](https://github.com/crowdAI/crowdai/pulls).
+If you see something that needs some improved documentation, please go ahead and make a [pull request](https://github.com/AIcrowd/AIcrowd/pulls).
 
 ## Participant Accounts
 
-crowdAI is a public website and large sections of the application are publicly viewable. To contribute to crowdAI or engage in a challege, users can sign up for a free participant account.
+AIcrowd is a public website and large sections of the application are publicly viewable. To contribute to AIcrowd or engage in a challege, users can sign up for a free participant account.
 
-crowdAI has support for [GDPR](./gdpr.md), [fine-grained email preferences](./email_preferences.md).
+AIcrowd has support for [GDPR](./gdpr.md), [fine-grained email preferences](./email_preferences.md).
 
 ## Challenge Organizers
 
-Organizers are groups such as universities or companies which launch competitions using crowdAI, define the competition rules and provide data and other information to competitors.
+Organizers are groups such as universities or companies which launch competitions using AIcrowd, define the competition rules and provide data and other information to competitors.
 
 The organizers also judge the competitors and, at the end of the competition, award the winner.
 
@@ -34,7 +34,7 @@ Related open issues:
 
 ## Challenges
 
-Challenges run on crowdAI to crowd-source machine learning solutions to open data problems.
+Challenges run on AIcrowd to crowd-source machine learning solutions to open data problems.
 
 - [New Challenge Creation](./new_challenge_creation.md)
 - [Ordering of Challenges](./ordering_of_challenges.md)
@@ -48,7 +48,7 @@ Challenges run on crowdAI to crowd-source machine learning solutions to open dat
 
 ### Leaderboard
 
-The crowdAI Leaderboard is dynamic and may be configured via the Challenge configuration. The leaderboard rows are populated with:
+The AIcrowd Leaderboard is dynamic and may be configured via the Challenge configuration. The leaderboard rows are populated with:
 
 - The highest scoring entry for each participant, for that challenge round
 - Only graded scores are considered

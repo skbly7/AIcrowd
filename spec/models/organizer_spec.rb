@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Organizer do
   context 'API key' do
     let!(:organizer) { create :organizer }
+
     it 'API key is created when organizer account created' do
       expect(organizer.api_key.length).to eq(32)
     end
@@ -14,5 +15,4 @@ describe Organizer do
       expect(organizer.api_key).not_to eq(api_key)
     end
   end
-
 end

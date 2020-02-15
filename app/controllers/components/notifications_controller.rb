@@ -1,8 +1,8 @@
-class Components::NotificationsController < Components::BaseController
+class Components::NotificationsController < ApplicationController
   before_action :authenticate_participant!
 
   def index
-    @notifications = Notification.where(participant: current_participant).recent.page(params[:page]).per(3)
+    @notifications          = Notification.where(participant: current_participant).recent.page(params[:page]).per(3)
     @new_notification_count = @notifications.count
   end
 
@@ -23,5 +23,4 @@ class Components::NotificationsController < Components::BaseController
     notification.update(read_at: Time.zone.now)
     head :ok
   end
-
 end

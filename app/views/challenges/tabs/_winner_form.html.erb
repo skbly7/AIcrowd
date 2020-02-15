@@ -1,0 +1,15 @@
+<div>
+  <span class="label-text">Options</span>
+
+  <div class="form-group">
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :winners_tab_active, text: "Winners' Tab Active?" } %>
+  </div>
+
+  <span class="label-text">Winner's Tab (Markdown)</span>
+
+  <%= markdown_editor do |m| %>
+    <%= f.text_area :winner_description_markdown, class: "txt-med form-control" %>
+  <% end %>
+
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'rules' } %>
+</div>
